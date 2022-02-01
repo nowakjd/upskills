@@ -1,4 +1,4 @@
-package pl.sii.upskills.service;
+package pl.sii.upskills.speaker.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
