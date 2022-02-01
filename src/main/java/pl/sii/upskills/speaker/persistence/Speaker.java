@@ -1,4 +1,4 @@
-package pl.sii.upskills.model;
+package pl.sii.upskills.speaker.persistence;
 
 import javax.persistence.*;
 
