@@ -18,7 +18,7 @@ class SpeakerInputValidator {
             speakerValidationException.addError("Email or phone number is required");
         }
 
-        if (speakerValidationException.getErrors().size() > 0) {
+        if (!speakerValidationException.getErrors().isEmpty()) {
             throw speakerValidationException;
         }
         return true;
