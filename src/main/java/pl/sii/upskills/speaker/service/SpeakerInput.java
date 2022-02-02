@@ -2,13 +2,20 @@ package pl.sii.upskills.speaker.service;
 
 public class SpeakerInput {
 
-    private String firstName;
+    private final String firstName;
+    private final String lastName;
+    private final String phoneNumber;
+    private final String email;
+    private final String bio;
 
-    private String lastName;
-    private String phoneNumber;
+    public SpeakerInput(String firstName, String lastName, String phoneNumber, String email, String bio) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.bio = bio;
+    }
 
-    private String email;
-    private String bio;
     public String getFirstName() {
         return firstName;
     }
