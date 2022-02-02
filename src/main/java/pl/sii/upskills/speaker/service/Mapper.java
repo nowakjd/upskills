@@ -1,9 +1,11 @@
 package pl.sii.upskills.speaker.service;
 
+import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
 
 import java.util.function.Function;
 
+@Component
 class Mapper implements Function<SpeakerInput, Speaker> {
     @Override
     public Speaker apply(SpeakerInput input) {
