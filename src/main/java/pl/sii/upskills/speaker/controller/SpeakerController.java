@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.service.SpeakerInput;
 import pl.sii.upskills.speaker.service.SpeakerService;
 
 @RestController
@@ -16,9 +17,7 @@ class SpeakerController {
     }
 
     @PostMapping("/speakers")
-    ResponseEntity<Speaker> createSpeaker(@RequestBody Speaker speaker){
-        return new ResponseEntity<>(speakerService.addSpeaker(speaker), HttpStatus.CREATED);
-        //return  ResponseEntity.(speakerService.addSpeaker(speaker));
-
+    ResponseEntity<Speaker> createSpeaker(@RequestBody SpeakerInput speakerInput){
+        return new ResponseEntity<>(speakerService.addSpeaker(speakerInput), HttpStatus.CREATED);
     }
 }
