@@ -212,6 +212,7 @@ class SpeakerInputValidatorTest {
                 arguments(" ", "\t"),
                 arguments("    ", " "),
                 arguments("\t", ""),
+                arguments(null, null),
                 arguments(null, " ")
 
         );
@@ -222,6 +223,7 @@ class SpeakerInputValidatorTest {
                 arguments(" ", "\t", null),
                 arguments("    ", " ", ""),
                 arguments("\t", "", "   "),
+                arguments(null, null, null),
                 arguments(null, " ", null)
 
         );
