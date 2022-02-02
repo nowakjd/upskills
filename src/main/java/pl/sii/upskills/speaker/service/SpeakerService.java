@@ -8,15 +8,17 @@ import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 public class SpeakerService {
     private final SpeakerRepository speakerRepository;
     private final SpeakerInputValidator speakerInputValidator;
+    private final Mapper mapper;
 
-    public SpeakerService(SpeakerRepository speakerRepository, SpeakerInputValidator speakerInputValidator) {
+    public SpeakerService(SpeakerRepository speakerRepository, SpeakerInputValidator speakerInputValidator, Mapper mapper) {
         this.speakerRepository = speakerRepository;
         this.speakerInputValidator =speakerInputValidator;
+        this.mapper = mapper;
     }
 
     public Speaker addSpeaker(SpeakerInput speakerInput) {
         speakerInputValidator.validate(speakerInput);
-        Speaker speaker = Mapper.map(speakerInput);
+        Speaker speaker = mapper.apply(speakerInput);
         return speakerRepository.save(speaker);
     }
 }
