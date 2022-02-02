@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 
+import java.util.function.Function;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -19,7 +21,7 @@ class SpeakerServiceTest {
         SpeakerRepository repository = mock(SpeakerRepository.class);
         when(repository.save(any())).thenAnswer(a -> a.getArgument(0));
         SpeakerInputValidator validator = new SpeakerInputValidator();
-        Mapper mapper = new Mapper();
+        Function<SpeakerInput, Speaker> mapper = new Mapper();
         underTest = new SpeakerService(repository, validator, mapper);
     }
 
