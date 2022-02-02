@@ -12,7 +12,7 @@ public class SpeakerInputValidator {
         if (isEmpty(speakerInput.getLastName())){
             speakerValidationException.addError("Last name is required");
         }
-        if (isEmpty(speakerInput.getEmail()) || isEmpty(speakerInput.getPhoneNumber())){
+        if (isEmpty(speakerInput.getEmail()) && isEmpty(speakerInput.getPhoneNumber())){
             speakerValidationException.addError("Email or phone number is required");
         }
 
