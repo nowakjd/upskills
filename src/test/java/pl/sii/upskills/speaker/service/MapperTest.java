@@ -6,10 +6,7 @@ import pl.sii.upskills.speaker.persistence.Speaker;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 class MapperTest {
-
-
 
     @Test
     @DisplayName("Should map SpeakerInput to Speaker")
@@ -17,7 +14,7 @@ class MapperTest {
         // given
         Mapper underTest = new Mapper();
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
-        Speaker speaker = new Speaker(null,"John", "Doe", "123456789", "john@email.com", "My bio");
+
         // when
         Speaker result = underTest.apply(speakerInput);
 
