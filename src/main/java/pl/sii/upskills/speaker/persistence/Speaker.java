@@ -8,15 +8,15 @@ public class Speaker {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 50)
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 50)
     private String lastName;
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", length = 20)
     private String phoneNumber;
-    @Column(name = "email")
+    @Column(name = "email", length = 50)
     private String email;
-    @Column(name = "bio")
+    @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
 
     public Speaker() {
