@@ -206,6 +206,24 @@ class SpeakerInputValidatorTest {
                 .anyMatch(e -> e.contains("Email or phone number is required"));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"bla@bla ", "bla.com"})
+    @DisplayName("Validation should throw exception when email is not a correct email")
+    void invalidEmail(String email) {
+        // given
+        SpeakerInputValidator underTest = new SpeakerInputValidator();
+        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", email, "My bio");
+
+        // when
+        Executable underTestLambda = () -> underTest.validate(input);
+
+        // then
+        SpeakerValidationException exception = assertThrows(SpeakerValidationException.class, underTestLambda);
+        assertThat(exception.getErrors())
+                .hasSize(1)
+                .allMatch(e -> e.contains("email must be valid"));
+    }
+
     private static Stream<Arguments> twoArgsProvider() {
         return Stream.of(
                 arguments(" ", "    "),
