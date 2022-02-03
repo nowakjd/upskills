@@ -109,7 +109,7 @@ class SpeakerInputValidatorTest {
         SpeakerValidationException exception = assertThrows(SpeakerValidationException.class, underTestLambda);
         assertThat(exception.getErrors())
                 .hasSize(1)
-                .allMatch(e->e.contentEquals("Last name is required"));
+                .allMatch(e -> e.contentEquals("Last name is required"));
     }
 
     @ParameterizedTest
@@ -127,7 +127,7 @@ class SpeakerInputValidatorTest {
         SpeakerValidationException exception = assertThrows(SpeakerValidationException.class, underTestLambda);
         assertThat(exception.getErrors())
                 .hasSize(1)
-                .allMatch(e->e.contains("Email or phone number is required"));
+                .allMatch(e -> e.contains("Email or phone number is required"));
     }
 
     @Test
@@ -147,7 +147,7 @@ class SpeakerInputValidatorTest {
                 .anyMatch(e -> e.contains("First name is required"))
                 .anyMatch(e -> e.contains("Last name is required"))
                 .anyMatch(e -> e.contains("Email or phone number is required"));
-   }
+    }
 
     @ParameterizedTest
     @MethodSource("twoArgsProvider")
@@ -164,8 +164,8 @@ class SpeakerInputValidatorTest {
         SpeakerValidationException exception = assertThrows(SpeakerValidationException.class, underTestLambda);
         assertThat(exception.getErrors())
                 .hasSize(2)
-                .anyMatch(e->e.contains("First name is required"))
-                .anyMatch(e->e.contains("Last name is required"));
+                .anyMatch(e -> e.contains("First name is required"))
+                .anyMatch(e -> e.contains("Last name is required"));
     }
 
     @ParameterizedTest
@@ -183,9 +183,9 @@ class SpeakerInputValidatorTest {
         SpeakerValidationException exception = assertThrows(SpeakerValidationException.class, underTestLambda);
         assertThat(exception.getErrors())
                 .hasSize(2)
-                .anyMatch(e->e.contains("First name is required"))
-                .anyMatch(e->e.contains("Email or phone number is required"));
-   }
+                .anyMatch(e -> e.contains("First name is required"))
+                .anyMatch(e -> e.contains("Email or phone number is required"));
+    }
 
     @ParameterizedTest
     @MethodSource("threeArgsProvider")
@@ -202,8 +202,8 @@ class SpeakerInputValidatorTest {
         SpeakerValidationException exception = assertThrows(SpeakerValidationException.class, underTestLambda);
         assertThat(exception.getErrors())
                 .hasSize(2)
-                .anyMatch(e->e.contains("Last name is required"))
-                .anyMatch(e->e.contains("Email or phone number is required"));
+                .anyMatch(e -> e.contains("Last name is required"))
+                .anyMatch(e -> e.contains("Email or phone number is required"));
     }
 
     private static Stream<Arguments> twoArgsProvider() {
@@ -217,6 +217,7 @@ class SpeakerInputValidatorTest {
 
         );
     }
+
     private static Stream<Arguments> threeArgsProvider() {
         return Stream.of(
                 arguments(" ", "    ", "\t"),

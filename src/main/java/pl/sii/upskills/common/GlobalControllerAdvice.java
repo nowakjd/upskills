@@ -1,7 +1,5 @@
 package pl.sii.upskills.common;
 
-
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -14,7 +12,7 @@ import java.util.List;
 public class GlobalControllerAdvice {
     @ExceptionHandler(SpeakerValidationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    List<String> handlingSpeakerValidationException(SpeakerValidationException e){
+    List<String> handlingSpeakerValidationException(SpeakerValidationException e) {
         return e.getErrors();
     }
 }
