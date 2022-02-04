@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,10 +17,11 @@ import static org.mockito.Mockito.when;
 
 class SpeakerServiceTest {
     SpeakerService underTest;
+    private SpeakerRepository repository;
 
     @BeforeEach
     void setUp() {
-        SpeakerRepository repository = mock(SpeakerRepository.class);
+        repository = mock(SpeakerRepository.class);
         when(repository.save(any())).thenAnswer(a -> a.getArgument(0));
         SpeakerInputValidator validator = new SpeakerInputValidator();
         Function<SpeakerInput, Speaker> mapper = new Mapper();
@@ -43,5 +46,16 @@ class SpeakerServiceTest {
         assertThat(result.getBio()).isEqualTo("My bio");
     }
 
+    @Test
+    @DisplayName("Should return list from repository")
+    void findAll(){
+        //given
+        List<Speaker> actual = new ArrayList<>();
+        when(repository.findAll()).thenReturn(actual);
+        //when
+        List<Speaker> result = underTest.findAll();
+        //then
+        assertThat(actual).isEqualTo(result);
+    }
 
 }

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Service
@@ -22,5 +23,8 @@ public class SpeakerService {
         speakerInputValidator.validate(speakerInput);
         Speaker speaker = mapper.apply(speakerInput);
         return speakerRepository.save(speaker);
+    }
+    public List<Speaker> findAll(){
+        return speakerRepository.findAll();
     }
 }

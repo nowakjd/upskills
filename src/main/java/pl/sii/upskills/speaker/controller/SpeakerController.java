@@ -7,6 +7,8 @@ import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.SpeakerInput;
 import pl.sii.upskills.speaker.service.SpeakerService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 class SpeakerController {
@@ -19,5 +21,10 @@ class SpeakerController {
     @PostMapping("/speakers")
     ResponseEntity<Speaker> createSpeaker(@RequestBody SpeakerInput speakerInput){
         return new ResponseEntity<>(speakerService.addSpeaker(speakerInput), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/speakers")
+    ResponseEntity<List<Speaker>>findAll(){
+        return new ResponseEntity<>(speakerService.findAll(), HttpStatus.OK);
     }
 }
