@@ -23,7 +23,7 @@ class SpeakerController {
     }
 
     @PostMapping("/speakers")
-    ResponseEntity<Speaker> createSpeaker(@RequestBody SpeakerInput speakerInput){
+    ResponseEntity<Speaker> createSpeaker(@RequestBody SpeakerInput speakerInput) {
         return new ResponseEntity<>(speakerService.addSpeaker(speakerInput), HttpStatus.CREATED);
     }
 
