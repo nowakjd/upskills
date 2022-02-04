@@ -3,7 +3,7 @@ package pl.sii.upskills.speaker.persistence;
 import javax.persistence.*;
 
 @Entity
-public class Speaker {
+public class Speaker implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

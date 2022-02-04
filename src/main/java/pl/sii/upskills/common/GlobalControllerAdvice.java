@@ -9,7 +9,7 @@ import pl.sii.upskills.speaker.service.SpeakerValidationException;
 import java.util.List;
 
 @RestControllerAdvice
-public class GlobalControllerAdvice {
+class GlobalControllerAdvice {
     @ExceptionHandler(SpeakerValidationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     List<String> handlingSpeakerValidationException(SpeakerValidationException e) {
