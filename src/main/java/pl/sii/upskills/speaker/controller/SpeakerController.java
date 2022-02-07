@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.SpeakerInput;
 import pl.sii.upskills.speaker.service.SpeakerService;
+import pl.sii.upskills.speaker.service.query.SpeakerOutput;
+import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 
 import javax.validation.Valid;
 import pl.sii.upskills.speaker.service.query.SpeakerOutput;
@@ -32,7 +34,7 @@ class SpeakerController {
     }
 
     @GetMapping("/speakers")
-    ResponseEntity<List<SpeakerOutput>>findAll(){
+    ResponseEntity<List<SpeakerOutput>> findAll() {
         return new ResponseEntity<>(speakerQueryService.findAll(), HttpStatus.OK);
     }
 }

@@ -23,4 +23,5 @@ public class SpeakerService {
         Speaker speaker = mapper.apply(speakerInput);
         return speakerRepository.save(speaker);
     }
+
 }

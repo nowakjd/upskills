@@ -1,5 +1,7 @@
 package pl.sii.upskills.speaker.service.query;
 
+import java.util.Objects;
+
 public class SpeakerOutput {
     private final Long Id;
     private final String firstName;
@@ -41,5 +43,16 @@ public class SpeakerOutput {
         return bio;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SpeakerOutput that = (SpeakerOutput) o;
+        return Objects.equals(Id, that.Id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(email, that.email) && Objects.equals(bio, that.bio);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, firstName, lastName, phoneNumber, email, bio);
+    }
 }
