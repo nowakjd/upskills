@@ -1,20 +1,26 @@
 package pl.sii.upskills.speaker.persistence;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
+
 public class Speaker implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "first_name", length = 50)
+    @Column(name = "first_name")
+    @Size(max = 50, message = "First name can't be length than 50 sign")
     private String firstName;
-    @Column(name = "last_name", length = 50)
+    @Column(name = "last_name")
+    @Size(max = 50, message = "Last name can't be length than 50 sign")
     private String lastName;
-    @Column(name = "phone_number", length = 20)
+    @Column(name = "phone_number")
+    @Size(max = 20, message = "Phone can't be length than 20 sign")
     private String phoneNumber;
-    @Column(name = "email", length = 50)
+    @Column(name = "email")
+    @Size(max = 50, message = "Email can't be length than 50 sign")
     private String email;
     @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
