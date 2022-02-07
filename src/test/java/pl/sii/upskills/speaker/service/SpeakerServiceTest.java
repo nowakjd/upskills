@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,16 +44,6 @@ class SpeakerServiceTest {
         assertThat(result.getBio()).isEqualTo("My bio");
     }
 
-    @Test
-    @DisplayName("Should return list from repository")
-    void findAll(){
-        //given
-        List<Speaker> actual = new ArrayList<>();
-        when(repository.findAll()).thenReturn(actual);
-        //when
-        List<Speaker> result = underTest.findAll();
-        //then
-        assertThat(actual).isEqualTo(result);
-    }
+
 
 }
