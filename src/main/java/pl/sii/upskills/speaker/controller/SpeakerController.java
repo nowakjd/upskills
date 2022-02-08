@@ -7,6 +7,7 @@ import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.SpeakerInput;
 import pl.sii.upskills.speaker.service.SpeakerService;
 
+
 @RestController
 @RequestMapping("/api/v1")
 class SpeakerController {
