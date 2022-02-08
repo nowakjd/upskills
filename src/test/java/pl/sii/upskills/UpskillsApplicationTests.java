@@ -1,6 +1,6 @@
 package pl.sii.upskills;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -9,9 +9,10 @@ class UpskillsApplicationTests {
 
 // Speaker speaker = new Speaker();
 
-// @Test
-// void contextLoads() {
-// }
+    @Disabled
+    @Test
+    void contextLoads() {
+    }
 
 // @Test
 // void speakerActive(){
