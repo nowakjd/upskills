@@ -15,11 +15,10 @@ import static org.mockito.Mockito.when;
 
 class SpeakerServiceTest {
     SpeakerService underTest;
-    private SpeakerRepository repository;
 
     @BeforeEach
     void setUp() {
-        repository = mock(SpeakerRepository.class);
+        SpeakerRepository repository = mock(SpeakerRepository.class);
         when(repository.save(any())).thenAnswer(a -> a.getArgument(0));
         SpeakerInputValidator validator = new SpeakerInputValidator();
         Function<SpeakerInput, Speaker> mapper = new Mapper();

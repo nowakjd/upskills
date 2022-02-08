@@ -17,7 +17,7 @@ class SpeakerController {
     SpeakerService speakerService;
     SpeakerQueryService speakerQueryService;
 
-    public SpeakerController(SpeakerService speakerService, SpeakerQueryService speakerQueryService) {
+    SpeakerController(SpeakerService speakerService, SpeakerQueryService speakerQueryService) {
         this.speakerService = speakerService;
         this.speakerQueryService = speakerQueryService;
     }
