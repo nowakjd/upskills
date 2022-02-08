@@ -11,16 +11,16 @@ public class Speaker implements java.io.Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "first_name")
-    @Size(max = 50, message = "First name can't be length than 50 sign")
+    @Size(max = 50, message = "First name must not be longer than 50 characters")
     private String firstName;
     @Column(name = "last_name")
-    @Size(max = 50, message = "Last name can't be length than 50 sign")
+    @Size(max = 50, message = "Last name must not be longer than 50 characters")
     private String lastName;
     @Column(name = "phone_number")
-    @Size(max = 20, message = "Phone can't be length than 20 sign")
+    @Size(max = 20, message = "Phone number must not be longer than 20 characters")
     private String phoneNumber;
     @Column(name = "email")
-    @Size(max = 50, message = "Email can't be length than 50 sign")
+    @Size(max = 50, message = "Email must not be longer than 50 characters")
     private String email;
     @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
