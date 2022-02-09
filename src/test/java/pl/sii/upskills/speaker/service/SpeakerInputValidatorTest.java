@@ -232,14 +232,14 @@ class SpeakerInputValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"bla@bla ", "bla.com", "bla.@bla.pl", "@.com", "blabla@@.com",
-        "bla.@''@.com", "bla-bla@bla..com", "--@.com", "a\"b(c)d,e:f;g<h>i[j\\k]l@example.com",
-        "this\\ still\\\"not\\\\allowed@example.com", "just\"not\"right@example.com",
-        "blabla@bla.com_"})
+                            "bla.@''@.com", "bla-bla@bla..com", "--@.com", "a\"b(c)d,e:f;g<h>i[j\\k]l@example.com",
+                            "this\\ still\\\"not\\\\allowed@example.com", "just\"not\"right@example.com",
+                            "blabla@bla.com_"})
     @DisplayName("Validation should throw exception when email is not a correct email")
     void invalidEmail(String email) {
         // given
-        SpeakerInputValidator underTest = new SpeakerInputValidator();
         SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", email, "My bio");
+        SpeakerInputValidator underTest = new SpeakerInputValidator();
 
         // when
         Executable underTestLambda = () -> underTest.validate(input);
