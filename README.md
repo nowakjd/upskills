@@ -27,7 +27,9 @@ If you would like to develop locally we recommend using docker, it is used for s
 You need  [Docker](https://www.docker.com/) and  docker-compose which is a part of Docker desktop.
 Clone this repo and start the database server configuration
 We do this with docker-compose, run `docker-compose up` then you can access database from `http://localhost:8090`.
-Also, database credentials are needed, report to our team for the appropriate database data.
+Also, database credentials are needed (to set environment variables, you need to go
+to run -> edit configurations -> environment variables then you set login and password with postgres variable), 
+report to our team for the appropriate database data.
 
 
 ### Deploying the app
