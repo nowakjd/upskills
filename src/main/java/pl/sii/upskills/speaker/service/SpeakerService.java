@@ -12,7 +12,9 @@ public class SpeakerService {
     private final SpeakerInputValidator speakerInputValidator;
     private final Function<SpeakerInput, Speaker> mapper;
 
-    public SpeakerService(SpeakerRepository speakerRepository, SpeakerInputValidator speakerInputValidator, Function<SpeakerInput, Speaker> mapper) {
+    public SpeakerService(SpeakerRepository speakerRepository,
+                          SpeakerInputValidator speakerInputValidator,
+                          Function<SpeakerInput, Speaker> mapper) {
         this.speakerRepository = speakerRepository;
         this.speakerInputValidator = speakerInputValidator;
         this.mapper = mapper;

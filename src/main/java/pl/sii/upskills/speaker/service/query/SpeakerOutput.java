@@ -3,7 +3,7 @@ package pl.sii.upskills.speaker.service.query;
 import java.util.Objects;
 
 public class SpeakerOutput {
-    private final Long Id;
+    private final Long id;
     private final String firstName;
     private final String lastName;
     private final String phoneNumber;
@@ -11,7 +11,7 @@ public class SpeakerOutput {
     private final String bio;
 
     public SpeakerOutput(Long id, String firstName, String lastName, String phoneNumber, String email, String bio) {
-        Id = id;
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -20,7 +20,7 @@ public class SpeakerOutput {
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public String getFirstName() {
@@ -48,11 +48,16 @@ public class SpeakerOutput {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpeakerOutput that = (SpeakerOutput) o;
-        return Objects.equals(Id, that.Id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(email, that.email) && Objects.equals(bio, that.bio);
+        return Objects.equals(id, that.id)
+                && Objects.equals(firstName, that.firstName)
+                && Objects.equals(lastName, that.lastName)
+                && Objects.equals(phoneNumber, that.phoneNumber)
+                && Objects.equals(email, that.email)
+                && Objects.equals(bio, that.bio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, firstName, lastName, phoneNumber, email, bio);
+        return Objects.hash(id, firstName, lastName, phoneNumber, email, bio);
     }
 }
