@@ -4,13 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sii.upskills.speaker.persistence.Speaker;
-import pl.sii.upskills.speaker.service.SpeakerInput;
-import pl.sii.upskills.speaker.service.SpeakerService;
-import pl.sii.upskills.speaker.service.query.SpeakerOutput;
-import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
-
-import javax.validation.Valid;
-import pl.sii.upskills.speaker.service.query.SpeakerOutput;
+import pl.sii.upskills.speaker.service.command.SpeakerCommandService;
+import pl.sii.upskills.speaker.service.model.SpeakerInput;
+import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 
 import java.util.List;
@@ -18,10 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 class SpeakerController {
-    SpeakerService speakerService;
+    SpeakerCommandService speakerService;
     SpeakerQueryService speakerQueryService;
 
-    SpeakerController(SpeakerService speakerService, SpeakerQueryService speakerQueryService) {
+    SpeakerController(SpeakerCommandService speakerService, SpeakerQueryService speakerQueryService) {
         this.speakerService = speakerService;
         this.speakerQueryService = speakerQueryService;
     }

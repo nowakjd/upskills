@@ -1,6 +1,7 @@
-package pl.sii.upskills.speaker.service;
+package pl.sii.upskills.speaker.service.command;
 
 import org.springframework.stereotype.Component;
+import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
 import java.util.regex.Pattern;
 
@@ -17,6 +18,10 @@ class SpeakerInputValidator {
                             + "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\"
                             + "[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
                     Pattern.CASE_INSENSITIVE);
+
+    public static boolean isEmailInvalid(String email) {
+        return !EMAIL_REGEX.matcher(email).matches();
+    }
 
     boolean validate(SpeakerInput speakerInput) {
         SpeakerValidationException speakerValidationException = new SpeakerValidationException();
@@ -43,9 +48,5 @@ class SpeakerInputValidator {
 
     private boolean isEmpty(String string) {
         return (string == null || string.trim().isEmpty());
-    }
-
-    public static boolean isEmailInvalid(String email) {
-        return ! EMAIL_REGEX.matcher(email).matches();
     }
 }
