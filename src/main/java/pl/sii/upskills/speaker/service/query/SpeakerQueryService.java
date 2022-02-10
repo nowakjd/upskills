@@ -12,7 +12,8 @@ public class SpeakerQueryService {
     private final Function<Speaker, SpeakerOutput> speakerOutputMapper;
     private final SpeakerRepository speakerRepository;
 
-    public SpeakerQueryService(Function<Speaker, SpeakerOutput> speakerOutputMapper, SpeakerRepository speakerRepository) {
+    public SpeakerQueryService(Function<Speaker, SpeakerOutput> speakerOutputMapper,
+                               SpeakerRepository speakerRepository) {
         this.speakerOutputMapper = speakerOutputMapper;
         this.speakerRepository = speakerRepository;
     }
