@@ -7,6 +7,7 @@ import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
+import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.function.Function;
 
@@ -34,7 +35,7 @@ class SpeakerServiceTest {
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
 
         // when
-        Speaker result = underTest.addSpeaker(speakerInput);
+        SpeakerOutput result = underTest.addSpeaker(speakerInput);
 
         // then
         assertThat(result).isNotNull();
