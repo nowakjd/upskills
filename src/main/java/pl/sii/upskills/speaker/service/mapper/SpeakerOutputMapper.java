@@ -1,7 +1,8 @@
-package pl.sii.upskills.speaker.service.query;
+package pl.sii.upskills.speaker.service.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.function.Function;
 
