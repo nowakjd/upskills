@@ -18,8 +18,7 @@ public class ConferenceController {
     }
 
     @PostMapping("/conferences")
-    @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<ConferenceOutput> conferenceResponseEntity (@RequestBody ConferenceInput conferenceInput) {
-        return new ResponseEntity<ConferenceOutput>(commandService.createConference(ConferenceInput));
+        return new ResponseEntity<>(commandService.createConference(conferenceInput),HttpStatus.CREATED);
     }
 }

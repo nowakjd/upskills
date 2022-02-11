@@ -1,13 +1,13 @@
 package pl.sii.upskills.conference.service.command;
 
-import pl.sii.upskills.conference.persistence.Conference;
+import org.springframework.stereotype.Controller;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
+import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
+@Controller
 public class CommandService {
 
-    public Conference createConference(ConferenceInput conferenceInput) {
-        speakerInputValidator.validate(speakerInput);
-        Conference conference = mapper.apply(speakerInput);
-        return speakerRepository.save(speaker);
+    public ConferenceOutput createConference(ConferenceInput conferenceInput) {
+        return null;
     }
 }

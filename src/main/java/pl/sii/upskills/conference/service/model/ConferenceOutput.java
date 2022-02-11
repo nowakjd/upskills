@@ -1,22 +1,26 @@
 package pl.sii.upskills.conference.service.model;
 
+import pl.sii.upskills.conference.persistence.ConferenceStatus;
+
+import java.util.UUID;
+
 public class ConferenceOutput {
 
-    private String name;
-    private String title;
-    private int numberOfPlaces;
-    private String value;
-    private String ISOCode;
-    private String startDate;
-    private String endDate;
+    private final String name;
+    private final String title;
+    private final int numberOfPlaces;
+    private final Money price;
+    private final TimeSlot timeSlot;
+    private final ConferenceStatus status;
+    private UUID id;
 
-    public ConferenceOutput(String name, String title, int numberOfPlaces, String value, String ISOCode, String startDate, String endDate) {
+    public ConferenceOutput(String name, String title, int numberOfPlaces, Money price, TimeSlot timeSlot, ConferenceStatus status, UUID id) {
         this.name = name;
         this.title = title;
         this.numberOfPlaces = numberOfPlaces;
-        this.value = value;
-        this.ISOCode = ISOCode;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.price = price;
+        this.timeSlot = timeSlot;
+        this.status = status;
+        this.id = id;
     }
 }

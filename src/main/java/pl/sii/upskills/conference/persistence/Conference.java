@@ -1,6 +1,7 @@
 package pl.sii.upskills.conference.persistence;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.UUID;
 
 @Entity
@@ -9,30 +10,32 @@ public class Conference {
     @Id
     @Column(name = "id", nullable = false)
     private UUID id;
-    @Column(nullable = false,length = 250)
+    @Column(nullable = false)
+    @Size(max = 250, message = "Name must not be length than 250 characters")
     private String name;
-    @Column(nullable = false,length = 250)
+    @Column(nullable = false)
+    @Size(max = 250, message = "Title must not be length than 250 characters")
     private String title;
     @Column(nullable = false)
     private int numberOfPlaces;
     @Enumerated
     private ConferenceStatus status;
     @Embedded
-    private Money price;
+    private MoneyDAO price;
     @Embedded
-    private TimeSlot timeSlot;
+    private TimeSlotDAO timeSlotDAO;
 
     public Conference() {
     }
 
-    public Conference(UUID id, String name, String title, int numberOfPlaces, ConferenceStatus status, Money price, TimeSlot timeSlot) {
+    public Conference(UUID id, String name, String title, int numberOfPlaces, ConferenceStatus status, MoneyDAO price, TimeSlotDAO timeSlotDAO) {
         this.id = id;
         this.name = name;
         this.title = title;
         this.numberOfPlaces = numberOfPlaces;
         this.status = status;
         this.price = price;
-        this.timeSlot = timeSlot;
+        this.timeSlotDAO = timeSlotDAO;
     }
 
     public String getName() {
@@ -67,20 +70,20 @@ public class Conference {
         this.status = status;
     }
 
-    public Money getPrice() {
+    public MoneyDAO getPrice() {
         return price;
     }
 
-    public void setPrice(Money price) {
+    public void setPrice(MoneyDAO price) {
         this.price = price;
     }
 
-    public TimeSlot getTimeSlot() {
-        return timeSlot;
+    public TimeSlotDAO getTimeSlot() {
+        return timeSlotDAO;
     }
 
-    public void setTimeSlot(TimeSlot timeSlot) {
-        this.timeSlot = timeSlot;
+    public void setTimeSlot(TimeSlotDAO timeSlotDAO) {
+        this.timeSlotDAO = timeSlotDAO;
     }
 
     public UUID getId() {
