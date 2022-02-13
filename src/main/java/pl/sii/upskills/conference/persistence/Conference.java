@@ -28,7 +28,8 @@ public class Conference {
     public Conference() {
     }
 
-    public Conference(UUID id, String name, String title, int numberOfPlaces, ConferenceStatus status, MoneyDAO price, TimeSlotDAO timeSlotDAO) {
+    public Conference(UUID id, String name, String title, int numberOfPlaces, ConferenceStatus status, MoneyDAO price,
+                      TimeSlotDAO timeSlotDAO) {
         this.id = id;
         this.name = name;
         this.title = title;

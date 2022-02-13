@@ -12,9 +12,10 @@ public class ConferenceOutput {
     private final Money price;
     private final TimeSlot timeSlot;
     private final ConferenceStatus status;
-    private UUID id;
+    private final UUID id;
 
-    public ConferenceOutput(String name, String title, int numberOfPlaces, Money price, TimeSlot timeSlot, ConferenceStatus status, UUID id) {
+    public ConferenceOutput(String name, String title, int numberOfPlaces, Money price, TimeSlot timeSlot,
+                            ConferenceStatus status, UUID id) {
         this.name = name;
         this.title = title;
         this.numberOfPlaces = numberOfPlaces;

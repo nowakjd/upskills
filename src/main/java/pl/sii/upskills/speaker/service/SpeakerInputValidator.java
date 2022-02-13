@@ -18,6 +18,10 @@ class SpeakerInputValidator {
                             + "[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])",
                     Pattern.CASE_INSENSITIVE);
 
+    public static boolean isEmailInvalid(String email) {
+        return !EMAIL_REGEX.matcher(email).matches();
+    }
+
     boolean validate(SpeakerInput speakerInput) {
         SpeakerValidationException speakerValidationException = new SpeakerValidationException();
 
@@ -43,9 +47,5 @@ class SpeakerInputValidator {
 
     private boolean isEmpty(String string) {
         return (string == null || string.trim().isEmpty());
-    }
-
-    public static boolean isEmailInvalid(String email) {
-        return ! EMAIL_REGEX.matcher(email).matches();
     }
 }
