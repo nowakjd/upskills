@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ConferenceValidationException extends RuntimeException{
+public class ConferenceValidationException extends RuntimeException {
     private final List<String> errorsConference = new ArrayList<>();
 
     void addError(String message) {

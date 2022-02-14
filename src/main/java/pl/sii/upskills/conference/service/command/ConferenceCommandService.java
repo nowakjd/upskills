@@ -15,11 +15,12 @@ public class ConferenceCommandService {
     private ConferenceMapper conferenceMapper;
     private ConferenceOutputMapper conferenceOutputMapper;
     private ConferenceRepository conferenceRepository;
+
     public ConferenceOutput createConference(ConferenceInput conferenceInput) {
         conferenceInputValidator.validate(conferenceInput);
-        Conference conference =conferenceMapper.apply(conferenceInput);
+        Conference conference = conferenceMapper.apply(conferenceInput);
         conference.setStatus(ConferenceStatus.DRAFT);
-        conference= conferenceRepository.save(conference);
+        conference = conferenceRepository.save(conference);
         return conferenceOutputMapper.apply(conference);
 
     }

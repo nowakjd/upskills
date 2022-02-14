@@ -5,9 +5,13 @@ import pl.sii.upskills.conference.persistence.TimeSlotDAO;
 
 import java.time.LocalDateTime;
 
+/**
+ Period placed in time.
+ */
 @JsonDeserialize(as = TimeSlotDAO.class)
 public interface TimeSlot {
 
-    public LocalDateTime getStartDate ();
-    public LocalDateTime getEndDate ();
+    LocalDateTime getStartDate();
+
+    LocalDateTime getEndDate();
 }

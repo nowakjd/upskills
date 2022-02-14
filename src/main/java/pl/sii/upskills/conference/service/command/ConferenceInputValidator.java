@@ -25,8 +25,8 @@ class ConferenceInputValidator {
 
         if (isNotEnoughIntoFutureIfExist(conferenceInput.getTimeSlot(), minimalDaysBeforeConference)) {
             conferenceValidationException.addError("Start date must be "
-                    + minimalDaysBeforeConference +
-                    " days in the future");
+                    + minimalDaysBeforeConference
+                    + " days in the future");
         }
 
         if (hasEndBeforeStartIfExist(conferenceInput.getTimeSlot())) {

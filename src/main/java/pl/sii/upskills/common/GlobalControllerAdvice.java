@@ -30,7 +30,7 @@ class GlobalControllerAdvice {
 
     @ExceptionHandler(ConferenceValidationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    List<String> handlingConferenceValidationException(ConferenceValidationException e){
+    List<String> handlingConferenceValidationException(ConferenceValidationException e) {
         return e.getErrors();
     }
 }
