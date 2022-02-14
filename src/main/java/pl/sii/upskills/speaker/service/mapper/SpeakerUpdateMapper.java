@@ -4,13 +4,13 @@ import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @Component
-public class SpeakerInputMapper implements Function<SpeakerInput, Speaker> {
-    @Override
-    public Speaker apply(SpeakerInput input) {
-        Speaker speaker = new Speaker();
+public class SpeakerUpdateMapper {
+
+    public Speaker map(Speaker speaker, SpeakerInput input) {
         speaker.setFirstName(input.getFirstName());
         speaker.setLastName(input.getLastName());
         speaker.setEmail(input.getEmail());

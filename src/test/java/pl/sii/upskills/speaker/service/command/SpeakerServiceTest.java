@@ -5,10 +5,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
-import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
+import pl.sii.upskills.speaker.service.mapper.SpeakerCreationMapper;
+import pl.sii.upskills.speaker.service.mapper.SpeakerUpdateMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,8 +26,9 @@ class SpeakerServiceTest {
         SpeakerRepository repository = mock(SpeakerRepository.class);
         when(repository.save(any())).thenAnswer(a -> a.getArgument(0));
         SpeakerInputValidator validator = new SpeakerInputValidator();
-        Function<SpeakerInput, Speaker> mapper = new SpeakerInputMapper();
-        underTest = new SpeakerCommandService(repository, validator, mapper);
+        SpeakerUpdateMapper speakerUpdateMapper = new SpeakerUpdateMapper();
+        Function<SpeakerInput, Speaker> mapper = new SpeakerCreationMapper();
+        underTest = new SpeakerCommandService(repository, validator, speakerUpdateMapper, mapper);
     }
 
     @Test

@@ -13,7 +13,7 @@ class SpeakerInputMapperTest {
     @DisplayName("Should map SpeakerInput to Speaker")
     void shouldMapSpeaker() {
         // given
-        SpeakerInputMapper underTest = new SpeakerInputMapper();
+        SpeakerCreationMapper underTest = new SpeakerCreationMapper();
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
 
         // when
