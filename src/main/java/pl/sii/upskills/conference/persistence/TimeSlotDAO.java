@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 @Embeddable
 public class TimeSlotDAO implements TimeSlot {
 
-private LocalDateTime startDate;
-private LocalDateTime endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
     public TimeSlotDAO() {
     }
