@@ -1,40 +1,59 @@
 package pl.sii.upskills.conference.service.command;
 
 import pl.sii.upskills.conference.service.model.ConferenceInput;
+import pl.sii.upskills.conference.service.model.TimeSlot;
 
 import java.time.LocalDateTime;
 
 class ConferenceInputValidator {
 
-      boolean validate(ConferenceInput conferenceInput) {
+    public static final int minimalDaysBeforeConference = 7;
 
-         ConferenceValidationException conferenceValidationException = new ConferenceValidationException();
+    boolean validate(ConferenceInput conferenceInput) {
 
-         if (isEmpty(conferenceInput.getName())) {
-             conferenceValidationException.addError("Name is required");
-         }
-         if (isEmpty(conferenceInput.getTitle())) {
-             conferenceValidationException.addError("Title is required");
-         }
-         if(conferenceInput.getNumberOfPlaces()<1) {
-             conferenceValidationException.addError("Number of places must be positive");
-         }
+        ConferenceValidationException conferenceValidationException = new ConferenceValidationException();
 
-         if (conferenceInput.getTimeSlot().getStartDate().isAfter(LocalDateTime.now().plusDays(7))) {
-              conferenceValidationException.addError("Start date must be 7 days in the future");
-         }
+        if (isEmpty(conferenceInput.getName())) {
+            conferenceValidationException.addError("Name is required");
+        }
+        if (isEmpty(conferenceInput.getTitle())) {
+            conferenceValidationException.addError("Title is required");
+        }
+        if (conferenceInput.getNumberOfPlaces() < 1) {
+            conferenceValidationException.addError("Number of places must be positive");
+        }
 
-         if (conferenceInput.getTimeSlot().getEndDate().isAfter(conferenceInput.getTimeSlot().getStartDate())) {
-             conferenceValidationException.addError("The end date cannot be faster than start date");
-         }
-          if (!conferenceValidationException.getErrors().isEmpty()) {
-              throw conferenceValidationException;
-          }
-          return true;
-     }
+        if (isNotEnoughIntoFutureIfExist(conferenceInput.getTimeSlot(), minimalDaysBeforeConference)) {
+            conferenceValidationException.addError("Start date must be "
+                    + minimalDaysBeforeConference +
+                    " days in the future");
+        }
 
-     private boolean isEmpty(String string) {
-         return (string == null || string.trim().isEmpty());
-     }
- }
+        if (hasEndBeforeStartIfExist(conferenceInput.getTimeSlot())) {
+            conferenceValidationException.addError("The end date cannot be faster than start date");
+        }
+        if (!conferenceValidationException.getErrors().isEmpty()) {
+            throw conferenceValidationException;
+        }
+        return true;
+    }
+
+    private boolean isEmpty(String string) {
+        return (string == null || string.trim().isEmpty());
+    }
+
+    private boolean isNotEnoughIntoFutureIfExist(TimeSlot timeSlot, int days) {
+        if (timeSlot == null) {
+            return false;
+        }
+        return timeSlot.getStartDate().isBefore(LocalDateTime.now().plusDays(7));
+    }
+
+    private boolean hasEndBeforeStartIfExist(TimeSlot timeSlot) {
+        if (timeSlot == null) {
+            return false;
+        }
+        return timeSlot.getEndDate().isBefore(timeSlot.getStartDate());
+    }
+}
 

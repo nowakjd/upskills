@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.sii.upskills.conference.service.command.CommandService;
+import pl.sii.upskills.conference.service.command.ConferenceCommandService;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
@@ -14,9 +14,9 @@ import pl.sii.upskills.conference.service.model.ConferenceOutput;
 @RestController
 @RequestMapping("/api/v1")
 public class ConferenceController {
-    CommandService commandService;
+    ConferenceCommandService commandService;
 
-    public ConferenceController(CommandService commandService) {
+    public ConferenceController(ConferenceCommandService commandService) {
         this.commandService = commandService;
     }
 

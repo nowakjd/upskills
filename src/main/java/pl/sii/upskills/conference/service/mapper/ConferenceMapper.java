@@ -9,7 +9,7 @@ import pl.sii.upskills.conference.service.model.ConferenceInput;
 import java.util.function.Function;
 
 @Component
-public class ConferenceInputMapper implements Function<ConferenceInput, Conference> {
+public class ConferenceMapper implements Function<ConferenceInput, Conference> {
     @Override
     public Conference apply(ConferenceInput conferenceInput) {
         Conference conference = new Conference();
