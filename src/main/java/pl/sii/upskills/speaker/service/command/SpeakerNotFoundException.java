@@ -8,7 +8,7 @@ public class SpeakerNotFoundException extends RuntimeException {
     private final List<String> errors = new ArrayList<>();
 
     public SpeakerNotFoundException(Long speakerId) {
-        errors.add(String.format("Speaker with id=%s was not found", speakerId));
+        errors.add(String.format("Speaker with id = %s was not found", speakerId));
     }
 
     public List<String> getErrors() {

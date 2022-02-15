@@ -1,16 +1,11 @@
 package pl.sii.upskills.speaker.service.mapper;
 
-import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
+public class SpeakerUpdateMapper  {
 
-@Component
-public class SpeakerUpdateMapper {
-
-    public Speaker map(Speaker speaker, SpeakerInput input) {
+    public Speaker updateMapping(SpeakerInput input, Speaker speaker) {
         speaker.setFirstName(input.getFirstName());
         speaker.setLastName(input.getLastName());
         speaker.setEmail(input.getEmail());

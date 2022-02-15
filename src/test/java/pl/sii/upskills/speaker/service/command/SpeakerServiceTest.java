@@ -10,7 +10,6 @@ import pl.sii.upskills.speaker.service.mapper.SpeakerUpdateMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +27,7 @@ class SpeakerServiceTest {
         SpeakerInputValidator validator = new SpeakerInputValidator();
         SpeakerUpdateMapper speakerUpdateMapper = new SpeakerUpdateMapper();
         Function<SpeakerInput, Speaker> mapper = new SpeakerCreationMapper();
-        underTest = new SpeakerCommandService(repository, validator, speakerUpdateMapper, mapper);
+        underTest = new SpeakerCommandService(repository, validator);
     }
 
     @Test
@@ -48,6 +47,4 @@ class SpeakerServiceTest {
         assertThat(result.getEmail()).isEqualTo("john@email.com");
         assertThat(result.getBio()).isEqualTo("My bio");
     }
-
-
 }

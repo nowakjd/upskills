@@ -3,13 +3,11 @@ package pl.sii.upskills.speaker.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.command.SpeakerCommandService;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -34,8 +32,7 @@ class SpeakerController {
     }
 
     @PutMapping("/speakers/{id}")
-    ResponseEntity<SpeakerOutput> update(@PathVariable("id") Long id, @RequestBody SpeakerInput speakerInput) {
-        SpeakerOutput updatedSpeaker = speakerService.updateSpeaker(id, speakerInput);
-        return new ResponseEntity<>(updatedSpeaker, HttpStatus.OK);
+    ResponseEntity<SpeakerOutput> updateSpeaker(@RequestBody SpeakerInput speakerInput, @PathVariable Long id) {
+        return new ResponseEntity<>(speakerService.updateSpeaker(id, speakerInput), HttpStatus.OK);
     }
 }
