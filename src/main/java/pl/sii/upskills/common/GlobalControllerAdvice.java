@@ -27,6 +27,7 @@ class GlobalControllerAdvice {
                 .map(ConstraintViolation::getMessageTemplate)
                 .toList();
     }
+
     @ExceptionHandler(SpeakerNotFoundException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     List<String> handSpeakerNotFoundException(SpeakerNotFoundException e) {

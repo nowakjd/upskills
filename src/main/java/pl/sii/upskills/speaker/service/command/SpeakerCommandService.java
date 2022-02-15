@@ -34,9 +34,11 @@ public class SpeakerCommandService {
 
     public SpeakerOutput updateSpeaker(Long id, SpeakerInput speakerInput) {
         speakerInputValidator.validate(speakerInput);
-        Speaker speaker = speakerRepository.findById(id).orElseThrow(() -> new SpeakerNotFoundException(id));
-        Speaker updatedSpeaker = speakerUpdateMapper.updateMapping(speakerInput, speaker);
-        speakerRepository.save(speaker);
-        return speakerOutputMapper.apply(updatedSpeaker);
+        return speakerRepository
+                .findById(id)
+                .map(s -> speakerUpdateMapper.apply(s, speakerInput))
+                .map(speakerRepository::save)
+                .map(speakerOutputMapper)
+                .orElseThrow(() -> new SpeakerNotFoundException(id));
     }
 }

@@ -3,14 +3,16 @@ package pl.sii.upskills.speaker.service.mapper;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
-public class SpeakerUpdateMapper  {
+import java.util.function.BiFunction;
 
-    public Speaker updateMapping(SpeakerInput input, Speaker speaker) {
-        speaker.setFirstName(input.getFirstName());
-        speaker.setLastName(input.getLastName());
-        speaker.setEmail(input.getEmail());
-        speaker.setPhoneNumber(input.getPhoneNumber());
-        speaker.setBio(input.getBio());
+public class SpeakerUpdateMapper implements BiFunction<Speaker, SpeakerInput, Speaker> {
+
+    public Speaker apply(Speaker speaker, SpeakerInput speakerInput) {
+        speaker.setFirstName(speakerInput.getFirstName());
+        speaker.setLastName(speakerInput.getLastName());
+        speaker.setPhoneNumber(speakerInput.getPhoneNumber());
+        speaker.setEmail(speakerInput.getEmail());
+        speaker.setBio(speakerInput.getBio());
         return speaker;
     }
 }

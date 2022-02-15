@@ -1,12 +1,10 @@
 package pl.sii.upskills.speaker.service.mapper;
 
-import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
 import java.util.function.Function;
 
-@Component
 public class SpeakerCreationMapper implements Function<SpeakerInput, Speaker> {
     @Override
     public Speaker apply(SpeakerInput input) {
