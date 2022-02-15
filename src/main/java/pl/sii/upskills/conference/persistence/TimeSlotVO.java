@@ -6,15 +6,15 @@ import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
 
 @Embeddable
-public class TimeSlotDAO implements TimeSlot {
+public class TimeSlotVO implements TimeSlot {
 
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public TimeSlotDAO() {
+    public TimeSlotVO() {
     }
 
-    public TimeSlotDAO(LocalDateTime startDate, LocalDateTime endDate) {
+    public TimeSlotVO(LocalDateTime startDate, LocalDateTime endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -23,15 +23,7 @@ public class TimeSlotDAO implements TimeSlot {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
-    }
-
     public LocalDateTime getEndDate() {
         return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
     }
 }

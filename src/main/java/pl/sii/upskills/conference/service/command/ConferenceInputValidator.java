@@ -1,13 +1,20 @@
 package pl.sii.upskills.conference.service.command;
 
+import org.springframework.stereotype.Component;
+import pl.sii.upskills.common.TimeService;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.TimeSlot;
 
 import java.time.LocalDateTime;
 
+@Component
 class ConferenceInputValidator {
 
-    public static final int minimalDaysBeforeConference = 7;
+    private final TimeService timeService;
+
+    public ConferenceInputValidator(TimeService timeService) {
+        this.timeService = timeService;
+    }
 
     boolean validate(ConferenceInput conferenceInput) {
 
@@ -23,10 +30,8 @@ class ConferenceInputValidator {
             conferenceValidationException.addError("Number of places must be positive");
         }
 
-        if (isNotEnoughIntoFutureIfExist(conferenceInput.getTimeSlot(), minimalDaysBeforeConference)) {
-            conferenceValidationException.addError("Start date must be "
-                    + minimalDaysBeforeConference
-                    + " days in the future");
+        if (isInPast(conferenceInput.getTimeSlot())) {
+            conferenceValidationException.addError("Start date must be in the future");
         }
 
         if (hasEndBeforeStartIfExist(conferenceInput.getTimeSlot())) {
@@ -42,11 +47,11 @@ class ConferenceInputValidator {
         return (string == null || string.trim().isEmpty());
     }
 
-    private boolean isNotEnoughIntoFutureIfExist(TimeSlot timeSlot, int days) {
+    private boolean isInPast(TimeSlot timeSlot) {
         if (timeSlot == null) {
             return false;
         }
-        return timeSlot.getStartDate().isBefore(LocalDateTime.now().plusDays(7));
+        return timeSlot.getStartDate().isBefore(timeService.get());
     }
 
     private boolean hasEndBeforeStartIfExist(TimeSlot timeSlot) {

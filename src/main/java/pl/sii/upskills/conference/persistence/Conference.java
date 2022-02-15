@@ -23,20 +23,20 @@ public class Conference {
     @Embedded
     private MoneyDAO price;
     @Embedded
-    private TimeSlotDAO timeSlotDAO;
+    private TimeSlotVO timeSlotVO;
 
     public Conference() {
     }
 
     public Conference(UUID id, String name, String title, int numberOfPlaces, ConferenceStatus status, MoneyDAO price,
-                      TimeSlotDAO timeSlotDAO) {
+                      TimeSlotVO timeSlotVO) {
         this.id = id;
         this.name = name;
         this.title = title;
         this.numberOfPlaces = numberOfPlaces;
         this.status = status;
         this.price = price;
-        this.timeSlotDAO = timeSlotDAO;
+        this.timeSlotVO = timeSlotVO;
     }
 
     public String getName() {
@@ -79,12 +79,12 @@ public class Conference {
         this.price = price;
     }
 
-    public TimeSlotDAO getTimeSlot() {
-        return timeSlotDAO;
+    public TimeSlotVO getTimeSlot() {
+        return timeSlotVO;
     }
 
-    public void setTimeSlot(TimeSlotDAO timeSlotDAO) {
-        this.timeSlotDAO = timeSlotDAO;
+    public void setTimeSlot(TimeSlotVO timeSlotVO) {
+        this.timeSlotVO = timeSlotVO;
     }
 
     public UUID getId() {

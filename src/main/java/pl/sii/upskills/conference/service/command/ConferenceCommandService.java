@@ -1,6 +1,6 @@
 package pl.sii.upskills.conference.service.command;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
@@ -9,19 +9,30 @@ import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
-@Controller
+import java.util.Optional;
+
+@Service
 public class ConferenceCommandService {
-    private ConferenceInputValidator conferenceInputValidator;
-    private ConferenceMapper conferenceMapper;
-    private ConferenceOutputMapper conferenceOutputMapper;
-    private ConferenceRepository conferenceRepository;
+    private final ConferenceInputValidator conferenceInputValidator;
+    private final ConferenceMapper conferenceMapper;
+    private final ConferenceOutputMapper conferenceOutputMapper;
+    private final ConferenceRepository conferenceRepository;
+
+    public ConferenceCommandService(ConferenceInputValidator conferenceInputValidator,
+                                    ConferenceMapper conferenceMapper, ConferenceOutputMapper conferenceOutputMapper,
+                                    ConferenceRepository conferenceRepository) {
+        this.conferenceInputValidator = conferenceInputValidator;
+        this.conferenceMapper = conferenceMapper;
+        this.conferenceOutputMapper = conferenceOutputMapper;
+        this.conferenceRepository = conferenceRepository;
+    }
 
     public ConferenceOutput createConference(ConferenceInput conferenceInput) {
         conferenceInputValidator.validate(conferenceInput);
-        Conference conference = conferenceMapper.apply(conferenceInput);
-        conference.setStatus(ConferenceStatus.DRAFT);
-        conference = conferenceRepository.save(conference);
-        return conferenceOutputMapper.apply(conference);
-
+        return Optional.of(conferenceInput)
+                .map(conferenceMapper)
+                .map(conferenceRepository::save)
+                .map(conferenceOutputMapper)
+                .orElseThrow();
     }
 }
