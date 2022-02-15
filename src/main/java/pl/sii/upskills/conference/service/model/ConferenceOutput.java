@@ -14,7 +14,8 @@ public class ConferenceOutput {
     private final ConferenceStatus status;
     private final UUID id;
 
-    public ConferenceOutput(String name, String title, int numberOfPlaces, Money price, TimeSlot timeSlot,
+    public ConferenceOutput(String name, String title, int numberOfPlaces,
+                            Money price, TimeSlot timeSlot,
                             ConferenceStatus status, UUID id) {
         this.name = name;
         this.title = title;
@@ -23,5 +24,33 @@ public class ConferenceOutput {
         this.timeSlot = timeSlot;
         this.status = status;
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getNumberOfPlaces() {
+        return numberOfPlaces;
+    }
+
+    public Money getPrice() {
+        return price;
+    }
+
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
+    }
+
+    public ConferenceStatus getStatus() {
+        return status;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }

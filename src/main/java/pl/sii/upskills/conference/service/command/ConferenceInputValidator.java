@@ -5,8 +5,6 @@ import pl.sii.upskills.common.TimeService;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.TimeSlot;
 
-import java.time.LocalDateTime;
-
 @Component
 class ConferenceInputValidator {
 
@@ -37,6 +35,7 @@ class ConferenceInputValidator {
         if (hasEndBeforeStartIfExist(conferenceInput.getTimeSlot())) {
             conferenceValidationException.addError("The end date cannot be faster than start date");
         }
+
         if (!conferenceValidationException.getErrors().isEmpty()) {
             throw conferenceValidationException;
         }

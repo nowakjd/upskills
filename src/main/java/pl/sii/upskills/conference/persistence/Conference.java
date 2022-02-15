@@ -8,6 +8,7 @@ import java.util.UUID;
 public class Conference {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private UUID id;
     @Column(nullable = false)

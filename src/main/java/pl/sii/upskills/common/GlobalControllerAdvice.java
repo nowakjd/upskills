@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.sii.upskills.conference.service.command.ConferenceValidationException;
-import pl.sii.upskills.speaker.service.SpeakerValidationException;
+import pl.sii.upskills.speaker.service.command.SpeakerValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
