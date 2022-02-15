@@ -1,4 +1,4 @@
-package pl.sii.upskills.speaker.service;
+package pl.sii.upskills.speaker.service.command;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
 import java.util.stream.Stream;
 

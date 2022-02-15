@@ -1,18 +1,19 @@
-package pl.sii.upskills.speaker.service;
+package pl.sii.upskills.speaker.service.mapper;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MapperTest {
+class SpeakerInputMapperTest {
 
     @Test
     @DisplayName("Should map SpeakerInput to Speaker")
     void shouldMapSpeaker() {
         // given
-        Mapper underTest = new Mapper();
+        SpeakerInputMapper underTest = new SpeakerInputMapper();
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
 
         // when
