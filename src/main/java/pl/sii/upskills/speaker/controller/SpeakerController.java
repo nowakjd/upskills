@@ -28,6 +28,11 @@ class SpeakerController {
         return new ResponseEntity<>(speakerService.addSpeaker(speakerInput), HttpStatus.CREATED);
     }
 
+    @GetMapping("/speakers")
+    ResponseEntity<List<SpeakerOutput>> findAll() {
+        return new ResponseEntity<>(speakerQueryService.findAll(), HttpStatus.OK);
+    }
+
     @PutMapping("/speakers/{id}")
     ResponseEntity<SpeakerOutput> update(@PathVariable("id") Long id, @RequestBody SpeakerInput speakerInput) {
         SpeakerOutput updatedSpeaker = speakerService.updateSpeaker(id, speakerInput);

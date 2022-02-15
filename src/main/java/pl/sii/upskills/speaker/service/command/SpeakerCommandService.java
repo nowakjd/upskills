@@ -40,7 +40,6 @@ public class SpeakerCommandService {
 
     public SpeakerOutput updateSpeaker(Long id, SpeakerInput speakerInput) {
         speakerInputValidator.validate(speakerInput);
-        mapper.apply(speakerInput);
         Speaker speaker = speakerRepository.findById(id).orElseThrow(() -> new SpeakerNotFoundException(id));
         Speaker updatedSpeaker = speakerUpdateMapper.map(speaker, speakerInput);
         speakerRepository.save(speaker);
