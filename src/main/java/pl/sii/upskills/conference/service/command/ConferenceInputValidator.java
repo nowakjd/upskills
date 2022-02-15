@@ -28,6 +28,21 @@ class ConferenceInputValidator {
             conferenceValidationException.addError("Number of places must be positive");
         }
 
+        if (conferenceInput.getTimeSlot()==null){
+            conferenceValidationException.addError("Start date and end date are required");
+        }
+
+        if (conferenceInput.getTimeSlot()!=null
+                && conferenceInput.getTimeSlot().getStartDate()==null ){
+            conferenceValidationException.addError("Start date is required");
+
+        }
+
+        if (conferenceInput.getTimeSlot()!=null
+                && conferenceInput.getTimeSlot().getEndDate()==null ){
+            conferenceValidationException.addError("End date is required");
+        }
+
         if (isInPast(conferenceInput.getTimeSlot())) {
             conferenceValidationException.addError("Start date must be in the future");
         }
@@ -47,14 +62,15 @@ class ConferenceInputValidator {
     }
 
     private boolean isInPast(TimeSlot timeSlot) {
-        if (timeSlot == null) {
+        if (timeSlot == null || timeSlot.getStartDate()==null) {
             return false;
         }
+
         return timeSlot.getStartDate().isBefore(timeService.get());
     }
 
     private boolean hasEndBeforeStartIfExist(TimeSlot timeSlot) {
-        if (timeSlot == null) {
+        if (timeSlot == null || timeSlot.getStartDate()==null || timeSlot.getEndDate()==null ) {
             return false;
         }
         return timeSlot.getEndDate().isBefore(timeSlot.getStartDate());
