@@ -22,14 +22,14 @@ public class Conference {
     @Enumerated
     private ConferenceStatus status;
     @Embedded
-    private MoneyDAO price;
+    private MoneyVO price;
     @Embedded
     private TimeSlotVO timeSlotVO;
 
     public Conference() {
     }
 
-    public Conference(UUID id, String name, String title, int numberOfPlaces, ConferenceStatus status, MoneyDAO price,
+    public Conference(UUID id, String name, String title, int numberOfPlaces, ConferenceStatus status, MoneyVO price,
                       TimeSlotVO timeSlotVO) {
         this.id = id;
         this.name = name;
@@ -72,11 +72,11 @@ public class Conference {
         this.status = status;
     }
 
-    public MoneyDAO getPrice() {
+    public MoneyVO getPrice() {
         return price;
     }
 
-    public void setPrice(MoneyDAO price) {
+    public void setPrice(MoneyVO price) {
         this.price = price;
     }
 

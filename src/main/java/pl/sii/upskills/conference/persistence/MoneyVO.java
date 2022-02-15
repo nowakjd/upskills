@@ -9,7 +9,7 @@ import java.util.Currency;
 
 
 @Embeddable
-public class MoneyDAO implements Money {
+public class MoneyVO implements Money {
     private BigDecimal amount;
     @Size(max = 3)
     private Currency currency;

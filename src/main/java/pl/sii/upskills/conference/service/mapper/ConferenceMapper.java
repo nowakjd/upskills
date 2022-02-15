@@ -3,7 +3,7 @@ package pl.sii.upskills.conference.service.mapper;
 import org.springframework.stereotype.Component;
 import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
-import pl.sii.upskills.conference.persistence.MoneyDAO;
+import pl.sii.upskills.conference.persistence.MoneyVO;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 
@@ -17,7 +17,7 @@ public class ConferenceMapper implements Function<ConferenceInput, Conference> {
         conference.setName(conferenceInput.getName());
         conference.setTitle(conferenceInput.getTitle());
         conference.setNumberOfPlaces(conferenceInput.getNumberOfPlaces());
-        conference.setPrice((MoneyDAO) conferenceInput.getPrice());
+        conference.setPrice((MoneyVO) conferenceInput.getPrice());
         conference.setTimeSlot((TimeSlotVO) conferenceInput.getTimeSlot());
         conference.setStatus(ConferenceStatus.DRAFT);
         return conference;
