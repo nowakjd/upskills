@@ -29,7 +29,7 @@ class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(SpeakerNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     List<String> handSpeakerNotFoundException(SpeakerNotFoundException e) {
         return e.getErrors();
     }
