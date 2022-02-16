@@ -4,18 +4,18 @@ import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 @Component
-public class SpeakerInputMapper implements Function<SpeakerInput, Speaker> {
+public class SpeakerInputMapper implements BiFunction<Speaker, SpeakerInput, Speaker> {
+
     @Override
-    public Speaker apply(SpeakerInput input) {
-        Speaker speaker = new Speaker();
-        speaker.setFirstName(input.getFirstName());
-        speaker.setLastName(input.getLastName());
-        speaker.setEmail(input.getEmail());
-        speaker.setPhoneNumber(input.getPhoneNumber());
-        speaker.setBio(input.getBio());
+    public Speaker apply(Speaker speaker, SpeakerInput speakerInput) {
+        speaker.setFirstName(speakerInput.getFirstName());
+        speaker.setLastName(speakerInput.getLastName());
+        speaker.setPhoneNumber(speakerInput.getPhoneNumber());
+        speaker.setEmail(speakerInput.getEmail());
+        speaker.setBio(speakerInput.getBio());
         return speaker;
     }
 }

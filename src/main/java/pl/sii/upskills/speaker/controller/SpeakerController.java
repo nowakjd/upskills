@@ -30,4 +30,9 @@ class SpeakerController {
     ResponseEntity<List<SpeakerOutput>> findAll() {
         return new ResponseEntity<>(speakerQueryService.findAll(), HttpStatus.OK);
     }
+
+    @PutMapping("/speakers/{id}")
+    ResponseEntity<SpeakerOutput> updateSpeaker(@RequestBody SpeakerInput speakerInput, @PathVariable Long id) {
+        return new ResponseEntity<>(speakerService.updateSpeaker(id, speakerInput), HttpStatus.OK);
+    }
 }

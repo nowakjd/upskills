@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 @Component
 public class SpeakerOutputMapper implements Function<Speaker, SpeakerOutput> {
+
     @Override
     public SpeakerOutput apply(Speaker speaker) {
         return new SpeakerOutput(speaker.getId(),
