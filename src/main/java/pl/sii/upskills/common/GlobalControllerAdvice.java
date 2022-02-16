@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.sii.upskills.conference.service.command.ConferenceValidationException;
+import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.command.SpeakerValidationException;
 
 import javax.validation.ConstraintViolation;
@@ -31,6 +32,12 @@ class GlobalControllerAdvice {
     @ExceptionHandler(ConferenceValidationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     List<String> handlingConferenceValidationException(ConferenceValidationException e) {
+        return e.getErrors();
+    }
+
+    @ExceptionHandler(SpeakerNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    List<String> handSpeakerNotFoundException(SpeakerNotFoundException e) {
         return e.getErrors();
     }
 }
