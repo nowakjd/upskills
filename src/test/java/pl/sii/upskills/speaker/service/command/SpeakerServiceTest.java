@@ -1,7 +1,6 @@
 package pl.sii.upskills.speaker.service.command;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -60,12 +59,12 @@ class SpeakerServiceTest {
         assertThat(result.getEmail()).isEqualTo("john@email.com");
         assertThat(result.getBio()).isEqualTo("My bio");
     }
-    @Disabled
+
     @Test
     @DisplayName("Should throw exception when speaker given to update doesn't exists in database")
     void exceptionWhenSpeakerNotFound() {
-         //given
-         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
+        //given
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
                 "123456789", "john@email.com", "My bio");
 
         //when
@@ -75,6 +74,6 @@ class SpeakerServiceTest {
         SpeakerNotFoundException exception = assertThrows(SpeakerNotFoundException.class, underTestLambda);
         assertThat(exception.getErrors())
                 .hasSize(1)
-                .anyMatch(e-> e.contains("Speaker with id = "+idOutsideDatabase+" was not found"));
+                .anyMatch(e -> e.contains("Speaker with id = " + idOutsideDatabase + " was not found"));
     }
 }
