@@ -18,7 +18,7 @@ public class ConferenceMapperTest {
     TimeSlotVO timeSlot = new TimeSlotVO(NOW_FOR_TEST.plusDays(1), NOW_FOR_TEST.plusDays(2));
 
     @Test
-    @DisplayName("Should map ConferenceMapper to ConferenceInput")
+    @DisplayName("Should map ConferenceInput to Conference")
     void shouldMapConference() {
         // given
         ConferenceMapper underTest = new ConferenceMapper();
