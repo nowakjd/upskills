@@ -24,8 +24,10 @@ public class ConferenceMapperTest {
         ConferenceMapper underTest = new ConferenceMapper();
         ConferenceInput conferenceInput = new ConferenceInput("Conference", "Doe",
                 12345, null, timeSlot);
+
         // when
         Conference result = underTest.apply(conferenceInput);
+
         // then
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo("Conference");

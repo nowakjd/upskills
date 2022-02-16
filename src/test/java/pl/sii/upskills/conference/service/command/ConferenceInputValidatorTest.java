@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 
@@ -38,11 +41,13 @@ class ConferenceInputValidatorTest {
         assertTrue(result);
     }
 
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {" ", "    ", "\t"})
     @DisplayName("Should throw exception when name is not given")
-    @Test
-    void withOutName() {
+    void withOutName(String name) {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("",
+        ConferenceInput conferenceInput = new ConferenceInput(name,
                 "Conference edition 2020", 100, null,
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(102)));
         //when
@@ -55,13 +60,13 @@ class ConferenceInputValidatorTest {
                 .allMatch(s -> s.equals("Name is required"));
     }
 
-
-    @DisplayName("Should throw exception when title is not given")
-    @Test
-    void withOutTitle() {
+    @ParameterizedTest
+    @NullSource
+    @ValueSource(strings = {" ", "    ", "\t"})
+    void withOutTitle(String title) {
         //given
         ConferenceInput conferenceInput = new ConferenceInput("Conference",
-                "", 100, null,
+                title, 100, null,
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(102)));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
@@ -95,8 +100,7 @@ class ConferenceInputValidatorTest {
     void noTimeSlot() {
         //given
         ConferenceInput conferenceInput = new ConferenceInput("Conference",
-                "Conference 2021", 100, null,
-                null);
+                "Conference 2021", 100, null, null);
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 
@@ -174,6 +178,4 @@ class ConferenceInputValidatorTest {
                 .hasSize(1)
                 .allMatch(s -> s.equals("The end date cannot be faster than start date"));
     }
-
-
 }
