@@ -35,8 +35,7 @@ class ConferenceInputValidator {
         if (conferenceInput.getTimeSlot() != null
                 && conferenceInput.getTimeSlot().getStartDate() == null) {
             conferenceValidationException.addError("Start date is required");
-
-        }
+		}
 
         if (conferenceInput.getTimeSlot() != null
                 && conferenceInput.getTimeSlot().getEndDate() == null) {
@@ -65,8 +64,7 @@ class ConferenceInputValidator {
         if (timeSlot == null || timeSlot.getStartDate() == null) {
             return false;
         }
-
-        return timeSlot.getStartDate().isBefore(timeService.get());
+		return timeSlot.getStartDate().isBefore(timeService.get());
     }
 
     private boolean hasEndBeforeStartIfExist(TimeSlot timeSlot) {
