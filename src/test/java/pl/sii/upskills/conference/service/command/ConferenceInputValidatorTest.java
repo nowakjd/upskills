@@ -16,22 +16,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConferenceInputValidatorTest {
 
-    private static final LocalDateTime nowForTest =
+    private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2020, 1, 1, 0, 1);
     ConferenceInputValidator underTest;
 
     @BeforeEach
     void setup() {
-        underTest = new ConferenceInputValidator(() -> nowForTest);
+        underTest = new ConferenceInputValidator(() -> NOW_FOR_TEST);
     }
 
     @DisplayName("Should pass validation")
     @Test
     void happyPath() {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
-                "Konfercja edycja 2020", 100, null,
-                new TimeSlotVO(nowForTest.plusDays(100), nowForTest.plusDays(102)));
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
+                "Conference edition 2020", 100, null,
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(102)));
         //when
         boolean result = underTest.validate(conferenceInput);
         //then
@@ -43,8 +43,8 @@ class ConferenceInputValidatorTest {
     void withOutName() {
         //given
         ConferenceInput conferenceInput = new ConferenceInput("",
-                "Konfercja edycja 2020", 100, null,
-                new TimeSlotVO(nowForTest.plusDays(100), nowForTest.plusDays(102)));
+                "Conference edition 2020", 100, null,
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(102)));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 
@@ -60,9 +60,9 @@ class ConferenceInputValidatorTest {
     @Test
     void withOutTitle() {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
                 "", 100, null,
-                new TimeSlotVO(nowForTest.plusDays(100), nowForTest.plusDays(102)));
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(102)));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 
@@ -77,9 +77,9 @@ class ConferenceInputValidatorTest {
     @Test
     void zeroPlaces() {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
-                "Konferencja 2021", 0, null,
-                new TimeSlotVO(nowForTest.plusDays(100), nowForTest.plusDays(102)));
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
+                "Conference 2021", 0, null,
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(102)));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 
@@ -94,8 +94,8 @@ class ConferenceInputValidatorTest {
     @Test
     void noTimeSlot() {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
-                "Konferencja 2021", 100, null,
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
+                "Conference 2021", 100, null,
                 null);
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
@@ -113,7 +113,7 @@ class ConferenceInputValidatorTest {
         //given
         ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
                 "Konferencja 2021", 1, null,
-                new TimeSlotVO(null, nowForTest.plusDays(102)));
+                new TimeSlotVO(null, NOW_FOR_TEST.plusDays(102)));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 
@@ -128,9 +128,9 @@ class ConferenceInputValidatorTest {
     @Test
     void noEndDate() {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
-                "Konferencja 2021", 1, null,
-                new TimeSlotVO(nowForTest.plusDays(100), null));
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
+                "Conference 2021", 1, null,
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(100), null));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 
@@ -145,9 +145,9 @@ class ConferenceInputValidatorTest {
     @Test
     void startDateInThePast() {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
-                "Konferencja 2021", 100, null,
-                new TimeSlotVO(nowForTest.minusDays(1), nowForTest.plusDays(102)));
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
+                "Conference 2021", 100, null,
+                new TimeSlotVO(NOW_FOR_TEST.minusDays(1), NOW_FOR_TEST.plusDays(102)));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 
@@ -162,9 +162,9 @@ class ConferenceInputValidatorTest {
     @Test
     void endDateBeforeStartDate() {
         //given
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
-                "Konferencja 2021", 100, null,
-                new TimeSlotVO(nowForTest.plusDays(100), nowForTest.plusDays(99)));
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
+                "Conference 2021", 100, null,
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(99)));
         //when
         Executable lambaUndertest = () -> underTest.validate(conferenceInput);
 

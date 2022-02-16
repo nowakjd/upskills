@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class ConferenceCommandServiceTest {
-    private static final LocalDateTime nowForTest =
+    private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2020, 1, 1, 0, 1);
     private ConferenceCommandService underTest;
 
@@ -27,7 +27,7 @@ class ConferenceCommandServiceTest {
         ConferenceRepository repository = mock(ConferenceRepository.class);
         when(repository.save(any())).thenAnswer(a -> a.getArgument(0));
         underTest = new ConferenceCommandService(
-                new ConferenceInputValidator(() -> nowForTest),
+                new ConferenceInputValidator(() -> NOW_FOR_TEST),
                 new ConferenceMapper(),
                 new ConferenceOutputMapper(),
                 repository);
@@ -37,9 +37,9 @@ class ConferenceCommandServiceTest {
     @DisplayName("Should add conference")
     void addConference() {
         //given
-        TimeSlotVO timeSlot = new TimeSlotVO(nowForTest.plusDays(100), nowForTest.plusDays(102));
-        ConferenceInput conferenceInput = new ConferenceInput("Konferencja",
-                "Konferencja edycja 2020", 100, null,
+        TimeSlotVO timeSlot = new TimeSlotVO(NOW_FOR_TEST.plusDays(100), NOW_FOR_TEST.plusDays(102));
+        ConferenceInput conferenceInput = new ConferenceInput("Conference",
+                "Conference edition 2020", 100, null,
                 timeSlot);
         //when
         ConferenceOutput result = underTest.createConference(conferenceInput);
