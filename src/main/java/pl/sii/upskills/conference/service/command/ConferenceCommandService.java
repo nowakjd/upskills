@@ -1,9 +1,7 @@
 package pl.sii.upskills.conference.service.command;
 
 import org.springframework.stereotype.Service;
-import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
-import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.mapper.ConferenceMapper;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceInput;

@@ -14,7 +14,7 @@ import pl.sii.upskills.conference.service.model.ConferenceOutput;
 @RestController
 @RequestMapping("/api/v1")
 public class ConferenceController {
-    ConferenceCommandService commandService;
+    final ConferenceCommandService commandService;
 
     public ConferenceController(ConferenceCommandService commandService) {
         this.commandService = commandService;

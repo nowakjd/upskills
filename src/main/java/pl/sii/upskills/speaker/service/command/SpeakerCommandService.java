@@ -28,7 +28,6 @@ public class SpeakerCommandService {
         speakerInputValidator.validate(speakerInput);
         Speaker speaker = mapper.apply(speakerInput);
         speakerRepository.save(speaker);
-        SpeakerOutput speakerOutput = outputMapper.apply(speaker);
-        return speakerOutput;
+        return outputMapper.apply(speaker);
     }
 }

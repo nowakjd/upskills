@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConferenceInputValidatorTest {
 
-    private final static LocalDateTime nowForTest =
+    private static final LocalDateTime nowForTest =
             LocalDateTime.of(2020, 1, 1, 0, 1);
     ConferenceInputValidator underTest;
 

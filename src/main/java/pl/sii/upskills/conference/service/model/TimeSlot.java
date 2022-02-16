@@ -6,7 +6,7 @@ import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import java.time.LocalDateTime;
 
 /**
- Period placed in time.
+ * Period placed in time.
  */
 @JsonDeserialize(as = TimeSlotVO.class)
 public interface TimeSlot {
