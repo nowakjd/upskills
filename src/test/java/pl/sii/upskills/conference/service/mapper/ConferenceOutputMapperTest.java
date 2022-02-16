@@ -20,7 +20,7 @@ public class ConferenceOutputMapperTest {
     TimeSlotVO timeSlot = new TimeSlotVO(NOW_FOR_TEST.plusDays(1), NOW_FOR_TEST.plusDays(2));
 
     @Test
-    @DisplayName("Should map ConferenceOutPutMapper to Conference")
+    @DisplayName("Should map Conference to ConferenceOutPut")
     void shouldMapConference() {
         // given
         ConferenceOutputMapper underTest = new ConferenceOutputMapper();
