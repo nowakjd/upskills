@@ -13,8 +13,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1")
 class SpeakerController {
-    SpeakerCommandService speakerService;
-    SpeakerQueryService speakerQueryService;
+    final SpeakerCommandService speakerService;
+    final SpeakerQueryService speakerQueryService;
 
     SpeakerController(SpeakerCommandService speakerService, SpeakerQueryService speakerQueryService) {
         this.speakerService = speakerService;
