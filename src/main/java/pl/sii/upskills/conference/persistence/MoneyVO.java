@@ -6,6 +6,7 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Objects;
 
 
 @Embeddable
@@ -28,5 +29,23 @@ public class MoneyVO implements Money {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MoneyVO moneyVO = (MoneyVO) o;
+
+        if (!Objects.equals(amount, moneyVO.amount)) return false;
+        return Objects.equals(currency, moneyVO.currency);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = amount != null ? amount.hashCode() : 0;
+        result = 31 * result + (currency != null ? currency.hashCode() : 0);
+        return result;
     }
 }
