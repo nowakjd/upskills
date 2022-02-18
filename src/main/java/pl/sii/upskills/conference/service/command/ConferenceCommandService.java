@@ -1,13 +1,16 @@
 package pl.sii.upskills.conference.service.command;
 
 import org.springframework.stereotype.Service;
+import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
+import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.mapper.ConferenceMapper;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ConferenceCommandService {
@@ -28,9 +31,20 @@ public class ConferenceCommandService {
     public ConferenceOutput createConference(ConferenceInput conferenceInput) {
         conferenceInputValidator.validate(conferenceInput);
         return Optional.of(conferenceInput)
-                .map(conferenceMapper)
+                .map(s -> conferenceMapper.apply(new Conference(), s))
                 .map(conferenceRepository::save)
                 .map(conferenceOutputMapper)
                 .orElseThrow();
+    }
+
+    public ConferenceOutput updateConference(UUID id, ConferenceInput conferenceInput) {
+        conferenceInputValidator.validate(conferenceInput);
+        return conferenceRepository
+                .findById(id)
+                .filter(conference -> conference.getStatus().equals(ConferenceStatus.DRAFT))
+                .map(conference -> conferenceMapper.apply(conference, conferenceInput))
+                .map(conferenceRepository::save)
+                .map(conferenceOutputMapper)
+                .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
     }
 }
