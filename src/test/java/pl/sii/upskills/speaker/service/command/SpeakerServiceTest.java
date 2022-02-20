@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
@@ -26,8 +27,7 @@ class SpeakerServiceTest {
     public static final Long idOutsideDatabase = 666L;
     public static final Long idInsideDatabase = 3L;
     public static final Speaker speakerInsideDatabase =
-            new Speaker(idInsideDatabase, "John", "Doe",
-                    "123456789", "john@email.com", "My bio");
+            new Speaker(idInsideDatabase, "John", "Doe", "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
 
 
     @BeforeEach
