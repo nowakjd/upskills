@@ -9,6 +9,7 @@ import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,6 +29,7 @@ public class ConferenceCommandService {
         this.conferenceRepository = conferenceRepository;
     }
 
+    @Transactional
     public ConferenceOutput createConference(ConferenceInput conferenceInput) {
         conferenceInputValidator.validate(conferenceInput);
         return Optional.of(conferenceInput)
@@ -37,6 +39,7 @@ public class ConferenceCommandService {
                 .orElseThrow();
     }
 
+    @Transactional
     public ConferenceOutput updateConference(UUID id, ConferenceInput conferenceInput) {
         conferenceInputValidator.validate(conferenceInput);
         return conferenceRepository
