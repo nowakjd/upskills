@@ -73,6 +73,5 @@ class SpeakerControllerITTest {
         assertEquals("987654321", body.getPhoneNumber());
         assertEquals("john.fowler@gmail.com", body.getEmail());
         assertEquals("It's my life", body.getBio());
-        assertEquals(7,body.getId());
     }
 }

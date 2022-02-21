@@ -29,13 +29,13 @@ class ConferenceControllerITTest {
     private TestRestTemplate restTemplate;
 
     private URI createServerAddress() throws URISyntaxException {
-        return new URI("http://localhost:7070/api/v1/speakers");
+        return new URI("http://localhost:7070/api/v1/conferences");
     }
 
     private static final LocalDateTime START_FOR_TEST =
-            LocalDateTime.of(2020, 1, 1, 0, 1);
+            LocalDateTime.of(2023, 1, 1, 0, 1);
     private static final LocalDateTime END_FOR_TEST =
-            LocalDateTime.of(2020, 1, 1, 8, 1);
+            LocalDateTime.of(2023, 1, 1, 8, 1);
 
 
     @Test
@@ -59,7 +59,7 @@ class ConferenceControllerITTest {
         assertEquals("First ever", body.getName());
         assertEquals("Our first conference", body.getTitle());
         assertEquals( 200 , body.getNumberOfPlaces());
-        assertEquals(LocalDateTime.of(2020, 1, 1, 8, 1),
+        assertEquals(LocalDateTime.of(2023, 1, 1, 8, 1),
                 body.getTimeSlot().getEndDate());
     }
 }
