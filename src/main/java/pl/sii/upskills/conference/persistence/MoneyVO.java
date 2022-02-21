@@ -15,6 +15,14 @@ public class MoneyVO implements Money {
     @Size(max = 3)
     private Currency currency;
 
+    public MoneyVO() {
+    }
+
+    public MoneyVO(BigDecimal amount, Currency currency) {
+        this.amount = amount;
+        this.currency = currency;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
