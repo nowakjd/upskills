@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionXpathFilter Experimental Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2_xpath_experimental.dtd">
+
+<suppressions>
+    <suppress-xpath checks="NeedBraces" query="//METHOD_DEF[./IDENT[@text='equals' or @text='hashCode']]/SLIST/*"/>
+    <suppress-xpath checks="OperatorWrap" query="//METHOD_DEF[./IDENT[@text='toString']]//PLUS"/>
+
+    <!--    TODO run rule MissingJavadocMethod only on abstract classes or interfaces -->
+    <!--    <suppress-xpath checks="MissingJavadocMethod" query="//CLASS_DEF//METHOD_DEF" />-->
+</suppressions>
+

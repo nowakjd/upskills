@@ -3,33 +3,36 @@ package pl.sii.upskills.speaker.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.sii.upskills.speaker.persistence.Speaker;
-import pl.sii.upskills.speaker.service.SpeakerInput;
-import pl.sii.upskills.speaker.service.SpeakerService;
-import pl.sii.upskills.speaker.service.query.SpeakerOutput;
+import pl.sii.upskills.speaker.service.command.SpeakerCommandService;
+import pl.sii.upskills.speaker.service.model.SpeakerInput;
+import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/v1")
 class SpeakerController {
-    SpeakerService speakerService;
-    SpeakerQueryService speakerQueryService;
+    final SpeakerCommandService speakerService;
+    final SpeakerQueryService speakerQueryService;
 
-    SpeakerController(SpeakerService speakerService, SpeakerQueryService speakerQueryService) {
+    SpeakerController(SpeakerCommandService speakerService, SpeakerQueryService speakerQueryService) {
         this.speakerService = speakerService;
         this.speakerQueryService = speakerQueryService;
     }
 
     @PostMapping("/speakers")
-    ResponseEntity<Speaker> createSpeaker(@RequestBody SpeakerInput speakerInput) {
+    ResponseEntity<SpeakerOutput> createSpeaker(@RequestBody SpeakerInput speakerInput) {
         return new ResponseEntity<>(speakerService.addSpeaker(speakerInput), HttpStatus.CREATED);
     }
 
     @GetMapping("/speakers")
     ResponseEntity<List<SpeakerOutput>> findAll() {
         return new ResponseEntity<>(speakerQueryService.findAll(), HttpStatus.OK);
+    }
+
+    @PutMapping("/speakers/{id}")
+    ResponseEntity<SpeakerOutput> updateSpeaker(@RequestBody SpeakerInput speakerInput, @PathVariable Long id) {
+        return new ResponseEntity<>(speakerService.updateSpeaker(id, speakerInput), HttpStatus.OK);
     }
 }

@@ -3,6 +3,7 @@ package pl.sii.upskills.speaker.service.query;
 import org.springframework.stereotype.Service;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
+import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.List;
 import java.util.function.Function;
@@ -12,7 +13,8 @@ public class SpeakerQueryService {
     private final Function<Speaker, SpeakerOutput> speakerOutputMapper;
     private final SpeakerRepository speakerRepository;
 
-    public SpeakerQueryService(Function<Speaker, SpeakerOutput> speakerOutputMapper, SpeakerRepository speakerRepository) {
+    public SpeakerQueryService(Function<Speaker, SpeakerOutput> speakerOutputMapper,
+                               SpeakerRepository speakerRepository) {
         this.speakerOutputMapper = speakerOutputMapper;
         this.speakerRepository = speakerRepository;
     }

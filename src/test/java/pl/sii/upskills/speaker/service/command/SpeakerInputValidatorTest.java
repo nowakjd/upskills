@@ -1,4 +1,4 @@
-package pl.sii.upskills.speaker.service;
+package pl.sii.upskills.speaker.service.command;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
 import java.util.stream.Stream;
 
@@ -17,6 +18,30 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class SpeakerInputValidatorTest {
+
+    private static Stream<Arguments> twoArgsProvider() {
+        return Stream.of(
+                arguments(" ", "    "),
+                arguments(" ", "\t"),
+                arguments("    ", " "),
+                arguments("\t", ""),
+                arguments(null, null),
+                arguments(null, " ")
+
+        );
+    }
+
+    private static Stream<Arguments> threeArgsProvider() {
+        return Stream.of(
+                arguments(" ", "    ", "\t"),
+                arguments(" ", "\t", null),
+                arguments("    ", " ", ""),
+                arguments("\t", "", "   "),
+                arguments(null, null, null),
+                arguments(null, " ", null)
+
+        );
+    }
 
     @Test
     @DisplayName("Validation should pass")
@@ -207,12 +232,15 @@ class SpeakerInputValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"bla@bla ", "bla.com","bla.@bla.pl", "@.com","blabla@@.com","bla.@''@.com","bla-bla@bla..com","--@.com","a\"b(c)d,e:f;g<h>i[j\\k]l@example.com","this\\ still\\\"not\\\\allowed@example.com","just\"not\"right@example.com","blabla@bla.com_"})
+    @ValueSource(strings = {"bla@bla ", "bla.com", "bla.@bla.pl", "@.com", "blabla@@.com",
+                            "bla.@''@.com", "bla-bla@bla..com", "--@.com", "a\"b(c)d,e:f;g<h>i[j\\k]l@example.com",
+                            "this\\ still\\\"not\\\\allowed@example.com", "just\"not\"right@example.com",
+                            "blabla@bla.com_"})
     @DisplayName("Validation should throw exception when email is not a correct email")
     void invalidEmail(String email) {
         // given
-        SpeakerInputValidator underTest = new SpeakerInputValidator();
         SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", email, "My bio");
+        SpeakerInputValidator underTest = new SpeakerInputValidator();
 
         // when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -222,30 +250,6 @@ class SpeakerInputValidatorTest {
         assertThat(exception.getErrors())
                 .hasSize(1)
                 .allMatch(e -> e.contains("email must be valid"));
-    }
-
-    private static Stream<Arguments> twoArgsProvider() {
-        return Stream.of(
-                arguments(" ", "    "),
-                arguments(" ", "\t"),
-                arguments("    ", " "),
-                arguments("\t", ""),
-                arguments(null, null),
-                arguments(null, " ")
-
-        );
-    }
-
-    private static Stream<Arguments> threeArgsProvider() {
-        return Stream.of(
-                arguments(" ", "    ", "\t"),
-                arguments(" ", "\t", null),
-                arguments("    ", " ", ""),
-                arguments("\t", "", "   "),
-                arguments(null, null, null),
-                arguments(null, " ", null)
-
-        );
     }
 
 }

@@ -1,4 +1,4 @@
-package pl.sii.upskills.speaker.service;
+package pl.sii.upskills.speaker.service.command;
 
 import java.util.ArrayList;
 import java.util.Collections;

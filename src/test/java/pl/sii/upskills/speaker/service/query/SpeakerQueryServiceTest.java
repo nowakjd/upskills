@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
+import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
+import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,17 +31,18 @@ class SpeakerQueryServiceTest {
     @DisplayName("Should return list from repository")
     void findAll() {
         //given
+        List<Speaker> list = new ArrayList<>();
+
         Speaker speaker1 = new Speaker(1L, "John", "Doe", "123456789", "john@email.com", "My bio");
+        list.add(speaker1);
         Speaker speaker2 = new Speaker(2L, "John", "Doe", "123456789", "john@email.com", "My bio");
+        list.add(speaker2);
         Speaker speaker3 = new Speaker(3L, "John", "Doe", "123456789", "john@email.com", "My bio");
+        list.add(speaker3);
+        when(repository.findAll()).thenReturn(list);
         SpeakerOutput speakerOutput1 = new SpeakerOutput(1L, "John", "Doe", "123456789", "john@email.com", "My bio");
         SpeakerOutput speakerOutput2 = new SpeakerOutput(2L, "John", "Doe", "123456789", "john@email.com", "My bio");
         SpeakerOutput speakerOutput3 = new SpeakerOutput(3L, "John", "Doe", "123456789", "john@email.com", "My bio");
-        List<Speaker> list = new ArrayList<>();
-        list.add(speaker1);
-        list.add(speaker2);
-        list.add(speaker3);
-        when(repository.findAll()).thenReturn(list);
         //when
         List<SpeakerOutput> result = underTest.findAll();
         //then
