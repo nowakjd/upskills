@@ -16,7 +16,7 @@ pipeline {
             }
             steps {
                 timeout(3) {
-                                    sh './mvn verify  -Pintegrationtests'
+                                    sh './mvnw verify  -Pintegrationtests'
                                 }
                 timeout(3) {
                     sh './mvnw clean verify'
