@@ -1,5 +1,6 @@
 package pl.sii.upskills.conference.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-
+@Disabled
 class ConferenceControllerITTest {
     @Autowired
     private TestRestTemplate restTemplate;
@@ -58,7 +59,7 @@ class ConferenceControllerITTest {
         assertTrue(response.getStatusCode().is2xxSuccessful());
         assertEquals("First ever", body.getName());
         assertEquals("Our first conference", body.getTitle());
-        assertEquals( 200 , body.getNumberOfPlaces());
+        assertEquals(200, body.getNumberOfPlaces());
         assertEquals(LocalDateTime.of(2023, 1, 1, 8, 1),
                 body.getTimeSlot().getEndDate());
     }

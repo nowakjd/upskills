@@ -1,5 +1,6 @@
 package pl.sii.upskills.speaker.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
@@ -18,17 +21,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@Disabled
 class SpeakerControllerITTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private SpeakerRepository speakerRepository;
 
     private URI createServerAddress() throws URISyntaxException {
         return new URI("http://localhost:7070/api/v1/speakers");
     }
 
     private URI updateServerAddress() throws URISyntaxException {
-        return new URI ("http://localhost:7070/api/v1/speakers/7");
+        return new URI("http://localhost:7070/api/v1/speakers/2");
     }
 
     @Test
@@ -57,6 +64,7 @@ class SpeakerControllerITTest {
     @DisplayName("shouldReturn2xxWhenUpdateSpeakerIsSuccessfull")
     void updateSpeaker() throws Exception {
         // given:
+        insertSpeakers();
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
                 "john.fowler@gmail.com", "It's my life");
         // when:
@@ -73,5 +81,14 @@ class SpeakerControllerITTest {
         assertEquals("987654321", body.getPhoneNumber());
         assertEquals("john.fowler@gmail.com", body.getEmail());
         assertEquals("It's my life", body.getBio());
+    }
+
+    private void insertSpeakers() {
+        speakerRepository.save(new Speaker(1L, "John", "Doe", "128345679",
+                "john.doe@gmail.com", "My bio"));
+        speakerRepository.save(new Speaker(2L, "James", "King", "128355555",
+                "james.king@gmail.com", "My short bio"));
+        speakerRepository.save(new Speaker(3L, "Jane", "Doe", "455699322",
+                "mymail@gmail.com", "My not so short bio"));
     }
 }
