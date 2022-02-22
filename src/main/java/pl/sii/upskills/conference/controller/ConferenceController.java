@@ -29,10 +29,6 @@ public class ConferenceController {
         return new ResponseEntity<>(commandService.createConference(conferenceInput), HttpStatus.CREATED);
     }
 
-    @GetMapping("/conferences")
-    ResponseEntity<List<ConferenceOutput>> findByStatus(@RequestParam(required = false) ConferenceStatus status) {
-        return new ResponseEntity<>(conferenceQueryService.findByStatus(status), HttpStatus.OK);
-    }
 
     @GetMapping("/conferences/statuses")
     @ResponseStatus(HttpStatus.OK)
@@ -40,17 +36,8 @@ public class ConferenceController {
         return ConferenceStatus.values();
     }
 
-//    @GetMapping("/conferences")
-//    ResponseEntity<List<ConferenceOutput>> findByStatus(@RequestParam(required = false) String status) {
-//        ConferenceStatus conferenceStatus = null;
-//        try {
-//            if (status != null) {
-//                conferenceStatus = ConferenceStatus.valueOf(status);
-//            }
-//        } catch (IllegalArgumentException e) {
-//            throw new ConferenceBadRequestException("You have provided wrong status!!\n" +
-//                    "Please use one of the following statuses : " + Arrays.toString(status()));
-//        }
-//        return new ResponseEntity<>(conferenceQueryService.findByStatus(conferenceStatus), HttpStatus.OK);
-//    }
+    @GetMapping("/conferences")
+    ResponseEntity<List<ConferenceOutput>> findByStatus(@RequestParam(required = false) String status) {
+        return new ResponseEntity<>(conferenceQueryService.findByStatus(status), HttpStatus.OK);
+    }
 }

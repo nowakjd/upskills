@@ -4,12 +4,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import pl.sii.upskills.conference.service.command.ConferenceBadRequestException;
 import pl.sii.upskills.conference.service.command.ConferenceValidationException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.command.SpeakerValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.Collections;
 import java.util.List;
 
 @RestControllerAdvice
@@ -35,11 +37,11 @@ class GlobalControllerAdvice {
         return e.getErrors();
     }
 
-//    @ExceptionHandler(ConferenceBadRequestException.class)
-//    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-//    String handleConferenceBadRequestException(ConferenceBadRequestException e) {
-//        return e.getMessage();
-//    }
+    @ExceptionHandler(ConferenceBadRequestException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    List<String> handleConferenceBadRequestException(ConferenceBadRequestException e) {
+        return Collections.singletonList(e.getMessage());
+    }
 
     @ExceptionHandler(SpeakerNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)

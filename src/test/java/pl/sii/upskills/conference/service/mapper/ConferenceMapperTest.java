@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ConferenceMapperTest {
+class ConferenceMapperTest {
 
     private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2020, 1, 1, 0, 1);
