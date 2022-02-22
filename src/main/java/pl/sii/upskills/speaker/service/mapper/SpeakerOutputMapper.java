@@ -19,8 +19,6 @@ public class SpeakerOutputMapper implements Function<Speaker, SpeakerOutput> {
                 speaker.getPhoneNumber(),
                 speaker.getEmail(),
                 speaker.getBio(),
-                Optional.ofNullable(speaker.getSpeakerStatus())
-                        .map(SpeakerStatus::toString)
-                        .orElse("BROKEN"));
+                speaker.getSpeakerStatus().toString());
     }
 }
