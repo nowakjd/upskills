@@ -36,8 +36,6 @@ public class ConferenceController {
                                                       @RequestBody ConferenceInput conferenceInput) {
         return new ResponseEntity<>(commandService.updateConference(id, conferenceInput), HttpStatus.OK);
     }
-}
-
 
     @GetMapping("/conferences/statuses")
     @ResponseStatus(HttpStatus.OK)

@@ -13,8 +13,6 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ConferenceMapperTest {
-
-class ConferenceMapperTest {
     private static final UUID TEST_UUID = UUID.fromString("92497903-d068-4243-9285-8f240517d093");
     private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2020, 1, 1, 0, 1);
@@ -63,6 +61,5 @@ class ConferenceMapperTest {
         assertThat(result.getNumberOfPlaces()).isEqualTo(conferenceInput.getNumberOfPlaces());
         assertThat(result.getStatus()).isEqualTo(conference.getStatus());
     }
-
 }
 
