@@ -61,6 +61,5 @@ class ConferenceMapperTest {
         assertThat(result.getNumberOfPlaces()).isEqualTo(conferenceInput.getNumberOfPlaces());
         assertThat(result.getStatus()).isEqualTo(conference.getStatus());
     }
-
 }
 

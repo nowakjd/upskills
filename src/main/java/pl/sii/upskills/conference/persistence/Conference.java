@@ -19,7 +19,7 @@ public class Conference {
     private String title;
     @Column(nullable = false)
     private int numberOfPlaces;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private ConferenceStatus status;
     @Embedded
     private MoneyVO price;
