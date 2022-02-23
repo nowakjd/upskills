@@ -38,7 +38,7 @@ class SpeakerControllerITTest {
     }
 
     @Test
-    @DisplayName("shouldReturn2xxWhenCreateSpeakerIsSuccessfull")
+    @DisplayName("shouldReturn2xxWhenCreateSpeakerIsSuccessful")
     void createSpeaker() throws Exception {
         // given:
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
@@ -60,7 +60,7 @@ class SpeakerControllerITTest {
     }
 
     @Test
-    @DisplayName("shouldReturn2xxWhenUpdateSpeakerIsSuccessfull")
+    @DisplayName("shouldReturn2xxWhenUpdateSpeakerIsSuccessful")
     void updateSpeaker() throws Exception {
         // given:
         insertSpeakers();

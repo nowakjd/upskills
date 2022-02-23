@@ -36,9 +36,8 @@ class ConferenceControllerITTest {
     private static final LocalDateTime END_FOR_TEST =
             LocalDateTime.of(2023, 1, 1, 8, 1);
 
-
     @Test
-    @DisplayName("shouldReturn2xxWhenCreateConferenceIsSuccessfull")
+    @DisplayName("shouldReturn2xxWhenCreateConferenceIsSuccessful")
     void createConference() throws Exception {
         // given:
         MoneyVO moneyVO = new MoneyVO(BigDecimal.valueOf(8.00), Currency.getInstance("USD"));
