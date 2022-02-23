@@ -24,4 +24,4 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-user}
       POSTGRES_DB: upskills
     ports:
-      - 8000:8000
+      - 8000:8080
