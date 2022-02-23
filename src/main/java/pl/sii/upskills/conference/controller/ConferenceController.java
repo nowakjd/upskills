@@ -11,6 +11,8 @@ import pl.sii.upskills.conference.service.query.ConferenceQueryService;
 
 import java.util.List;
 
+import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/v1")
@@ -28,6 +30,13 @@ public class ConferenceController {
     ResponseEntity<ConferenceOutput> conferenceResponseEntity(@RequestBody ConferenceInput conferenceInput) {
         return new ResponseEntity<>(commandService.createConference(conferenceInput), HttpStatus.CREATED);
     }
+
+    @PutMapping("/conferences/{uuid}")
+    ResponseEntity<ConferenceOutput> updateConference(@PathVariable("uuid") UUID id,
+                                                      @RequestBody ConferenceInput conferenceInput) {
+        return new ResponseEntity<>(commandService.updateConference(id, conferenceInput), HttpStatus.OK);
+    }
+}
 
 
     @GetMapping("/conferences/statuses")
