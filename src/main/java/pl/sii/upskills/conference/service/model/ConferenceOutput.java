@@ -2,6 +2,7 @@ package pl.sii.upskills.conference.service.model;
 
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class ConferenceOutput {
@@ -52,5 +53,23 @@ public class ConferenceOutput {
 
     public UUID getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConferenceOutput that)) return false;
+        return numberOfPlaces == that.numberOfPlaces
+                && Objects.equals(name, that.name)
+                && Objects.equals(title, that.title)
+                && Objects.equals(price, that.price)
+                && Objects.equals(timeSlot, that.timeSlot)
+                && status == that.status
+                && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, title, numberOfPlaces, price, timeSlot, status, id);
     }
 }

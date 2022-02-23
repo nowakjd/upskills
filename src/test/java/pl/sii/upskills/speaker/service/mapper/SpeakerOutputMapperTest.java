@@ -14,7 +14,8 @@ class SpeakerOutputMapperTest {
     void shouldMapSpeaker() {
         // given
         SpeakerOutputMapper underTest = new SpeakerOutputMapper();
-        Speaker speaker = new Speaker(1L, "John", "Doe", "123456789", "john@email.com", "My bio", ACTIVE);
+        Speaker speaker = new Speaker(1L, "John", "Doe",
+                "123456789", "john@email.com", "My bio", ACTIVE);
 
         // when
         SpeakerOutput result = underTest.apply(speaker);

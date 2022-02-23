@@ -46,7 +46,8 @@ class SpeakerServiceTest {
     @DisplayName("Should return Speaker after it's creation")
     void shouldAddSpeaker() {
         // given
-        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
+                "123456789", "john@email.com", "My bio");
 
         // when
         SpeakerOutput result = underTest.addSpeaker(speakerInput);
@@ -64,7 +65,8 @@ class SpeakerServiceTest {
     @DisplayName("Should return Speaker after it's update")
     void shouldUpdateSpeaker() {
         // given
-        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
+                "123456789", "john@email.com", "My bio");
 
         // when
         SpeakerOutput result = underTest.updateSpeaker(ID_INSIDE_DATABASE, speakerInput);
