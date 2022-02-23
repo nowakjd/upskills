@@ -22,9 +22,6 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
-            <properties>
-                <activatedProperties>test</activatedProperties>
-            </properties>
             <dependencies>
                  <dependency>
                     <groupId>com.h2database</groupId>
@@ -38,9 +35,6 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <properties>
-                <activatedProperties>dev</activatedProperties>
-            </properties>
             <dependencies>
             <dependency>
                 <groupId>org.postgresql</groupId>
@@ -83,12 +77,6 @@
         </dependency>
     </dependencies>
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
