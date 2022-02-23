@@ -17,6 +17,7 @@ public class SpeakerOutputMapper implements Function<Speaker, SpeakerOutput> {
                 speaker.getPhoneNumber(),
                 speaker.getEmail(),
                 speaker.getBio(),
-                speaker.getSpeakerStatus().toString());
+                speaker.getSpeakerStatus().name()
+        );
     }
 }
