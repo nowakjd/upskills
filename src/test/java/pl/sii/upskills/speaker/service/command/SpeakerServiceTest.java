@@ -26,8 +26,8 @@ class SpeakerServiceTest {
     SpeakerCommandService underTest;
     public static final Long ID_OUTSIDE_DATABASE = 666L;
     public static final Long ID_INSIDE_DATABASE = 3L;
-    public static final Speaker SPEAKER_INSIDE_DATABASE =
-            new Speaker(ID_INSIDE_DATABASE, "John", "Doe", "123456789", "john@email.com", "My bio");
+    public static final Speaker SPEAKER_INSIDE_DATABASE = new Speaker(ID_INSIDE_DATABASE, "John", "Doe",
+                    "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
 
 
     @BeforeEach

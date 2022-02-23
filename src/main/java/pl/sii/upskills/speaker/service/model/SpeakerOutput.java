@@ -55,7 +55,13 @@ public class SpeakerOutput {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpeakerOutput that = (SpeakerOutput) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(email, that.email) && Objects.equals(bio, that.bio) && Objects.equals(status, that.status);
+        return Objects.equals(id, that.id)
+                && Objects.equals(firstName, that.firstName)
+                && Objects.equals(lastName, that.lastName)
+                && Objects.equals(phoneNumber, that.phoneNumber)
+                && Objects.equals(email, that.email)
+                && Objects.equals(bio, that.bio)
+                && Objects.equals(status, that.status);
     }
 
     @Override

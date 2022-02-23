@@ -2,10 +2,8 @@ package pl.sii.upskills.speaker.service.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
-import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 @Component
