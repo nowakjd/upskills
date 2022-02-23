@@ -10,7 +10,6 @@ import pl.sii.upskills.conference.service.model.ConferenceOutput;
 import pl.sii.upskills.conference.service.query.ConferenceQueryService;
 
 import java.util.List;
-
 import java.util.UUID;
 
 
