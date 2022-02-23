@@ -16,10 +16,7 @@ pipeline {
             }
             steps {
                 timeout(3) {
-                                    sh './mvnw verify  -Pintegrationtests'
-                                }
-                timeout(3) {
-                    sh './mvnw clean verify'
+                    sh './mvnw clean verify -Pintegrationtests'
                 }
                 junit 'target/surefire-reports/*.xml'
                 jacoco()
