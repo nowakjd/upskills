@@ -39,7 +39,7 @@ class ConferenceQueryServiceTest {
     }
 
     @Test
-    @DisplayName("Should return list from repository")
+    @DisplayName("Should return list of conference drafts from repository")
     void findByStatus() {
         //given
         TimeSlotVO timeSlot = new TimeSlotVO(NOW_FOR_TEST.plusDays(1), NOW_FOR_TEST.plusDays(2));
@@ -71,7 +71,7 @@ class ConferenceQueryServiceTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"", "  ", "\t", "draft", "PUBLISHD", "DRAFt"})
-    @DisplayName("should throw exception invalid status")
+    @DisplayName("should throw bad request exception when provided wrong status")
     void throwException(String inputStatus) {
         //give
         when(repository.findByStatus(any())).thenReturn(Collections.emptyList());
@@ -84,7 +84,7 @@ class ConferenceQueryServiceTest {
     }
 
     @Test
-    @DisplayName("should pass test when findByStatus is null")
+    @DisplayName("should return not empty list when status isn't provided")
     void statusIsNull() {
         //given
         //when(repository.findByStatus(any())).thenReturn(Collections.emptyList());
