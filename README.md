@@ -27,10 +27,10 @@ If you would like to develop locally we recommend using docker, it is used for s
 
 ### Setup
 
-You need  [Docker](https://www.docker.com/) and docker-compose which is a part of Docker desktop. Clone this repo and
-start the database server configuration We do this with docker-compose, run `docker-compose up` then you can access
-database from `http://localhost:8090`. Also, database credentials are needed, report to our team for the appropriate
-database data.
+You need to set file .env (you should set username and password) and build maven with this command:
+./mvnw clean package then use docker-compose up -d db and when db is ready you can run docker-compose up, which is a
+part of Docker desktop [Docker](https://www.docker.com/). Then you can access database from `http://localhost:8090`.
+Also, database credentials are needed, report to our team for the appropriate database data.
 
 ### Deploying the app
 
