@@ -11,6 +11,6 @@ class UpSkillsConfigurations {
 
     @Bean
     TimeService getTimeService() {
-        return () -> LocalDateTime.of(2025, 2, 2, 12, 34, 56);
+        return () -> LocalDateTime.of(2022, 1, 27, 12, 34, 56);
     }
 }
