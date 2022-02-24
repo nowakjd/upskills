@@ -1,7 +1,11 @@
 package pl.sii.upskills.conference.persistence;
 
+import pl.sii.upskills.speech.persistence.Speech;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +29,9 @@ public class Conference {
     private MoneyVO price;
     @Embedded
     private TimeSlotVO timeSlotVO;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "conference_id")
+    private List<Speech> listOfSpeeches = new ArrayList<>();
 
     public Conference() {
     }
@@ -96,4 +103,11 @@ public class Conference {
         this.id = id;
     }
 
+    public void addSpeech(Speech speech) {
+        listOfSpeeches.add(speech);
+    }
+
+    public void removeSpeech(Speech speech) {
+        listOfSpeeches.remove(speech);
+    }
 }
