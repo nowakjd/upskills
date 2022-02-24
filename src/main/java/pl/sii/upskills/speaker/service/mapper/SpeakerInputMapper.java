@@ -2,7 +2,6 @@ package pl.sii.upskills.speaker.service.mapper;
 
 import org.springframework.stereotype.Component;
 import pl.sii.upskills.speaker.persistence.Speaker;
-import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
 import java.util.function.BiFunction;
@@ -17,7 +16,7 @@ public class SpeakerInputMapper implements BiFunction<Speaker, SpeakerInput, Spe
         speaker.setPhoneNumber(speakerInput.getPhoneNumber());
         speaker.setEmail(speakerInput.getEmail());
         speaker.setBio(speakerInput.getBio());
-        speaker.setSpeakerStatus(SpeakerStatus.ACTIVE);
+        speaker.setSpeakerStatus(speakerInput.getStatus());
         return speaker;
     }
 }
