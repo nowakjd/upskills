@@ -74,4 +74,3 @@ class ConferenceInputValidator {
         return timeSlot.getEndDate().isBefore(timeSlot.getStartDate());
     }
 }
-
