@@ -63,4 +63,5 @@ public class Speech {
     public void setSpeakerSet(Set<Speaker> speakerSet) {
         this.speakerSet = speakerSet;
     }
+
 }

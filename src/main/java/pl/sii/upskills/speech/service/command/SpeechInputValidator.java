@@ -2,18 +2,20 @@ package pl.sii.upskills.speech.service.command;
 
 import org.springframework.stereotype.Component;
 import pl.sii.upskills.common.TimeService;
+import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.service.model.TimeSlot;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 
 @Component
 public class SpeechInputValidator {
+
     private final TimeService timeService;
 
     public SpeechInputValidator(TimeService timeService) {
         this.timeService = timeService;
     }
 
-    boolean validate(SpeechInput speechInput) {
+    boolean validate(SpeechInput speechInput, Conference conference) {
 
         SpeechValidationException speechValidationException = new SpeechValidationException();
 
@@ -43,11 +45,13 @@ public class SpeechInputValidator {
             speechValidationException.addError("The end date cannot be faster than start date");
         }
 
-        if (speechDurationIsValid(speechInput)) {
-            ;
-        } else {
+        if (!speechDurationIsValid(speechInput)) {
             speechValidationException.addError("Duration of speech must be at least 5 minutes and it"
                     + " cannot be longer than 8 hours");
+        }
+
+        if (!isInConference(conference, speechInput)) {
+            speechValidationException.addError("Speech must be in range of conference");
         }
 
         if (!speechValidationException.getErrors().isEmpty()) {
@@ -81,4 +85,10 @@ public class SpeechInputValidator {
                         speechInput.getTimeSlot().getEndDate())
                 );
     }
+
+    private boolean isInConference(Conference conference, SpeechInput speechInput) {
+        return (conference.getTimeSlot().getStartDate().isBefore(speechInput.getTimeSlot().getStartDate())
+                && conference.getTimeSlot().getEndDate().isAfter(speechInput.getTimeSlot().getEndDate()));
+    }
+
 }

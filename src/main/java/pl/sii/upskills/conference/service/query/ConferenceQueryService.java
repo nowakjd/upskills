@@ -37,7 +37,7 @@ public class ConferenceQueryService {
                 .toList();
     }
 
-    public Conference findDraft(UUID id){
+    public Conference findDraft(UUID id) {
         return  conferenceRepository
                 .findById(id)
                 .filter(con -> con.getStatus().equals(ConferenceStatus.DRAFT))

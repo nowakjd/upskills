@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class SpeechValidationException extends RuntimeException {
+public class SpeechValidationException extends RuntimeException {
 
     private final List<String> speechErrors = new ArrayList<>();
 

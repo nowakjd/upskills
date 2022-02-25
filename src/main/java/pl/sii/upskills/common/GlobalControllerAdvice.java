@@ -9,6 +9,7 @@ import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundExcepti
 import pl.sii.upskills.conference.service.command.ConferenceValidationException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.command.SpeakerValidationException;
+import pl.sii.upskills.speech.service.command.SpeechValidationException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -54,5 +55,11 @@ class GlobalControllerAdvice {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     String handlingConferenceDraftNotFoundException(ConferenceDraftNotFoundException e) {
         return e.getMessage();
+    }
+
+    @ExceptionHandler(SpeechValidationException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    List<String> handlingSpeechValidationException(SpeechValidationException e) {
+        return e.getErrors();
     }
 }

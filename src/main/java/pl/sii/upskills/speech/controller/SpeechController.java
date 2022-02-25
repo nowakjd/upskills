@@ -12,7 +12,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1")
 public class SpeechController {
-        private final SpeechCommandService speechCommandService;
+
+    private final SpeechCommandService speechCommandService;
 
     public SpeechController(SpeechCommandService speechCommandService) {
         this.speechCommandService = speechCommandService;

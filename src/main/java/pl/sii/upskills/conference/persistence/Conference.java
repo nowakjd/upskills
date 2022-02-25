@@ -29,9 +29,9 @@ public class Conference {
     private MoneyVO price;
     @Embedded
     private TimeSlotVO timeSlotVO;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "conference_id")
-    private List<Speech> listOfSpeeches = new ArrayList<>();
+    private final List<Speech> listOfSpeeches = new ArrayList<>();
 
     public Conference() {
     }
@@ -105,9 +105,5 @@ public class Conference {
 
     public void addSpeech(Speech speech) {
         listOfSpeeches.add(speech);
-    }
-
-    public void removeSpeech(Speech speech) {
-        listOfSpeeches.remove(speech);
     }
 }
