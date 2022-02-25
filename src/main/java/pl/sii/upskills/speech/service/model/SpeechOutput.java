@@ -1,21 +1,21 @@
 package pl.sii.upskills.speech.service.model;
 
-import pl.sii.upskills.conference.persistence.TimeSlotVO;
-import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.conference.service.model.TimeSlot;
+import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.Objects;
 import java.util.Set;
 
 public class SpeechOutput {
     private final String title;
-    private final TimeSlotVO timeSlotVO;
-    private final Set<Speaker> speakerSet;
+    private final TimeSlot timeSlot;
+    private final Set<SpeakerOutput> speakerOutputSet;
     private final Long id;
 
-    public SpeechOutput(String title, TimeSlotVO timeSlotVO, Set<Speaker> speakerSet, Long id) {
+    public SpeechOutput(String title, TimeSlot timeSlot, Set<SpeakerOutput> speakerOutputSet, Long id) {
         this.title = title;
-        this.timeSlotVO = timeSlotVO;
-        this.speakerSet = speakerSet;
+        this.timeSlot = timeSlot;
+        this.speakerOutputSet = speakerOutputSet;
         this.id = id;
     }
 
@@ -23,12 +23,12 @@ public class SpeechOutput {
         return title;
     }
 
-    public TimeSlotVO getTimeSlotVO() {
-        return timeSlotVO;
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
     }
 
-    public Set<Speaker> getSpeakerSet() {
-        return speakerSet;
+    public Set<SpeakerOutput> getSpeakerOutputSet() {
+        return speakerOutputSet;
     }
 
     public Long getId() {
@@ -40,12 +40,13 @@ public class SpeechOutput {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpeechOutput that = (SpeechOutput) o;
-        return title.equals(that.title) && timeSlotVO.equals(that.timeSlotVO) && speakerSet.equals(that.speakerSet)
+        return title.equals(that.title) && timeSlot.equals(that.timeSlot) && speakerOutputSet.equals(
+                that.speakerOutputSet)
                 && id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, timeSlotVO, speakerSet, id);
+        return Objects.hash(title, timeSlot, speakerOutputSet, id);
     }
 }

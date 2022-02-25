@@ -11,7 +11,7 @@ public class SpeechOutputMapper implements Function<Speech, SpeechOutput> {
     public SpeechOutput apply(Speech speech) {
         return new SpeechOutput(speech.getTitle(),
                 speech.getTimeSlotVO(),
-                speech.getSpeakerSet(),
+                speech.getSpeakerOutputSet(),
                 speech.getId());
     }
 }
