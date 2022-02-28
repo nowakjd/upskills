@@ -43,7 +43,7 @@ class SpeakerControllerITTest {
     void createSpeaker() throws Exception {
         // given:
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
-                "john.fowler@gmail.com", "It's my life", ACTIVE);
+                "john.fowler@gmail.com", "It's my life");
         // when:
         RequestEntity<SpeakerInput> request = RequestEntity
                 .post(createServerAddress())
@@ -66,7 +66,7 @@ class SpeakerControllerITTest {
         // given:
         insertSpeakers();
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
-                "john.fowler@gmail.com", "It's my life", ACTIVE);
+                "john.fowler@gmail.com", "It's my life");
         // when:
         RequestEntity<SpeakerInput> request = RequestEntity
                 .put(updateServerAddress())

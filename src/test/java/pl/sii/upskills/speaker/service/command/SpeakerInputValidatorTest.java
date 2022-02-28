@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
 
 class SpeakerInputValidatorTest {
 
@@ -49,7 +48,7 @@ class SpeakerInputValidatorTest {
     void happyPath() {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
 
         // when
         boolean validate = underTest.validate(input);
@@ -63,7 +62,7 @@ class SpeakerInputValidatorTest {
     void noEmail() {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", "", "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", "", "My bio");
 
         // when
         boolean validate = underTest.validate(input);
@@ -77,7 +76,7 @@ class SpeakerInputValidatorTest {
     void noPhone() {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("John", "Doe", "", "john@email.com", "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", "Doe", "", "john@email.com", "My bio");
 
         // when
         boolean validate = underTest.validate(input);
@@ -91,7 +90,7 @@ class SpeakerInputValidatorTest {
     void noBio() {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "");
 
         // when
         boolean validate = underTest.validate(input);
@@ -107,7 +106,7 @@ class SpeakerInputValidatorTest {
     void firstNameEmpty(String firstName) {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput(firstName, "Doe", "123456789", "john@email.com", "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput(firstName, "Doe", "123456789", "john@email.com", "My bio");
 
         // when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -126,7 +125,7 @@ class SpeakerInputValidatorTest {
     void lastNameEmpty(String lastName) {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("John", lastName, "123456789", "john@email.com", "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", lastName, "123456789", "john@email.com", "My bio");
 
         // when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -144,7 +143,7 @@ class SpeakerInputValidatorTest {
     void emailAndPhoneEmpty(String email, String phoneNumber) {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("John", "Doe", email, phoneNumber, "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", "Doe", email, phoneNumber, "My bio");
 
         // when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -161,7 +160,7 @@ class SpeakerInputValidatorTest {
     void allFieldAreEmpty() {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("", "", "", "", "", ACTIVE);
+        SpeakerInput input = new SpeakerInput("", "", "", "", "");
 
         // when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -181,7 +180,7 @@ class SpeakerInputValidatorTest {
     void firstNameAndLastNameAreEmpty(String firstName, String lastName) {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput(firstName, lastName, "123456789", "john@email.com", "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput(firstName, lastName, "123456789", "john@email.com", "My bio");
 
         //when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -200,7 +199,7 @@ class SpeakerInputValidatorTest {
     void firstNameAndPhoneNumberAndEmailEmpty(String firstName, String phoneNumber, String email) {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput(firstName, "Doe", phoneNumber, email, "", ACTIVE);
+        SpeakerInput input = new SpeakerInput(firstName, "Doe", phoneNumber, email, "");
 
         //when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -219,7 +218,7 @@ class SpeakerInputValidatorTest {
     void lastNameAndPhoneNumberAndEmailEmpty(String lastName, String phoneNumber, String email) {
         // given
         SpeakerInputValidator underTest = new SpeakerInputValidator();
-        SpeakerInput input = new SpeakerInput("John", lastName, phoneNumber, email, "", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", lastName, phoneNumber, email, "");
 
         //when
         Executable underTestLambda = () -> underTest.validate(input);
@@ -240,7 +239,7 @@ class SpeakerInputValidatorTest {
     @DisplayName("Validation should throw exception when email is not a correct email")
     void invalidEmail(String email) {
         // given
-        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", email, "My bio", ACTIVE);
+        SpeakerInput input = new SpeakerInput("John", "Doe", "123456789", email, "My bio");
         SpeakerInputValidator underTest = new SpeakerInputValidator();
 
         // when

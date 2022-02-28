@@ -47,7 +47,7 @@ class SpeakerServiceTest {
     void shouldAddSpeaker() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
+                "123456789", "john@email.com", "My bio");
 
         // when
         SpeakerOutput result = underTest.addSpeaker(speakerInput);
@@ -66,7 +66,7 @@ class SpeakerServiceTest {
     void shouldUpdateSpeaker() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
+                "123456789", "john@email.com", "My bio");
 
         // when
         SpeakerOutput result = underTest.updateSpeaker(ID_INSIDE_DATABASE, speakerInput);
@@ -79,7 +79,7 @@ class SpeakerServiceTest {
         assertThat(result.getPhoneNumber()).isEqualTo(speakerInput.getPhoneNumber());
         assertThat(result.getEmail()).isEqualTo(speakerInput.getEmail());
         assertThat(result.getBio()).isEqualTo(speakerInput.getBio());
-        assertThat(result.getStatus()).isEqualTo(speakerInput.getStatus().name());
+        assertThat(result.getStatus()).isEqualTo(SPEAKER_INSIDE_DATABASE.getSpeakerStatus().name());
     }
 
     @Test
@@ -87,7 +87,7 @@ class SpeakerServiceTest {
     void exceptionWhenSpeakerNotFound() {
         //given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
+                "123456789", "john@email.com", "My bio");
 
         //when
         Executable underTestLambda = () -> underTest.updateSpeaker(ID_OUTSIDE_DATABASE, speakerInput);
