@@ -27,8 +27,8 @@ class SpeakerController {
     }
 
     @GetMapping("/speakers")
-    ResponseEntity<List<SpeakerOutput>> findAll() {
-        return new ResponseEntity<>(speakerQueryService.findAll(), HttpStatus.OK);
+    ResponseEntity<List<SpeakerOutput>> findAllWithStatus(@RequestParam(required = false) String speakerStatus) {
+        return new ResponseEntity<>(speakerQueryService.findSpeakers(speakerStatus), HttpStatus.OK);
     }
 
     @PutMapping("/speakers/{id}")

@@ -46,7 +46,7 @@ class SpeakerServiceTest {
     @DisplayName("Should return Speaker after it's creation")
     void shouldAddSpeaker() {
         // given
-        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
 
         // when
         SpeakerOutput result = underTest.addSpeaker(speakerInput);
@@ -64,7 +64,8 @@ class SpeakerServiceTest {
     @DisplayName("Should return Speaker after it's update")
     void shouldUpdateSpeaker() {
         // given
-        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
+                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
 
         // when
         SpeakerOutput result = underTest.updateSpeaker(ID_INSIDE_DATABASE, speakerInput);
@@ -77,14 +78,15 @@ class SpeakerServiceTest {
         assertThat(result.getPhoneNumber()).isEqualTo(speakerInput.getPhoneNumber());
         assertThat(result.getEmail()).isEqualTo(speakerInput.getEmail());
         assertThat(result.getBio()).isEqualTo(speakerInput.getBio());
-        assertThat(result.getStatus()).isEqualTo(SPEAKER_INSIDE_DATABASE.getSpeakerStatus().name());
+        assertThat(result.getStatus()).isEqualTo(speakerInput.getStatus());
     }
 
     @Test
     @DisplayName("Should throw exception when speaker given to update doesn't exists in database")
     void exceptionWhenSpeakerNotFound() {
         //given
-        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio");
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
+                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
 
         //when
         Executable underTestLambda = () -> underTest.updateSpeaker(ID_OUTSIDE_DATABASE, speakerInput);

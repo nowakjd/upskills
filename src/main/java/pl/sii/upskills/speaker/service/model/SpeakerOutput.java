@@ -1,5 +1,7 @@
 package pl.sii.upskills.speaker.service.model;
 
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
+
 import java.util.Objects;
 
 public class SpeakerOutput {
@@ -9,10 +11,10 @@ public class SpeakerOutput {
     private final String phoneNumber;
     private final String email;
     private final String bio;
-    private final String status;
+    private final SpeakerStatus status;
 
     public SpeakerOutput(Long id, String firstName, String lastName,
-                         String phoneNumber, String email, String bio, String status) {
+                         String phoneNumber, String email, String bio, SpeakerStatus status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +48,7 @@ public class SpeakerOutput {
         return bio;
     }
 
-    public String getStatus() {
+    public SpeakerStatus getStatus() {
         return status;
     }
 

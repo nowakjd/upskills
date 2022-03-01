@@ -39,16 +39,16 @@ class SpeakerQueryServiceTest {
         when(repository.findAll()).thenReturn(list);
 
         //when
-        List<SpeakerOutput> result = underTest.findAll();
+        List<SpeakerOutput> result = underTest.findAllSpeakers();
 
         //then
         assertThat(result)
                 .hasSize(3)
                 .anyMatch(s -> s.equals(new SpeakerOutput(1L, "John", "Doe", "123456789", "john@email.com", "My bio",
-                        "ACTIVE")))
+                        ACTIVE)))
                 .anyMatch(s -> s.equals(new SpeakerOutput(2L, "John", "Doe", "123456789", "john@email.com", "My bio",
-                        "ACTIVE")))
+                        ACTIVE)))
                 .anyMatch(s -> s.equals(new SpeakerOutput(3L, "John", "Doe", "123456789", "john@email.com", "My bio",
-                        "ACTIVE")));
+                        ACTIVE)));
     }
 }
