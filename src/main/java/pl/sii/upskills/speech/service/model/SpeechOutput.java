@@ -12,7 +12,7 @@ public class SpeechOutput {
     private final Set<SpeakerOutput> speakerOutputSet;
     private final Long id;
 
-    public SpeechOutput(String title, TimeSlot timeSlot, Set<SpeakerOutput> speakerOutputSet, Long id) {
+    public SpeechOutput(String title, TimeSlot timeSlot, Long id, Set<SpeakerOutput> speakerOutputSet) {
         this.title = title;
         this.timeSlot = timeSlot;
         this.speakerOutputSet = speakerOutputSet;

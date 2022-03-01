@@ -1,14 +1,13 @@
 package pl.sii.upskills.speech.persistence;
 
+import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.speaker.persistence.Speaker;
-import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
-import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Collections;
 import java.util.Set;
-import java.util.TreeSet;
 
 @Entity
 public class Speech {
@@ -22,16 +21,20 @@ public class Speech {
     private String title;
     @Embedded
     private TimeSlotVO timeSlotVO;
+    @ManyToOne
+    @JoinColumn(name = "conference_id")
+    Conference conference;
     @ManyToMany
     private Set<Speaker> speakerSet;
 
     public Speech() {
     }
 
-    public Speech(Long id, String title, TimeSlotVO timeSlotVO, Set<Speaker> speakerSet) {
+    public Speech(Long id, String title, TimeSlotVO timeSlotVO, Conference conference, Set<Speaker> speakerSet) {
         this.id = id;
         this.title = title;
         this.timeSlotVO = timeSlotVO;
+        this.conference = conference;
         this.speakerSet = speakerSet;
     }
 
@@ -60,21 +63,22 @@ public class Speech {
     }
 
     public Set<Speaker> getSpeakerSet() {
-        return speakerSet;
+        if (speakerSet == null || speakerSet.isEmpty()) {
+            return Collections.emptySet();
+        } else {
+            return speakerSet;
+        }
     }
 
     public void setSpeakerSet(Set<Speaker> speakerSet) {
         this.speakerSet = speakerSet;
     }
 
-    public Set<SpeakerOutput> getSpeakerOutputSet() {
-        SpeakerOutputMapper speakerOutputMapper = new SpeakerOutputMapper();
-        Set<SpeakerOutput> speakerOutputSet = new TreeSet<>();
-        Set<Speaker> speakerSetForMap = getSpeakerSet();
-        for (Speaker speaker : speakerSetForMap
-        ) {
-            speakerOutputSet.add(speakerOutputMapper.apply(speaker));
-        }
-        return speakerOutputSet;
+    public Conference getConference() {
+        return conference;
+    }
+
+    public void setConference(Conference conference) {
+        this.conference = conference;
     }
 }

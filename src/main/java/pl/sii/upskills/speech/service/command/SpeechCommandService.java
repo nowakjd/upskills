@@ -6,6 +6,7 @@ import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
 import pl.sii.upskills.speech.persistence.Speech;
+import pl.sii.upskills.speech.persistence.SpeechRepository;
 import pl.sii.upskills.speech.service.mapper.SpeechMapper;
 import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
 import pl.sii.upskills.speech.service.model.SpeechInput;
@@ -17,15 +18,18 @@ import java.util.UUID;
 @Transactional
 @Service
 public class SpeechCommandService {
+    private final SpeechRepository speechRepository;
     private final ConferenceRepository conferenceRepository;
     private final SpeechInputValidator speechInputValidator;
+    private final SpeechOutputMapper speechOutputMapper;
     private final SpeechMapper speechMapper = new SpeechMapper();
-    private final SpeechOutputMapper speechOutputMapper = new SpeechOutputMapper();
 
-    public SpeechCommandService(ConferenceRepository conferenceRepository,
-                                SpeechInputValidator speechInputValidator) {
+    public SpeechCommandService(SpeechRepository speechRepository, ConferenceRepository conferenceRepository,
+                                SpeechInputValidator speechInputValidator, SpeechOutputMapper speechOutputMapper) {
+        this.speechRepository = speechRepository;
         this.conferenceRepository = conferenceRepository;
         this.speechInputValidator = speechInputValidator;
+        this.speechOutputMapper = speechOutputMapper;
     }
 
     public SpeechOutput createSpeech(UUID conferenceId, SpeechInput speechInput) {
@@ -35,7 +39,8 @@ public class SpeechCommandService {
                 .orElseThrow(() -> new ConferenceDraftNotFoundException(conferenceId));
         speechInputValidator.validate(speechInput, conference);
         Speech speech = speechMapper.apply(new Speech(), speechInput);
-        conference.addSpeech(speech);
+        speech.setConference(conference);
+        speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
     }
 }
