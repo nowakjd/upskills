@@ -46,7 +46,8 @@ class SpeakerServiceTest {
     @DisplayName("Should return Speaker after it's creation")
     void shouldAddSpeaker() {
         // given
-        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
+                "john@email.com", "My bio", SpeakerStatus.ACTIVE);
 
         // when
         SpeakerOutput result = underTest.addSpeaker(speakerInput);
