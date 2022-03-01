@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 @Component
 public class SpeechOutputMapper implements Function<Speech, SpeechOutput> {
 
-    private final Function<Speaker, SpeakerOutput>  speakerSpeakerOutputMapper;
+    private final Function<Speaker, SpeakerOutput>  speakerOutputMapper;
 
-    public SpeechOutputMapper(Function<Speaker, SpeakerOutput> speakerSpeakerOutputMapper) {
-        this.speakerSpeakerOutputMapper = speakerSpeakerOutputMapper;
+    public SpeechOutputMapper(Function<Speaker, SpeakerOutput> speakerOutputMapper) {
+        this.speakerOutputMapper = speakerOutputMapper;
     }
 
     @Override
@@ -25,7 +25,7 @@ public class SpeechOutputMapper implements Function<Speech, SpeechOutput> {
                 speech.getId(),
                 speech.getSpeakerSet()
                 .stream()
-                .map(speakerSpeakerOutputMapper)
+                .map(speakerOutputMapper)
                 .collect(Collectors.toSet()));
     }
 }
