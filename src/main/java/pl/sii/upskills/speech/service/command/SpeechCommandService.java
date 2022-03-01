@@ -43,4 +43,18 @@ public class SpeechCommandService {
         speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
     }
+
+    public SpeechOutput addSpeakers(UUID conferenceId, Long id, SpeechInput speechInput) {
+        Conference conference = conferenceRepository
+                .findById(conferenceId)
+                .filter(c -> c.getStatus().equals(ConferenceStatus.DRAFT))
+                .orElseThrow(() -> new ConferenceDraftNotFoundException(conferenceId));
+        speechInputValidator.validate(speechInput, conference);
+        return speechRepository.findById(id)
+                .map(s -> {
+                    s.setSpeakerSet(speechInput.getSpeakerSet());
+                    return  s; })
+                .map(speechOutputMapper)
+                .orElseThrow(() -> new SpeechNotFoundException(id));
+    }
 }

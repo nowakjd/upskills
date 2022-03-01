@@ -24,4 +24,12 @@ public class SpeechController {
                                               @RequestBody SpeechInput speechInput) {
         return new ResponseEntity<>(speechCommandService.createSpeech(uuid, speechInput), HttpStatus.CREATED);
     }
+
+    @PostMapping("/conferences/{conferenceId}/speeches/{id}/speakers")
+    ResponseEntity<SpeechOutput> addSpeakers(@PathVariable("conferenceId") UUID uuid, @PathVariable("id") Long id,
+                                             @RequestBody SpeechInput speechInput) {
+        return new ResponseEntity<>(speechCommandService.addSpeakers(uuid, id, speechInput),
+                HttpStatus.CREATED);
+    }
+
 }
