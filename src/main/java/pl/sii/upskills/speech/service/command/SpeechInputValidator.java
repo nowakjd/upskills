@@ -45,12 +45,16 @@ public class SpeechInputValidator {
             speechValidationException.addError("The end date cannot be faster than start date");
         }
 
-        if (!speechDurationIsValid(speechInput)) {
+        if (speechInput.getTimeSlot() != null && speechInput.getTimeSlot().getStartDate() != null
+                && speechInput.getTimeSlot().getEndDate() != null
+                && !speechDurationIsValid(speechInput)) {
             speechValidationException.addError("Duration of speech must be at least 5 minutes and it"
                     + " cannot be longer than 8 hours");
         }
 
-        if (!isInConference(conference, speechInput)) {
+        if (speechInput.getTimeSlot() != null && speechInput.getTimeSlot().getStartDate() != null
+                && speechInput.getTimeSlot().getEndDate() != null
+                && !isInConference(conference, speechInput)) {
             speechValidationException.addError("Speech must be in range of conference");
         }
 
