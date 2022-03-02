@@ -24,17 +24,22 @@ public class Speaker implements java.io.Serializable {
     private String email;
     @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private SpeakerStatus speakerStatus;
 
     public Speaker() {
     }
 
-    public Speaker(Long id, String firstName, String lastName, String phoneNumber, String email, String bio) {
+    public Speaker(Long id, String firstName, String lastName,
+                   String phoneNumber, String email, String bio, SpeakerStatus speakerStatus) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.bio = bio;
+        this.speakerStatus = speakerStatus;
     }
 
     public Long getId() {
@@ -85,4 +90,11 @@ public class Speaker implements java.io.Serializable {
         this.bio = bio;
     }
 
+    public SpeakerStatus getSpeakerStatus() {
+        return speakerStatus;
+    }
+
+    public void setSpeakerStatus(SpeakerStatus speakerStatus) {
+        this.speakerStatus = speakerStatus;
+    }
 }

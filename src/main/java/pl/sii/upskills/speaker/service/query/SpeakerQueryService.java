@@ -3,8 +3,11 @@ package pl.sii.upskills.speaker.service.query;
 import org.springframework.stereotype.Service;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
+import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -19,7 +22,7 @@ public class SpeakerQueryService {
         this.speakerRepository = speakerRepository;
     }
 
-    public List<SpeakerOutput> findAll() {
+    public List<SpeakerOutput> findAllSpeakers() {
         return speakerRepository
                 .findAll()
                 .stream()
@@ -27,4 +30,24 @@ public class SpeakerQueryService {
                 .toList();
     }
 
+    public List<SpeakerOutput> findSpeakers(String speakerStatus) {
+        if (speakerStatus == null) {
+            return findAllSpeakers();
+        } else {
+            return speakerRepository
+                    .findBySpeakerStatus(mapToEnum(speakerStatus))
+                    .stream()
+                    .map(speakerOutputMapper)
+                    .toList();
+        }
+    }
+
+    private SpeakerStatus mapToEnum(String speakerStatus) {
+        try {
+            return SpeakerStatus.valueOf(speakerStatus);
+        } catch (IllegalArgumentException e) {
+            throw new SpeakerBadRequestException("You have provided wrong status!"
+                    + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
+        }
+    }
 }

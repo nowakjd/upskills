@@ -10,6 +10,8 @@ import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
+import static pl.sii.upskills.speaker.persistence.SpeakerStatus.INACTIVE;
 
 @SpringBootTest
 class SpeakerServiceITTest {
@@ -25,7 +27,7 @@ class SpeakerServiceITTest {
     void happyPath() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
-                "john@email.com", "My bio");
+                "john@email.com", "My bio", ACTIVE);
 
         // when
         SpeakerOutput speakerOutput = underTest.addSpeaker(speakerInput);
@@ -41,7 +43,7 @@ class SpeakerServiceITTest {
         // given
         insertSpeakers();
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
-                "john@email.com", "My bio");
+                "john@email.com", "My bio", INACTIVE);
 
         // when
         SpeakerOutput speakerOutput = underTest.updateSpeaker(2L, speakerInput);
@@ -49,14 +51,19 @@ class SpeakerServiceITTest {
         // then
         assertThat(speakerOutput.getId()).isEqualTo(2L);
         assertThat(speakerOutput.getFirstName()).isEqualTo(speakerInput.getFirstName());
+        assertThat(speakerOutput.getLastName()).isEqualTo(speakerInput.getLastName());
+        assertThat(speakerOutput.getPhoneNumber()).isEqualTo(speakerInput.getPhoneNumber());
+        assertThat(speakerOutput.getBio()).isEqualTo(speakerInput.getBio());
+        assertThat(speakerOutput.getEmail()).isEqualTo(speakerInput.getEmail());
+        assertThat(speakerOutput.getStatus()).isEqualTo(speakerInput.getStatus());
     }
 
     private void insertSpeakers() {
         speakerRepository.save(new Speaker(1L, "John", "Doe", "128345679",
-                "john.doe@gmail.com", "My bio"));
+                "john.doe@gmail.com", "My bio", ACTIVE));
         speakerRepository.save(new Speaker(2L, "James", "King", "128355555",
-                "james.king@gmail.com", "My short bio"));
+                "james.king@gmail.com", "My short bio", ACTIVE));
         speakerRepository.save(new Speaker(3L, "Jane", "Doe", "455699322",
-                "mymail@gmail.com", "My not so short bio"));
+                "mymail@gmail.com", "My not so short bio", ACTIVE));
     }
 }

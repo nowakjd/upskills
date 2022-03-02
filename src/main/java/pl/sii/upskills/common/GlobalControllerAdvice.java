@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.sii.upskills.conference.service.command.ConferenceBadRequestException;
 import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
 import pl.sii.upskills.conference.service.command.ConferenceValidationException;
+import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.command.SpeakerValidationException;
 import pl.sii.upskills.speech.service.command.SpeechValidationException;
@@ -42,6 +43,12 @@ class GlobalControllerAdvice {
     @ExceptionHandler(ConferenceBadRequestException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     List<String> handleConferenceBadRequestException(ConferenceBadRequestException e) {
+        return Collections.singletonList(e.getMessage());
+    }
+
+    @ExceptionHandler(SpeakerBadRequestException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    List<String> handleSpeakerBadRequestException(SpeakerBadRequestException e) {
         return Collections.singletonList(e.getMessage());
     }
 

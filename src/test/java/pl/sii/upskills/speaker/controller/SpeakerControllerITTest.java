@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 
@@ -42,7 +43,7 @@ class SpeakerControllerITTest {
     void createSpeaker() throws Exception {
         // given:
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
-                "john.fowler@gmail.com", "It's my life");
+                "john.fowler@gmail.com", "It's my life", ACTIVE);
         // when:
         RequestEntity<SpeakerInput> request = RequestEntity
                 .post(createServerAddress())
@@ -65,7 +66,7 @@ class SpeakerControllerITTest {
         // given:
         insertSpeakers();
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
-                "john.fowler@gmail.com", "It's my life");
+                "john.fowler@gmail.com", "It's my life", ACTIVE);
         // when:
         RequestEntity<SpeakerInput> request = RequestEntity
                 .put(updateServerAddress())
@@ -84,10 +85,10 @@ class SpeakerControllerITTest {
 
     private void insertSpeakers() {
         speakerRepository.save(new Speaker(1L, "John", "Doe", "128345679",
-                "john.doe@gmail.com", "My bio"));
+                "john.doe@gmail.com", "My bio", ACTIVE));
         speakerRepository.save(new Speaker(2L, "James", "King", "128355555",
-                "james.king@gmail.com", "My short bio"));
+                "james.king@gmail.com", "My short bio", ACTIVE));
         speakerRepository.save(new Speaker(3L, "Jane", "Doe", "455699322",
-                "mymail@gmail.com", "My not so short bio"));
+                "mymail@gmail.com", "My not so short bio", ACTIVE));
     }
 }
