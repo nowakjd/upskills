@@ -1,4 +1,4 @@
-package pl.sii.upskills;
+package pl.sii.upskills.configuration;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
