@@ -33,6 +33,7 @@ part of Docker desktop [Docker](https://www.docker.com/). Then you can access da
 Also, database credentials are needed, report to our team for the appropriate database data.
 
 ### Jacoco plugins
+
 The plugin has been added as a dependency to the pom.xml file
 Adding the @Generated annotation over a particular method will exclude it from the report.
 More information on method and class exclusion: https://www.baeldung.com/jacoco-report-exclude
