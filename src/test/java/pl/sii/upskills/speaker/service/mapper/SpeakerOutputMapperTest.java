@@ -6,6 +6,7 @@ import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
 
 class SpeakerOutputMapperTest {
     @Test
@@ -14,7 +15,7 @@ class SpeakerOutputMapperTest {
         // given
         SpeakerOutputMapper underTest = new SpeakerOutputMapper();
         Speaker speaker = new Speaker(1L, "John", "Doe",
-                "123456789", "john@email.com", "My bio");
+                "123456789", "john@email.com", "My bio", ACTIVE);
 
         // when
         SpeakerOutput result = underTest.apply(speaker);

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
@@ -25,9 +26,8 @@ class SpeakerServiceTest {
     SpeakerCommandService underTest;
     public static final Long ID_OUTSIDE_DATABASE = 666L;
     public static final Long ID_INSIDE_DATABASE = 3L;
-    public static final Speaker SPEAKER_INSIDE_DATABASE =
-            new Speaker(ID_INSIDE_DATABASE, "John", "Doe",
-                    "123456789", "john@email.com", "My bio");
+    public static final Speaker SPEAKER_INSIDE_DATABASE = new Speaker(ID_INSIDE_DATABASE, "John", "Doe",
+                    "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
 
 
     @BeforeEach
@@ -46,8 +46,8 @@ class SpeakerServiceTest {
     @DisplayName("Should return Speaker after it's creation")
     void shouldAddSpeaker() {
         // given
-        SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio");
+        SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
+                "john@email.com", "My bio", SpeakerStatus.ACTIVE);
 
         // when
         SpeakerOutput result = underTest.addSpeaker(speakerInput);
@@ -66,7 +66,7 @@ class SpeakerServiceTest {
     void shouldUpdateSpeaker() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio");
+                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
 
         // when
         SpeakerOutput result = underTest.updateSpeaker(ID_INSIDE_DATABASE, speakerInput);
@@ -79,6 +79,7 @@ class SpeakerServiceTest {
         assertThat(result.getPhoneNumber()).isEqualTo(speakerInput.getPhoneNumber());
         assertThat(result.getEmail()).isEqualTo(speakerInput.getEmail());
         assertThat(result.getBio()).isEqualTo(speakerInput.getBio());
+        assertThat(result.getStatus()).isEqualTo(speakerInput.getStatus());
     }
 
     @Test
@@ -86,7 +87,7 @@ class SpeakerServiceTest {
     void exceptionWhenSpeakerNotFound() {
         //given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio");
+                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
 
         //when
         Executable underTestLambda = () -> underTest.updateSpeaker(ID_OUTSIDE_DATABASE, speakerInput);

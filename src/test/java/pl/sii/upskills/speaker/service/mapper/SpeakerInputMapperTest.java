@@ -3,6 +3,7 @@ package pl.sii.upskills.speaker.service.mapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -15,7 +16,7 @@ class SpeakerInputMapperTest {
         // given
         SpeakerInputMapper underTest = new SpeakerInputMapper();
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio");
+                "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
         Speaker speaker = new Speaker();
         // when
         Speaker result = underTest.apply(speaker, speakerInput);
@@ -28,6 +29,7 @@ class SpeakerInputMapperTest {
         assertThat(result.getPhoneNumber()).isEqualTo("123456789");
         assertThat(result.getEmail()).isEqualTo("john@email.com");
         assertThat(result.getBio()).isEqualTo("My bio");
+        assertThat(result.getSpeakerStatus()).isEqualTo(SpeakerStatus.ACTIVE);
     }
 
 }
