@@ -7,7 +7,6 @@ import pl.sii.upskills.speech.persistence.Speech;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 
 import java.time.LocalDateTime;
-import java.util.TreeSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

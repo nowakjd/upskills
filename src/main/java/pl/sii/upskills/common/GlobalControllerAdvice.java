@@ -11,7 +11,6 @@ import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.command.SpeakerValidationException;
 import pl.sii.upskills.speech.service.command.SpeakerSetValidationException;
-import pl.sii.upskills.speech.service.command.SpeakerSetValidator;
 import pl.sii.upskills.speech.service.command.SpeechValidationException;
 
 import javax.validation.ConstraintViolation;
@@ -74,5 +73,8 @@ class GlobalControllerAdvice {
 
     @ExceptionHandler(SpeakerSetValidationException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    List<String> handlingSpeakerSetValidationException(SpeakerSetValidationException e) { return e.getErrors();}
+    List<String> handlingSpeakerSetValidationException(SpeakerSetValidationException e) {
+        return e.getErrors();
+    }
+
 }

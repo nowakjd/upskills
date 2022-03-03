@@ -31,7 +31,8 @@ public class SpeechCommandService {
     private final SpeakerSetValidator speakerSetValidator = new SpeakerSetValidator();
 
     public SpeechCommandService(SpeechRepository speechRepository, ConferenceRepository conferenceRepository,
-                                SpeechInputValidator speechInputValidator, SpeechOutputMapper speechOutputMapper, SpeakerQueryService speakerQueryService) {
+                                SpeechInputValidator speechInputValidator, SpeechOutputMapper speechOutputMapper,
+                                SpeakerQueryService speakerQueryService) {
         this.speechRepository = speechRepository;
         this.conferenceRepository = conferenceRepository;
         this.speechInputValidator = speechInputValidator;

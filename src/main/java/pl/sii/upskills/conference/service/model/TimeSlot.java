@@ -22,14 +22,7 @@ public interface TimeSlot {
     }
 
     default boolean doesntCollide(TimeSlot timeSlotToCompare) {
-        if (getStartDate().isAfter(timeSlotToCompare.getEndDate())) {
-            return true;
-        }
-
-        if (getEndDate().isBefore(timeSlotToCompare.getStartDate())) {
-            return true;
-        }
-
-        return false;
+        return getStartDate().isAfter(timeSlotToCompare.getEndDate())
+                || getEndDate().isBefore(timeSlotToCompare.getStartDate());
     }
 }

@@ -14,7 +14,6 @@ import pl.sii.upskills.speech.service.model.SpeechOutput;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
-import java.util.TreeSet;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;

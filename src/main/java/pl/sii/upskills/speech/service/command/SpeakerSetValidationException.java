@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SpeakerSetValidationException extends RuntimeException{
+public class SpeakerSetValidationException extends RuntimeException {
 
     private final List<String> speakerSetErrors = new ArrayList<>();
 
