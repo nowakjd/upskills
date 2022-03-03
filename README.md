@@ -32,6 +32,12 @@ You need to set file .env (you should set username and password) and build maven
 part of Docker desktop [Docker](https://www.docker.com/). Then you can access database from `http://localhost:8090`.
 Also, database credentials are needed, report to our team for the appropriate database data.
 
+### Jacoco plugins
+
+The plugin has been added as a dependency to the pom.xml file.
+Adding the `@pl.sii.upskills.configuration.Generated` annotation over a particular method will exclude it from the report.
+More information on method and class exclusion: https://www.baeldung.com/jacoco-report-exclude
+
 ### Deploying the app
 
 To deploy to **upskills.sii.pl** you need to wait - we will add app server soon.
@@ -39,4 +45,3 @@ To deploy to **upskills.sii.pl** you need to wait - we will add app server soon.
 ### Contact us
 
 Use this [Email](mailto:email@example.com)
-

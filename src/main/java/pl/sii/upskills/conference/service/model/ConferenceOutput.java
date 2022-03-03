@@ -1,6 +1,7 @@
 package pl.sii.upskills.conference.service.model;
 
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
+import pl.sii.upskills.configuration.Generated;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -55,6 +56,7 @@ public class ConferenceOutput {
         return id;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,6 +70,7 @@ public class ConferenceOutput {
                 && Objects.equals(id, that.id);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(name, title, numberOfPlaces, price, timeSlot, status, id);
