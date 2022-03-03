@@ -1,7 +1,7 @@
 package pl.sii.upskills.conference.service.model;
 
-import pl.sii.upskills.configuration.Generated;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
+import pl.sii.upskills.configuration.Generated;
 
 import java.util.Objects;
 import java.util.UUID;
