@@ -15,7 +15,6 @@ import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 
 import java.time.LocalDateTime;
-import java.util.TreeSet;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -45,7 +44,7 @@ class SpeechInputValidatorTest {
     @Test
     void happyPath() {
         //given
-        SpeechInput speechInput = new SpeechInput("War never changes", speechTimeSlot, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput("War never changes", speechTimeSlot);
         //when
         boolean result = underTest.validate(speechInput, conference);
         //then
@@ -58,7 +57,7 @@ class SpeechInputValidatorTest {
     @DisplayName("Should throw exception when title is not given")
     void withoutTitle(String title) {
         //given
-        SpeechInput speechInput = new SpeechInput(title, speechTimeSlot, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput(title, speechTimeSlot);
         //when
         Executable lambdaUndertest = () -> underTest.validate(speechInput, conference);
 
@@ -73,7 +72,7 @@ class SpeechInputValidatorTest {
     @Test
     void noTimeSlot() {
         //given
-        SpeechInput speechInput = new SpeechInput("War never changes", null, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput("War never changes", null);
         //when
         Executable lambdaUndertest = () -> underTest.validate(speechInput, conference);
 
@@ -89,7 +88,7 @@ class SpeechInputValidatorTest {
     void noStartDateInTimeSlot() {
         //given
         SpeechInput speechInput = new SpeechInput("War never changes", new TimeSlotVO(null,
-                speechTimeSlot.getEndDate()), new TreeSet<>());
+                speechTimeSlot.getEndDate()));
         //when
         Executable lambdaUndertest = () -> underTest.validate(speechInput, conference);
 
@@ -105,7 +104,7 @@ class SpeechInputValidatorTest {
     void noStartDateInPast() {
         //given
         SpeechInput speechInput = new SpeechInput("War never changes", new TimeSlotVO(NOW_FOR_TEST.minusDays(1),
-                NOW_FOR_TEST.minusHours(17)), new TreeSet<>());
+                NOW_FOR_TEST.minusHours(17)));
         Conference conference = new Conference(UUID.fromString("0963c134-0141-415f-aaf6-89a502fb58bf"), "name",
                 "title", 100, ConferenceStatus.DRAFT, null,
                 new TimeSlotVO(NOW_FOR_TEST.minusDays(1).minusMinutes(1), NOW_FOR_TEST));
@@ -124,7 +123,7 @@ class SpeechInputValidatorTest {
     void endsBeforeStart() {
         //given
         SpeechInput speechInput = new SpeechInput("War never changes", new TimeSlotVO(NOW_FOR_TEST,
-                NOW_FOR_TEST.minusHours(17)), new TreeSet<>());
+                NOW_FOR_TEST.minusHours(17)));
         Conference conference = new Conference(UUID.fromString("0963c134-0141-415f-aaf6-89a502fb58bf"), "name",
                 "title", 100, ConferenceStatus.DRAFT, null,
                 new TimeSlotVO(NOW_FOR_TEST.minusDays(1), NOW_FOR_TEST.plusDays(2)));
@@ -134,7 +133,8 @@ class SpeechInputValidatorTest {
         //then
         SpeechValidationException exception = assertThrows(SpeechValidationException.class, lambdaUndertest);
         assertThat(exception.getErrors())
-                .anyMatch(s -> s.equals("The end date cannot be faster than start date"));
+                .hasSize(1)
+                .allMatch(s -> s.equals("The end date cannot be faster than start date"));
     }
 
     @ParameterizedTest
@@ -142,7 +142,7 @@ class SpeechInputValidatorTest {
     @DisplayName("Should throw exception when duration of speech is invalid")
     void speechDurationInvalid(TimeSlotVO timeSlotVO) {
         //given
-        SpeechInput speechInput = new SpeechInput("War never changes", timeSlotVO, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput("War never changes", timeSlotVO);
         //when
         Executable lambdaUndertest = () -> underTest.validate(speechInput, conference);
 
@@ -159,7 +159,7 @@ class SpeechInputValidatorTest {
     void speechOutOfConference() {
         //given
         SpeechInput speechInput = new SpeechInput("War never changes",
-                new TimeSlotVO(NOW_FOR_TEST, NOW_FOR_TEST.plusHours(2)), new TreeSet<>());
+                new TimeSlotVO(NOW_FOR_TEST, NOW_FOR_TEST.plusHours(2)));
         //when
         Executable lambdaUndertest = () -> underTest.validate(speechInput, conference);
 

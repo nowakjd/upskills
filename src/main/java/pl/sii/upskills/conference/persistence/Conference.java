@@ -103,6 +103,10 @@ public class Conference {
         this.id = id;
     }
 
+    public List<Speech> getListOfSpeeches() {
+        return listOfSpeeches;
+    }
+
     public void addSpeech(Speech speech) {
         listOfSpeeches.add(speech);
     }

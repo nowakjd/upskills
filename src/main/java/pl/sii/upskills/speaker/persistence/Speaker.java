@@ -97,4 +97,8 @@ public class Speaker implements java.io.Serializable {
     public void setSpeakerStatus(SpeakerStatus speakerStatus) {
         this.speakerStatus = speakerStatus;
     }
+
+    public boolean isActive() {
+        return speakerStatus.equals(SpeakerStatus.ACTIVE);
+    }
 }

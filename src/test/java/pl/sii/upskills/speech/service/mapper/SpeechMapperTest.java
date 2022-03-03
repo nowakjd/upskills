@@ -24,7 +24,7 @@ class SpeechMapperTest {
     void shouldMapSpeech() {
         // given
         SpeechMapper underTest = new SpeechMapper();
-        SpeechInput speechInput = new SpeechInput("War never changes", timeSlot, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput("War never changes", timeSlot);
 
         // when
         Speech result = underTest.apply(new Speech(), speechInput);

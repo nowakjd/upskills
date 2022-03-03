@@ -39,7 +39,7 @@ class SpeechCommandServiceITTest {
     void happyPath() {
         // given
         UUID conferenceId = createConference();
-        SpeechInput speechInput = new SpeechInput("Holy Hand Grenade", CORRECT_TIMESLOT, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput("Holy Hand Grenade", CORRECT_TIMESLOT);
 
         // when
         SpeechOutput speechOutput = underTest.createSpeech(conferenceId, speechInput);

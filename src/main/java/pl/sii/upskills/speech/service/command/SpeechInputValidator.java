@@ -6,9 +6,14 @@ import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.service.model.TimeSlot;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 
+import java.time.Duration;
+
 @Component
 public class SpeechInputValidator {
-
+    private static final int MINIMAL_DURATION_IN_MINUTES = 5;
+    private static final int MAX_DURATION_IN_HOURS = 8;
+    private static final Duration MINIMAL_DURATION = Duration.ofMinutes(MINIMAL_DURATION_IN_MINUTES);
+    private static final Duration MAXIMUM_DURATION = Duration.ofHours(MAX_DURATION_IN_HOURS);
     private final TimeService timeService;
 
     public SpeechInputValidator(TimeService timeService) {
@@ -25,36 +30,18 @@ public class SpeechInputValidator {
 
         if (speechInput.getTimeSlot() == null) {
             speechValidationException.addError("Start date and end date are required");
-        }
-
-        if (speechInput.getTimeSlot() != null
-                && speechInput.getTimeSlot().getStartDate() == null) {
+        } else if (speechInput.getTimeSlot().getStartDate() == null) {
             speechValidationException.addError("Start date is required");
-        }
-
-        if (speechInput.getTimeSlot() != null
-                && speechInput.getTimeSlot().getEndDate() == null) {
+        } else if (speechInput.getTimeSlot().getEndDate() == null) {
             speechValidationException.addError("End date is required");
-        }
-
-        if (isInPast(speechInput.getTimeSlot())) {
+        } else if (isInPast(speechInput.getTimeSlot())) {
             speechValidationException.addError("Start date must be in the future");
-        }
-
-        if (hasEndBeforeStartIfExist(speechInput.getTimeSlot())) {
+        } else if (hasEndBeforeStartIfExist(speechInput.getTimeSlot())) {
             speechValidationException.addError("The end date cannot be faster than start date");
-        }
-
-        if (speechInput.getTimeSlot() != null && speechInput.getTimeSlot().getStartDate() != null
-                && speechInput.getTimeSlot().getEndDate() != null
-                && !speechDurationIsValid(speechInput)) {
+        } else if (speechDurationIsInvalid(speechInput)) {
             speechValidationException.addError("Duration of speech must be at least 5 minutes and it"
                     + " cannot be longer than 8 hours");
-        }
-
-        if (speechInput.getTimeSlot() != null && speechInput.getTimeSlot().getStartDate() != null
-                && speechInput.getTimeSlot().getEndDate() != null
-                && !isInConference(conference, speechInput)) {
+        } else if (!isInConference(conference, speechInput)) {
             speechValidationException.addError("Speech must be in range of conference");
         }
 
@@ -82,12 +69,12 @@ public class SpeechInputValidator {
         return timeSlot.getEndDate().isBefore(timeSlot.getStartDate());
     }
 
-    private boolean speechDurationIsValid(SpeechInput speechInput) {
-        return (speechInput.getTimeSlot().getStartDate().isBefore(
-                speechInput.getTimeSlot().getEndDate().minusMinutes(5).minusSeconds(1))
-                && speechInput.getTimeSlot().getStartDate().plusHours(8).plusSeconds(1).isAfter(
-                        speechInput.getTimeSlot().getEndDate())
-                );
+    private boolean speechDurationIsInvalid(SpeechInput speechInput) {
+        Duration speechDuration = speechInput.getTimeSlot().toDuration();
+        boolean isTooShort = speechDuration.compareTo(MINIMAL_DURATION) < 0;
+        boolean isTooLong = speechDuration.compareTo(MAXIMUM_DURATION) > 0;
+
+        return isTooLong || isTooShort;
     }
 
     private boolean isInConference(Conference conference, SpeechInput speechInput) {

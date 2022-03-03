@@ -24,7 +24,7 @@ public class Speech {
     @ManyToOne
     @JoinColumn(name = "conference_id")
     Conference conference;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Speaker> speakerSet;
 
     public Speech() {
@@ -63,10 +63,10 @@ public class Speech {
     }
 
     public Set<Speaker> getSpeakerSet() {
-        if (speakerSet == null || speakerSet.isEmpty()) {
+        if (speakerSet == null) {
             return Collections.emptySet();
         } else {
-            return speakerSet;
+            return Collections.unmodifiableSet(speakerSet);
         }
     }
 

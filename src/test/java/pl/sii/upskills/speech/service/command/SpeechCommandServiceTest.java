@@ -10,14 +10,17 @@ import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
+import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 import pl.sii.upskills.speech.persistence.Speech;
 import pl.sii.upskills.speech.persistence.SpeechRepository;
 import pl.sii.upskills.speech.service.mapper.SpeechMapper;
 import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
+import pl.sii.upskills.speech.service.model.SpeakersForSpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -55,14 +58,16 @@ class SpeechCommandServiceTest {
         SpeechInputValidator speechInputValidator = new SpeechInputValidator(() -> NOW_FOR_TEST);
         SpeechOutputMapper outputMapper = new SpeechOutputMapper(new SpeakerOutputMapper());
         BiFunction<Speech, SpeechInput, Speech> inputMapper = new SpeechMapper();
-        underTest = new SpeechCommandService(repository, conferenceRepository, speechInputValidator, outputMapper);
+        SpeakerQueryService speakerQueryService = mock(SpeakerQueryService.class);
+        underTest = new SpeechCommandService(repository, conferenceRepository, speechInputValidator,
+                outputMapper, speakerQueryService);
     }
 
     @Test
     @DisplayName("Should add speech")
     void addSpeech() {
         //given
-        SpeechInput speechInput = new SpeechInput("Swimming with boots on ?", CORRECT_TIMESLOT, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput("Swimming with boots on ?", CORRECT_TIMESLOT);
 
         //when
         SpeechOutput result = underTest.createSpeech(ID_OF_DRAFT_IN_DATABASE, speechInput);
@@ -77,7 +82,7 @@ class SpeechCommandServiceTest {
     @Test
     void noConference() {
         //given
-        SpeechInput speechInput = new SpeechInput("Swimming with boots on ?", CORRECT_TIMESLOT, new TreeSet<>());
+        SpeechInput speechInput = new SpeechInput("Swimming with boots on ?", CORRECT_TIMESLOT);
 
         //when
         Executable lambdaUnderTest = () -> underTest.createSpeech(ID_OUTSIDE_DATABASE, speechInput);
@@ -90,10 +95,12 @@ class SpeechCommandServiceTest {
     @Test
     void noSpeech() {
         //given
-        SpeechInput speechInput = new SpeechInput("Swimming with boots on ?", CORRECT_TIMESLOT, new TreeSet<>());
+        SpeakersForSpeechInput speakersForSpeechInput = new SpeakersForSpeechInput(
+                new TreeSet<Long>(Arrays.asList(1L, 2L, 3L)));
 
         //when
-        Executable lambdaUnderTest = () -> underTest.addSpeakers(ID_OF_DRAFT_IN_DATABASE, 223L, speechInput);
+        Executable lambdaUnderTest = () -> underTest.addSpeakers(ID_OF_DRAFT_IN_DATABASE, 223L,
+                speakersForSpeechInput);
 
         //then
         assertThrows(SpeechNotFoundException.class, lambdaUnderTest);

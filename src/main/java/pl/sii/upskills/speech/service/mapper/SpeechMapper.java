@@ -11,7 +11,6 @@ public class SpeechMapper implements BiFunction<Speech, SpeechInput, Speech> {
     public Speech apply(Speech speech, SpeechInput speechInput) {
         speech.setTitle(speechInput.getTitle());
         speech.setTimeSlotVO(speechInput.getTimeSlot());
-        speech.setSpeakerSet(speechInput.getSpeakerSet());
         return speech;
     }
 }
