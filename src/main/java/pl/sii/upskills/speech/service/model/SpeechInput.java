@@ -1,22 +1,22 @@
 package pl.sii.upskills.speech.service.model;
 
-import pl.sii.upskills.conference.persistence.TimeSlotVO;
+import pl.sii.upskills.conference.service.model.TimeSlot;
 
 public class SpeechInput {
 
     private final String title;
-    private final TimeSlotVO timeSlotVO;
+    private final TimeSlot timeSlot;
 
-    public SpeechInput(String title, TimeSlotVO timeSlotVO) {
+    public SpeechInput(String title, TimeSlot timeSlot) {
         this.title = title;
-        this.timeSlotVO = timeSlotVO;
+        this.timeSlot = timeSlot;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public TimeSlotVO getTimeSlot() {
-        return timeSlotVO;
+    public TimeSlot getTimeSlot() {
+        return timeSlot;
     }
 }
