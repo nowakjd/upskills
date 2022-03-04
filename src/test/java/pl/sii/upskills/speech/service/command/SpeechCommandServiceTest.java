@@ -15,9 +15,9 @@ import pl.sii.upskills.speech.persistence.Speech;
 import pl.sii.upskills.speech.persistence.SpeechRepository;
 import pl.sii.upskills.speech.service.mapper.SpeechMapper;
 import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
-import pl.sii.upskills.speech.service.model.SpeakersForSpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
+import pl.sii.upskills.speech.service.model.SpeechSpeakersInput;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -95,12 +95,12 @@ class SpeechCommandServiceTest {
     @Test
     void noSpeech() {
         //given
-        SpeakersForSpeechInput speakersForSpeechInput = new SpeakersForSpeechInput(
+        SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(
                 new TreeSet<Long>(Arrays.asList(1L, 2L, 3L)));
 
         //when
-        Executable lambdaUnderTest = () -> underTest.addSpeakers(ID_OF_DRAFT_IN_DATABASE, 223L,
-                speakersForSpeechInput);
+        Executable lambdaUnderTest = () -> underTest.addSpeakers(223L,
+                speechSpeakersInput);
 
         //then
         assertThrows(SpeechNotFoundException.class, lambdaUnderTest);

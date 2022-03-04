@@ -11,15 +11,15 @@ import pl.sii.upskills.speech.persistence.Speech;
 import pl.sii.upskills.speech.persistence.SpeechRepository;
 import pl.sii.upskills.speech.service.mapper.SpeechMapper;
 import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
-import pl.sii.upskills.speech.service.model.SpeakersForSpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
+import pl.sii.upskills.speech.service.model.SpeechSpeakersInput;
 
 import javax.transaction.Transactional;
 import java.util.Set;
 import java.util.UUID;
 
-@Transactional
+
 @Service
 public class SpeechCommandService {
     private final SpeechRepository speechRepository;
@@ -29,6 +29,7 @@ public class SpeechCommandService {
     private final SpeakerQueryService speakerQueryService;
     private final SpeechMapper speechMapper = new SpeechMapper();
     private final SpeakerSetValidator speakerSetValidator = new SpeakerSetValidator();
+    private final SpeechConferenceValidator speechConferenceValidator = new SpeechConferenceValidator();
 
     public SpeechCommandService(SpeechRepository speechRepository, ConferenceRepository conferenceRepository,
                                 SpeechInputValidator speechInputValidator, SpeechOutputMapper speechOutputMapper,
@@ -40,6 +41,7 @@ public class SpeechCommandService {
         this.speakerQueryService = speakerQueryService;
     }
 
+    @Transactional
     public SpeechOutput createSpeech(UUID conferenceId, SpeechInput speechInput) {
         Conference conference = getConference(conferenceId);
         speechInputValidator.validate(speechInput, conference);
@@ -49,11 +51,13 @@ public class SpeechCommandService {
         return speechOutputMapper.apply(speech);
     }
 
-    public SpeechOutput addSpeakers(UUID conferenceId, Long id, SpeakersForSpeechInput speakersForSpeechInput) {
-        Conference conference = getConference(conferenceId);
-        Set<Speaker> speakerSet = speakerQueryService.getSpeakersIds(speakersForSpeechInput.getIds());
+    @Transactional
+    public SpeechOutput addSpeakers(Long id, SpeechSpeakersInput speechSpeakersInput) {
         Speech speech = getSpeech(id);
-        speakerSetValidator.validate(speakersForSpeechInput, conference);
+        Conference conference = speech.getConference();
+        speechConferenceValidator.validate(conference, speech);
+        Set<Speaker> speakerSet = speakerQueryService.getSpeakersIds(speechSpeakersInput.getIds());
+        speakerSetValidator.validate(speakerSet, speech);
         speech.setSpeakerSet(speakerSet);
         return speechOutputMapper.apply(speech);
     }

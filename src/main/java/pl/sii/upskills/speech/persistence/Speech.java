@@ -81,4 +81,8 @@ public class Speech {
     public void setConference(Conference conference) {
         this.conference = conference;
     }
+
+    public boolean hasSpeaker(Speaker speaker) {
+        return speakerSet.contains(speaker);
+    }
 }

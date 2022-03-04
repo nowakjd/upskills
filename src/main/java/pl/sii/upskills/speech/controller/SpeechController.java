@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sii.upskills.speech.service.command.SpeechCommandService;
-import pl.sii.upskills.speech.service.model.SpeakersForSpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
+import pl.sii.upskills.speech.service.model.SpeechSpeakersInput;
 
 import java.util.UUID;
 
@@ -28,8 +28,8 @@ public class SpeechController {
 
     @PutMapping("/conferences/{conferenceId}/speeches/{id}/speakers")
     ResponseEntity<SpeechOutput> addSpeakers(@PathVariable("conferenceId") UUID uuid, @PathVariable("id") Long id,
-                                             @RequestBody SpeakersForSpeechInput speakersForSpeechInput) {
-        return new ResponseEntity<>(speechCommandService.addSpeakers(uuid, id, speakersForSpeechInput),
+                                             @RequestBody SpeechSpeakersInput speechSpeakersInput) {
+        return new ResponseEntity<>(speechCommandService.addSpeakers(id, speechSpeakersInput),
                 HttpStatus.CREATED);
     }
 
