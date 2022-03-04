@@ -13,9 +13,10 @@ class SpeakerSetValidator {
 
         SpeakerSetValidationException speakerSetValidationException = new SpeakerSetValidationException();
 
-
-
-        // TODO - is available
+        for (Speaker speaker : speakerSet
+        ) {
+            speakerSetValidationException.addAll(isAvailable(speaker, speech));
+        }
 
         if (!speakerSetValidationException.getErrors().isEmpty()) {
             throw speakerSetValidationException;

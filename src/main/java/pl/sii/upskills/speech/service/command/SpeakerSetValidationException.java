@@ -12,6 +12,10 @@ public class SpeakerSetValidationException extends RuntimeException {
         speakerSetErrors.add(message);
     }
 
+    void addAll(List<String> errorsList) {
+        speakerSetErrors.addAll(errorsList);
+    }
+
     public List<String> getErrors() {
         return Collections.unmodifiableList(speakerSetErrors);
     }
