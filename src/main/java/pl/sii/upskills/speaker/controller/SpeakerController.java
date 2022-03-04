@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.sii.upskills.speaker.service.command.SpeakerCommandService;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
+import pl.sii.upskills.speaker.service.model.SpeakerStatusInput;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 
 import java.util.List;
@@ -34,5 +35,11 @@ class SpeakerController {
     @PutMapping("/speakers/{id}")
     ResponseEntity<SpeakerOutput> updateSpeaker(@RequestBody SpeakerInput speakerInput, @PathVariable Long id) {
         return new ResponseEntity<>(speakerService.updateSpeaker(id, speakerInput), HttpStatus.OK);
+    }
+
+    @PutMapping("/speakers/{id}/status")
+    ResponseEntity<SpeakerOutput> changeStatus(@RequestBody SpeakerStatusInput speakerStatusInput,
+                                               @PathVariable Long id) {
+        return new ResponseEntity<>(speakerService.changeStatus(id, speakerStatusInput), HttpStatus.OK);
     }
 }

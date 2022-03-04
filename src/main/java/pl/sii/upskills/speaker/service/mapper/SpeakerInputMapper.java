@@ -16,7 +16,6 @@ public class SpeakerInputMapper implements BiFunction<Speaker, SpeakerInput, Spe
         speaker.setPhoneNumber(speakerInput.getPhoneNumber());
         speaker.setEmail(speakerInput.getEmail());
         speaker.setBio(speakerInput.getBio());
-        speaker.setSpeakerStatus(speakerInput.getStatus());
         return speaker;
     }
 }

@@ -9,8 +9,10 @@ import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
+import pl.sii.upskills.speaker.service.mapper.SpeakerStatusInputMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
+import pl.sii.upskills.speaker.service.model.SpeakerStatusInput;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -26,8 +28,9 @@ class SpeakerServiceTest {
     SpeakerCommandService underTest;
     public static final Long ID_OUTSIDE_DATABASE = 666L;
     public static final Long ID_INSIDE_DATABASE = 3L;
-    public static final Speaker SPEAKER_INSIDE_DATABASE = new Speaker(ID_INSIDE_DATABASE, "John", "Doe",
-                    "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
+    public static final Speaker SPEAKER_INSIDE_DATABASE = new Speaker(ID_INSIDE_DATABASE,
+            "John", "Doe", "123456789", "john@email.com",
+            "My bio", SpeakerStatus.ACTIVE);
 
 
     @BeforeEach
@@ -39,7 +42,10 @@ class SpeakerServiceTest {
         SpeakerInputValidator validator = new SpeakerInputValidator();
         Function<Speaker, SpeakerOutput> outputMapper = new SpeakerOutputMapper();
         BiFunction<Speaker, SpeakerInput, Speaker> inputMapper = new SpeakerInputMapper();
-        underTest = new SpeakerCommandService(repository, validator, outputMapper, inputMapper);
+        BiFunction<Speaker, SpeakerStatusInput, Speaker> speakerStatusInputMapper = new SpeakerStatusInputMapper();
+        SpeakerStatusInputValidator speakerStatusInputValidator =new SpeakerStatusInputValidator();
+        underTest = new SpeakerCommandService(repository, validator, outputMapper,
+                inputMapper,speakerStatusInputMapper,speakerStatusInputValidator);
     }
 
     @Test
@@ -47,7 +53,7 @@ class SpeakerServiceTest {
     void shouldAddSpeaker() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
-                "john@email.com", "My bio", SpeakerStatus.ACTIVE);
+                "john@email.com", "My bio");
 
         // when
         SpeakerOutput result = underTest.addSpeaker(speakerInput);
@@ -66,7 +72,7 @@ class SpeakerServiceTest {
     void shouldUpdateSpeaker() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
+                "123456789", "john@email.com", "My bio");
 
         // when
         SpeakerOutput result = underTest.updateSpeaker(ID_INSIDE_DATABASE, speakerInput);
@@ -79,7 +85,6 @@ class SpeakerServiceTest {
         assertThat(result.getPhoneNumber()).isEqualTo(speakerInput.getPhoneNumber());
         assertThat(result.getEmail()).isEqualTo(speakerInput.getEmail());
         assertThat(result.getBio()).isEqualTo(speakerInput.getBio());
-        assertThat(result.getStatus()).isEqualTo(speakerInput.getStatus());
     }
 
     @Test
@@ -87,7 +92,7 @@ class SpeakerServiceTest {
     void exceptionWhenSpeakerNotFound() {
         //given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe",
-                "123456789", "john@email.com", "My bio", SpeakerStatus.INACTIVE);
+                "123456789", "john@email.com", "My bio");
 
         //when
         Executable underTestLambda = () -> underTest.updateSpeaker(ID_OUTSIDE_DATABASE, speakerInput);
