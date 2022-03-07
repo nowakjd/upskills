@@ -9,6 +9,8 @@ import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
+import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 import pl.sii.upskills.speech.persistence.Speech;
@@ -20,10 +22,7 @@ import pl.sii.upskills.speech.service.model.SpeechOutput;
 import pl.sii.upskills.speech.service.model.SpeechSpeakersInput;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.BiFunction;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -104,6 +103,27 @@ class SpeechCommandServiceTest {
 
         //then
         assertThrows(SpeechNotFoundException.class, lambdaUnderTest);
+    }
+
+    @DisplayName("Should add speakers")
+    @Test
+    void addSpeakers() {
+        //given
+        Conference conference = new Conference(UUID.randomUUID(), "Name", "Title", 100,
+                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20), NOW_FOR_TEST.plusDays(40)));
+        Set<Speaker> speakers = new HashSet<>();
+        Speech speech = new Speech(2L, "Speech title",
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
+                conference, speakers);
+        SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(
+                new HashSet<>(Arrays.asList(1L, 2L, 3L)));
+
+        //when
+        Executable lambdaUnderTest = () -> underTest.addSpeakers(speech.getId(),
+                speechSpeakersInput);
+
+        //then
+        assertThat(speech.getSpeakerSet().size()).isEqualTo(3);
     }
 
 }
