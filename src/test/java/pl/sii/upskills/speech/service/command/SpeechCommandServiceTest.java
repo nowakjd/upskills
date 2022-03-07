@@ -9,8 +9,6 @@ import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
-import pl.sii.upskills.speaker.persistence.Speaker;
-import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 import pl.sii.upskills.speech.persistence.Speech;
@@ -47,12 +45,16 @@ class SpeechCommandServiceTest {
 
     @BeforeEach
     void setUp() {
+        Conference testConference = new Conference(ID_OF_DRAFT_IN_DATABASE, "name", "title", 100,
+                ConferenceStatus.DRAFT, null, CONFERENCE_TIMESLOT);
+        Speech speech = new Speech(2L, "Title",
+                CORRECT_TIMESLOT, testConference, new HashSet<>());
         SpeechRepository repository = mock(SpeechRepository.class);
         when(repository.save(any())).thenAnswer(a -> a.getArgument(0));
+        when(repository.findById(2L)).thenReturn(Optional.of(speech));
+        testConference.addSpeech(speech);
         ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
-        when(conferenceRepository.findById(ID_OF_DRAFT_IN_DATABASE)).thenReturn(Optional.of(
-                new Conference(ID_OF_DRAFT_IN_DATABASE, "name", "title", 100,
-                        ConferenceStatus.DRAFT, null, CONFERENCE_TIMESLOT)));
+        when(conferenceRepository.findById(ID_OF_DRAFT_IN_DATABASE)).thenReturn(Optional.of(testConference));
         when(conferenceRepository.findById(ID_OUTSIDE_DATABASE)).thenReturn(Optional.empty());
         SpeechInputValidator speechInputValidator = new SpeechInputValidator(() -> NOW_FOR_TEST);
         SpeechOutputMapper outputMapper = new SpeechOutputMapper(new SpeakerOutputMapper());
@@ -95,7 +97,7 @@ class SpeechCommandServiceTest {
     void noSpeech() {
         //given
         SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(
-                new TreeSet<Long>(Arrays.asList(1L, 2L, 3L)));
+                new TreeSet<>(Arrays.asList(1L, 2L, 3L)));
 
         //when
         Executable lambdaUnderTest = () -> underTest.addSpeakers(223L,
@@ -103,27 +105,6 @@ class SpeechCommandServiceTest {
 
         //then
         assertThrows(SpeechNotFoundException.class, lambdaUnderTest);
-    }
-
-    @DisplayName("Should add speakers")
-    @Test
-    void addSpeakers() {
-        //given
-        Conference conference = new Conference(UUID.randomUUID(), "Name", "Title", 100,
-                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20), NOW_FOR_TEST.plusDays(40)));
-        Set<Speaker> speakers = new HashSet<>();
-        Speech speech = new Speech(2L, "Speech title",
-                new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
-                conference, speakers);
-        SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(
-                new HashSet<>(Arrays.asList(1L, 2L, 3L)));
-
-        //when
-        Executable lambdaUnderTest = () -> underTest.addSpeakers(speech.getId(),
-                speechSpeakersInput);
-
-        //then
-        assertThat(speech.getSpeakerSet().size()).isEqualTo(3);
     }
 
 }

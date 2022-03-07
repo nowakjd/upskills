@@ -5,6 +5,7 @@ import pl.sii.upskills.speech.persistence.Speech;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -104,7 +105,7 @@ public class Conference {
     }
 
     public List<Speech> getListOfSpeeches() {
-        return listOfSpeeches;
+        return Collections.unmodifiableList(listOfSpeeches);
     }
 
     public void addSpeech(Speech speech) {
