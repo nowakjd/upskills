@@ -8,12 +8,18 @@ import pl.sii.upskills.conference.persistence.MoneyVO;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceCommandService;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
+import pl.sii.upskills.conference.service.model.ConferenceOutput;
+import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.persistence.SpeakerRepository;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
+import pl.sii.upskills.speech.service.model.SpeechSpeakersInput;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,6 +27,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class SpeechCommandServiceITTest {
 
+    @Autowired
+    SpeakerRepository speakerRepository;
     @Autowired
     ConferenceCommandService conferenceCommandService;
     @Autowired
@@ -37,7 +45,7 @@ class SpeechCommandServiceITTest {
     @DisplayName("Should add speech to database")
     void happyPath() {
         // given
-        UUID conferenceId = createConference();
+        UUID conferenceId = createConference().getId();
         SpeechInput speechInput = new SpeechInput("Holy Hand Grenade", CORRECT_TIMESLOT);
 
         // when
@@ -48,9 +56,35 @@ class SpeechCommandServiceITTest {
         assertThat(speechOutput.getTitle()).isEqualTo("Holy Hand Grenade");
     }
 
-    private UUID createConference() {
+    @Test
+    @DisplayName("Should add speakers to speech")
+    void addSpeakers() {
+        // given
+        createSpeakers();
+        ConferenceOutput conferenceOutput = createConference();
+        SpeechInput speechInput = new SpeechInput("Concrete Donkey", CORRECT_TIMESLOT);
+        SpeechOutput speechOutput = underTest.createSpeech(conferenceOutput.getId(), speechInput);
+        SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(Set.of(1L, 2L));
+
+
+        // when
+        SpeechOutput result = underTest.addSpeakers(speechOutput.getId(), speechSpeakersInput);
+
+        // then
+        assertThat(result.getSpeakerOutputSet()).hasSize(2);
+        assertThat(result.getTitle()).isEqualTo("Concrete Donkey");
+    }
+
+    private ConferenceOutput createConference() {
         return conferenceCommandService.createConference(new ConferenceInput("Worms", "Armageddon ?",
-                        200, new MoneyVO(BigDecimal.valueOf(9.00), Currency.getInstance("USD")),
-                        CONFERENCE_TIMESLOT)).getId();
+                200, new MoneyVO(BigDecimal.valueOf(9.00), Currency.getInstance("USD")),
+                CONFERENCE_TIMESLOT));
+    }
+
+    private void createSpeakers() {
+        speakerRepository.save(new Speaker(1L, "Old", "Woman", "12345679",
+                "old@grandma.com", "My bio", SpeakerStatus.ACTIVE));
+        speakerRepository.save(new Speaker(2L, "Young", "Woman", "12345679",
+                "young@grandma.com", "My bio", SpeakerStatus.ACTIVE));
     }
 }

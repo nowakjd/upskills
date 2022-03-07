@@ -17,7 +17,6 @@ public interface TimeSlot {
     LocalDateTime getEndDate();
 
     default Duration toDuration() {
-        // TODO - null handling - hate Optionals
         return Duration.between(getStartDate(), getEndDate());
     }
 

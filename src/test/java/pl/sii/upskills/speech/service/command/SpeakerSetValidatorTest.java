@@ -25,20 +25,16 @@ class SpeakerSetValidatorTest {
             LocalDateTime.of(2023, 1, 1, 8, 1);
     private static final TimeSlotVO CONFERENCE_TIMESLOT
             = new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1), NOW_FOR_TEST.plusDays(4).plusHours(2));
-    private static final UUID ID_OF_DRAFT_IN_DATABASE =
-            UUID.fromString("0163c134-0141-415f-aaf6-89a502fb58bf");
-   private final SpeakerSetValidator underTest = new SpeakerSetValidator();
+    private final SpeakerSetValidator underTest = new SpeakerSetValidator();
 
 
     @DisplayName("Should validate speaker")
     @Test
     void happyPath() {
         //given
-        Conference conference = new Conference(UUID.randomUUID(), "Name", "Title", 100,
-                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20), NOW_FOR_TEST.plusDays(40)));
+        Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
-        speakers.add(new Speaker(1L, "First", "Last", "123456789",
-                "email@gmail.com", "bio", SpeakerStatus.ACTIVE));
+        Speaker speaker = activeSpeakerNoOne();
         Speech toValidate = new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, new HashSet<>());
@@ -51,11 +47,9 @@ class SpeakerSetValidatorTest {
     @DisplayName("Should throw exception when speaker is inactive")
     @Test
     void inactive() {
-        Conference conference = new Conference(UUID.randomUUID(), "Name", "Title", 100,
-                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20), NOW_FOR_TEST.plusDays(40)));
+        Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
-        speakers.add(new Speaker(1L, "First", "Last", "123456789",
-                "email@gmail.com", "bio", SpeakerStatus.INACTIVE));
+        speakers.add(inactiveSpeaker());
         Speech toValidate = new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, new HashSet<>());
@@ -71,11 +65,9 @@ class SpeakerSetValidatorTest {
     @DisplayName("Should throw exception when speaker is inactive without overlapping information")
     @Test
     void inactiveAndOverlaps() {
-        Conference conference = new Conference(UUID.randomUUID(), "Name", "Title", 100,
-                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20), NOW_FOR_TEST.plusDays(40)));
+        Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
-        speakers.add(new Speaker(1L, "First", "Last", "123456789",
-                "email@gmail.com", "bio", SpeakerStatus.INACTIVE));
+        speakers.add(inactiveSpeaker());
         conference.addSpeech(new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, speakers));
@@ -94,13 +86,10 @@ class SpeakerSetValidatorTest {
     @DisplayName("Should throw two exceptions with two different messages")
     @Test
     void oneSpeakerInactiveSecondOverlaps() {
-        Conference conference = new Conference(UUID.randomUUID(), "Name", "Title", 100,
-                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20), NOW_FOR_TEST.plusDays(40)));
+        Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
-        speakers.add(new Speaker(1L, "First", "Last", "123456789",
-                "email@gmail.com", "bio", SpeakerStatus.INACTIVE));
-        speakers.add(new Speaker(2L, "First", "Last", "123456789",
-                "email@gmail.com", "bio", SpeakerStatus.ACTIVE));
+        speakers.add(inactiveSpeaker());
+        speakers.add(activeSpeakerNoOne());
         conference.addSpeech(new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, speakers));
@@ -120,29 +109,25 @@ class SpeakerSetValidatorTest {
     @DisplayName("Should throw exception with 3 messages")
     @Test
     void oneSpeakerInactiveTwoOverlaps() {
-        Conference conference = new Conference(UUID.randomUUID(), "Name", "Title", 100,
-                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20), NOW_FOR_TEST.plusDays(40)));
+        Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
-        speakers.add(new Speaker(1L, "First", "Last", "123456789",
-                "email@il.com", "bio", SpeakerStatus.INACTIVE));
-        speakers.add(new Speaker(2L, "First", "Last", "123456789",
-                "email@il.com", "bio", SpeakerStatus.ACTIVE));
+        Speaker inactiveSpeaker = inactiveSpeaker();
+        Speaker activeNoOne = activeSpeakerNoOne();
+        speakers.add(inactiveSpeaker);
+        speakers.add(activeNoOne);
         conference.addSpeech(new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, speakers));
         Set<Speaker> otherSpeakers = new HashSet<>();
-        otherSpeakers.add(new Speaker(3L, "First", "Last", "123456789",
-                "email@il.com", "bio", SpeakerStatus.ACTIVE));
+        Speaker activeNoTwo = activeSpeakerNoTwo();
+        otherSpeakers.add(activeNoTwo);
         conference.addSpeech(new Speech(2L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, otherSpeakers));
         Set<Speaker> validateSpeakers = new HashSet<>();
-        validateSpeakers.add(new Speaker(1L, "First", "Last", "123456789",
-                "email@il.com", "bio", SpeakerStatus.INACTIVE));
-        validateSpeakers.add(new Speaker(2L, "First", "Last", "123456789",
-                "email@il.com", "bio", SpeakerStatus.ACTIVE));
-        validateSpeakers.add(new Speaker(3L, "First", "Last", "123456789",
-                "email@il.com", "bio", SpeakerStatus.ACTIVE));
+        validateSpeakers.add(inactiveSpeaker);
+        validateSpeakers.add(activeNoOne);
+        validateSpeakers.add(activeNoTwo);
         Speech toValidate = new Speech(3L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, new HashSet<>());
@@ -157,6 +142,27 @@ class SpeakerSetValidatorTest {
                 .anyMatch(s -> s.equals("Speaker is inactive"))
                 .anyMatch(s -> s.equals("Speaker with id 2 is already assigned to speech with id 1"))
                 .anyMatch(s -> s.equals("Speaker with id 3 is already assigned to speech with id 2"));
+    }
+
+    private Conference conferenceMaker() {
+        return new Conference(UUID.randomUUID(), "Name", "Title", 100,
+                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
+                NOW_FOR_TEST.plusDays(40)));
+    }
+
+    private Speaker inactiveSpeaker() {
+        return new Speaker(1L, "First", "Last", "123456789",
+                "email@gmail.com", "bio", SpeakerStatus.INACTIVE);
+    }
+
+    private Speaker activeSpeakerNoOne() {
+        return new Speaker(2L, "First", "Last", "123456789",
+                "email@gmail.com", "bio", SpeakerStatus.ACTIVE);
+    }
+
+    private Speaker activeSpeakerNoTwo() {
+        return new Speaker(3L, "First", "Last", "123456789",
+                "email@il.com", "bio", SpeakerStatus.ACTIVE);
     }
 
 }
