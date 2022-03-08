@@ -11,11 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class TimeSlotTest {
 
-    private static final LocalDateTime BASE_START_DATE = LocalDateTime.of(2022, 4, 22, 8,
+    private static final LocalDateTime BASE_DATE_TIME = LocalDateTime.of(2022, 4, 22, 8,
             5);
-    private static final LocalDateTime BASE_END_DATE = LocalDateTime.of(2022, 4, 22, 10,
-            5);
-
 
     @Test
     @DisplayName("Timeslots aren't colliding")
@@ -138,35 +135,35 @@ class TimeSlotTest {
     }
 
     private TimeSlotVO createTestTimeslot() {
-        return new TimeSlotVO(BASE_START_DATE, BASE_END_DATE);
+        return new TimeSlotVO(BASE_DATE_TIME, BASE_DATE_TIME.plusHours(2));
     }
 
     private TimeSlotVO createCollidingTimeslot() {
-        return new TimeSlotVO(BASE_START_DATE.plusHours(1), BASE_END_DATE.plusHours(1));
+        return new TimeSlotVO(BASE_DATE_TIME.plusHours(1), BASE_DATE_TIME.plusHours(3));
     }
 
     private TimeSlotVO createEarlierCollidingTimeslot() {
-        return new TimeSlotVO(BASE_START_DATE.minusHours(1), BASE_END_DATE.minusHours(1));
+        return new TimeSlotVO(BASE_DATE_TIME.minusHours(1), BASE_DATE_TIME.plusHours(1));
     }
 
     private TimeSlotVO createNonCollidingTimeslot() {
-        return new TimeSlotVO(BASE_START_DATE.plusHours(4), BASE_END_DATE.plusHours(4));
+        return new TimeSlotVO(BASE_DATE_TIME.plusHours(4), BASE_DATE_TIME.plusHours(6));
     }
 
     private TimeSlotVO createSameStartDateTimeslot() {
-        return new TimeSlotVO(BASE_START_DATE, BASE_END_DATE.minusHours(1));
+        return new TimeSlotVO(BASE_DATE_TIME, BASE_DATE_TIME.plusHours(1));
     }
 
     private TimeSlotVO createSameEndDateTimeslot() {
-        return new TimeSlotVO(BASE_START_DATE.plusHours(1), BASE_END_DATE);
+        return new TimeSlotVO(BASE_DATE_TIME.plusHours(1), BASE_DATE_TIME.plusHours(2));
     }
 
     private TimeSlotVO createEndDateEqualToStartDate() {
-        return new TimeSlotVO(BASE_START_DATE.minusHours(2), BASE_START_DATE);
+        return new TimeSlotVO(BASE_DATE_TIME.minusHours(2), BASE_DATE_TIME);
     }
 
     private TimeSlotVO createStartDateEqualToEndDate() {
-        return new TimeSlotVO(BASE_END_DATE, BASE_END_DATE.plusHours(2));
+        return new TimeSlotVO(BASE_DATE_TIME.plusHours(2), BASE_DATE_TIME.plusHours(4));
     }
 
 }
