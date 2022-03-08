@@ -101,6 +101,36 @@ class TimeSlotTest {
 
     }
 
+    @Test
+    @DisplayName("Timeslot starts when tested one ends")
+    void endsWhenSecondStarts() {
+        //given
+        TimeSlot undertest = createTestTimeslot();
+        TimeSlot startingOne = createStartDateEqualToEndDate();
+
+        //when
+        boolean result =  undertest.doesntCollide(startingOne);
+
+        //then
+        assertThat(result).isFalse();
+
+    }
+
+    @Test
+    @DisplayName("Timeslot endss when tested one starts")
+    void startsWhenSecondEnds() {
+        //given
+        TimeSlot undertest = createTestTimeslot();
+        TimeSlot endingOne = createEndDateEqualToStartDate();
+
+        //when
+        boolean result =  undertest.doesntCollide(endingOne);
+
+        //then
+        assertThat(result).isFalse();
+
+    }
+
     private TimeSlotVO createTestTimeslot() {
         return new TimeSlotVO(LocalDateTime.of(2022, 4, 22, 8,
                 5), LocalDateTime.of(2022, 4, 22, 10, 5));
@@ -129,6 +159,16 @@ class TimeSlotTest {
     private TimeSlotVO createSameEndDateTimeslot() {
         return new TimeSlotVO(LocalDateTime.of(2022, 4, 22, 7,
                 5), LocalDateTime.of(2022, 4, 22, 10, 5));
+    }
+
+    private TimeSlotVO createEndDateEqualToStartDate() {
+        return new TimeSlotVO(LocalDateTime.of(2022, 4, 22, 6,
+                5), LocalDateTime.of(2022, 4, 22, 8, 5));
+    }
+
+    private TimeSlotVO createStartDateEqualToEndDate() {
+        return new TimeSlotVO(LocalDateTime.of(2022, 4, 22, 10,
+                5), LocalDateTime.of(2022, 4, 22, 12, 5));
     }
 
 }
