@@ -1,29 +1,29 @@
 package pl.sii.upskills.speaker.service.command;
 
 import org.springframework.stereotype.Component;
-import pl.sii.upskills.speaker.service.model.SpeakerStatusInput;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
+
+import java.util.Arrays;
 
 @Component
 class SpeakerStatusInputValidator {
 
-    boolean validateStatus(SpeakerStatusInput speakerStatusInput) {
+
+    boolean validateStatus(SpeakerStatus speakerStatus) {
+
         SpeakerValidationException speakerValidationException = new SpeakerValidationException();
 
-        /**
-         * TO DO
-        */
+        if(speakerStatus == null) {
+            speakerValidationException.addError("You have provided wrong status!" +
+                    "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
+        }
 
-//        if (isEmpty(speakerStatusInput.getSpeakerStatus().name())) {
-//            speakerValidationException.addError("Status must be valid");
-//        }
-//
-//        if (!speakerValidationException.getErrors().isEmpty()) {
-//            throw speakerValidationException;
-//        }
+        if (!speakerValidationException.getErrors().isEmpty()) {
+            throw speakerValidationException;
+        }
+
         return true;
     }
-
-    private boolean isEmpty(String string) {
-        return (string == null || string.trim().isEmpty());
-    }
 }
+
+

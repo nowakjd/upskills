@@ -9,7 +9,6 @@ import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
-import pl.sii.upskills.speaker.service.mapper.SpeakerStatusInputMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 import pl.sii.upskills.speaker.service.model.SpeakerStatusInput;
@@ -42,10 +41,9 @@ class SpeakerServiceTest {
         SpeakerInputValidator validator = new SpeakerInputValidator();
         Function<Speaker, SpeakerOutput> outputMapper = new SpeakerOutputMapper();
         BiFunction<Speaker, SpeakerInput, Speaker> inputMapper = new SpeakerInputMapper();
-        BiFunction<Speaker, SpeakerStatusInput, Speaker> speakerStatusInputMapper = new SpeakerStatusInputMapper();
         SpeakerStatusInputValidator speakerStatusInputValidator =new SpeakerStatusInputValidator();
         underTest = new SpeakerCommandService(repository, validator, outputMapper,
-                inputMapper,speakerStatusInputMapper,speakerStatusInputValidator);
+                inputMapper,speakerStatusInputValidator);
     }
 
     @Test
