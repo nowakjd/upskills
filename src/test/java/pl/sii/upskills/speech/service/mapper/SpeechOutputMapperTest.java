@@ -44,6 +44,6 @@ class SpeechOutputMapperTest {
         assertThat(result).isNotNull();
         assertThat(result.getTitle()).isEqualTo("Modern ironing techniques");
         assertThat(result.getId()).isEqualTo(3L);
-        assertThat(result.getSpeakerOutputSet()).isEmpty();
+        assertThat(result.getSpeakers()).isEmpty();
     }
 }

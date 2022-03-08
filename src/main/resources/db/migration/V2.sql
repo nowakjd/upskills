@@ -12,6 +12,6 @@ CREATE TABLE speech_speaker_set(
   speech_id BIGINT,
   speaker_set_id BIGINT,
   PRIMARY KEY (speech_id, speaker_set_id),
-    CONSTRAINT fk_speech FOREIGN KEY(speech_id) REFERENCES speech(id),
-    CONSTRAINT fk_speaker FOREIGN KEY(speaker_set_id) REFERENCES speaker(id)
+  CONSTRAINT fk_speech FOREIGN KEY(speech_id) REFERENCES speech(id),
+  CONSTRAINT fk_speaker FOREIGN KEY(speaker_set_id) REFERENCES speaker(id)
 );

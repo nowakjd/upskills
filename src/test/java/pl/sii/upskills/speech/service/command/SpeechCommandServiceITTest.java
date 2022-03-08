@@ -71,7 +71,7 @@ class SpeechCommandServiceITTest {
         SpeechOutput result = underTest.addSpeakers(speechOutput.getId(), speechSpeakersInput);
 
         // then
-        assertThat(result.getSpeakerOutputSet()).hasSize(2);
+        assertThat(result.getSpeakers()).hasSize(2);
         assertThat(result.getTitle()).isEqualTo("Concrete Donkey");
     }
 

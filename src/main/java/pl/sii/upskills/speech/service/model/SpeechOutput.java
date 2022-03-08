@@ -9,13 +9,13 @@ import java.util.Set;
 public class SpeechOutput {
     private final String title;
     private final TimeSlot timeSlot;
-    private final Set<SpeakerOutput> speakerOutputSet;
+    private final Set<SpeakerOutput> speakers;
     private final Long id;
 
-    public SpeechOutput(String title, TimeSlot timeSlot, Long id, Set<SpeakerOutput> speakerOutputSet) {
+    public SpeechOutput(String title, TimeSlot timeSlot, Long id, Set<SpeakerOutput> speakers) {
         this.title = title;
         this.timeSlot = timeSlot;
-        this.speakerOutputSet = speakerOutputSet;
+        this.speakers = speakers;
         this.id = id;
     }
 
@@ -27,8 +27,8 @@ public class SpeechOutput {
         return timeSlot;
     }
 
-    public Set<SpeakerOutput> getSpeakerOutputSet() {
-        return speakerOutputSet;
+    public Set<SpeakerOutput> getSpeakers() {
+        return speakers;
     }
 
     public Long getId() {
@@ -40,13 +40,13 @@ public class SpeechOutput {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpeechOutput that = (SpeechOutput) o;
-        return title.equals(that.title) && timeSlot.equals(that.timeSlot) && speakerOutputSet.equals(
-                that.speakerOutputSet)
+        return title.equals(that.title) && timeSlot.equals(that.timeSlot) && speakers.equals(
+                that.speakers)
                 && id.equals(that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, timeSlot, speakerOutputSet, id);
+        return Objects.hash(title, timeSlot, speakers, id);
     }
 }
