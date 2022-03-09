@@ -32,7 +32,7 @@ class SpeakerController {
 
     @GetMapping("/speakers")
     ResponseEntity<List<SpeakerOutput>> findAllWithStatus(@RequestParam(required = false) String speakerStatus) {
-        List<SpeakerOutput> speakers = speakerQueryService.findSpeakers(mapToEnum(speakerStatus));
+        List<SpeakerOutput> speakers = speakerQueryService.findSpeakers(speakerStatus);
         return new ResponseEntity<>(speakers, HttpStatus.OK);
     }
 
