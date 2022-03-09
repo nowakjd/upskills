@@ -61,7 +61,7 @@ class SpeakerSetValidatorTest {
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
                 .hasSize(1)
-                .allMatch(s -> s.equals("Speaker is inactive"));
+                .allMatch(s -> s.equals("Speaker with id " + inactiveSpeaker().getId() + " is inactive"));
     }
 
     @Test
@@ -82,7 +82,7 @@ class SpeakerSetValidatorTest {
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
                 .hasSize(1)
-                .allMatch(s -> s.equals("Speaker is inactive"));
+                .allMatch(s -> s.equals("Speaker with id " + inactiveSpeaker().getId() + " is inactive"));
     }
 
     @Test
@@ -104,7 +104,7 @@ class SpeakerSetValidatorTest {
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
                 .hasSize(2)
-                .anyMatch(s -> s.equals("Speaker is inactive"))
+                .anyMatch(s -> s.equals("Speaker with id " + inactiveSpeaker().getId() + " is inactive"))
                 .anyMatch(s -> s.equals("Speaker with id 2 is already assigned to speech with id 1"));
     }
 
@@ -141,7 +141,7 @@ class SpeakerSetValidatorTest {
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
                 .hasSize(3)
-                .anyMatch(s -> s.equals("Speaker is inactive"))
+                .anyMatch(s -> s.equals("Speaker with id " + inactiveSpeaker.getId() + " is inactive"))
                 .anyMatch(s -> s.equals("Speaker with id 2 is already assigned to speech with id 1"))
                 .anyMatch(s -> s.equals("Speaker with id 3 is already assigned to speech with id 2"));
     }

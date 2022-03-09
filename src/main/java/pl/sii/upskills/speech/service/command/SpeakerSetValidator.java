@@ -13,9 +13,9 @@ class SpeakerSetValidator {
 
         SpeakerSetValidationException speakerSetValidationException = new SpeakerSetValidationException();
 
-        for (Speaker speaker : speakerSet) {
-            speakerSetValidationException.addAll(isAvailable(speaker, speech));
-        }
+        speakerSet.stream()
+                .map(s -> isAvailable(s, speech))
+                .forEach(speakerSetValidationException::addAll);
 
         if (!speakerSetValidationException.getErrors().isEmpty()) {
             throw speakerSetValidationException;
@@ -24,7 +24,7 @@ class SpeakerSetValidator {
 
     private List<String> isAvailable(Speaker speaker, Speech speech) {
         if (!speaker.isActive()) {
-            return Collections.singletonList("Speaker is inactive");
+            return Collections.singletonList("Speaker with id " + speaker.getId() + " is inactive");
         }
         return getListOfSpeechesToCheck(speech)
                     .stream()
