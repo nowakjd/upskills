@@ -9,19 +9,17 @@ import java.util.Set;
 
 class SpeakerSetValidator {
 
-    boolean validate(Set<Speaker> speakerSet, Speech speech) {
+    void validate(Set<Speaker> speakerSet, Speech speech) {
 
         SpeakerSetValidationException speakerSetValidationException = new SpeakerSetValidationException();
 
-        for (Speaker speaker : speakerSet
-        ) {
+        for (Speaker speaker : speakerSet) {
             speakerSetValidationException.addAll(isAvailable(speaker, speech));
         }
 
         if (!speakerSetValidationException.getErrors().isEmpty()) {
             throw speakerSetValidationException;
         }
-        return true;
     }
 
     private List<String> isAvailable(Speaker speaker, Speech speech) {

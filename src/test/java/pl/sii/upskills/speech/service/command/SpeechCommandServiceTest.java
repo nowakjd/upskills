@@ -47,11 +47,14 @@ class SpeechCommandServiceTest {
     void setUp() {
         Conference testConference = new Conference(ID_OF_DRAFT_IN_DATABASE, "name", "title", 100,
                 ConferenceStatus.DRAFT, null, CONFERENCE_TIMESLOT);
-        Speech speech = new Speech(2L, "Title",
-                CORRECT_TIMESLOT, testConference, new HashSet<>());
+        Conference noRelation = new Conference(ID_OUTSIDE_DATABASE, "name", "title", 100,
+                ConferenceStatus.DRAFT, null, CONFERENCE_TIMESLOT);
+        Speech speech = new Speech(2L, "Title", CORRECT_TIMESLOT, testConference, new HashSet<>());
+        Speech withoutConference = new Speech(1L, "Test", CORRECT_TIMESLOT, noRelation, new HashSet<>());
         SpeechRepository repository = mock(SpeechRepository.class);
         when(repository.save(any())).thenAnswer(a -> a.getArgument(0));
         when(repository.findById(2L)).thenReturn(Optional.of(speech));
+        when(repository.findById(1L)).thenReturn(Optional.of(withoutConference));
         testConference.addSpeech(speech);
         ConferenceRepository conferenceRepository = mock(ConferenceRepository.class);
         when(conferenceRepository.findById(ID_OF_DRAFT_IN_DATABASE)).thenReturn(Optional.of(testConference));
@@ -79,8 +82,8 @@ class SpeechCommandServiceTest {
         assertThat(result.getTimeSlot()).isEqualTo(speechInput.getTimeSlot());
     }
 
-    @DisplayName("Should throw exception when conference is not found in database")
     @Test
+    @DisplayName("Should throw exception when conference is not found in database")
     void noConference() {
         //given
         SpeechInput speechInput = new SpeechInput("Swimming with boots on ?", CORRECT_TIMESLOT);
@@ -92,19 +95,35 @@ class SpeechCommandServiceTest {
         assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
     }
 
-    @DisplayName("Should throw exception when speech is not found in database while adding speakers")
     @Test
+    @DisplayName("Should throw exception when speech is not found in database while adding speakers")
     void noSpeech() {
         //given
         SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(
                 new TreeSet<>(Arrays.asList(1L, 2L, 3L)));
 
         //when
-        Executable lambdaUnderTest = () -> underTest.addSpeakers(223L,
+        Executable lambdaUnderTest = () -> underTest.addSpeakers(ID_OF_DRAFT_IN_DATABASE, 223L,
                 speechSpeakersInput);
 
         //then
         assertThrows(SpeechNotFoundException.class, lambdaUnderTest);
+    }
+
+    @Test
+    @DisplayName("Should throw speech relation exception while adding speakers to speech in other conference")
+    void noRelationSpeechConference() {
+        //given
+        SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(
+                new TreeSet<>(Arrays.asList(1L, 2L, 3L)));
+
+        //when
+        Executable lambdaUnderTest = () -> underTest.addSpeakers(ID_OF_DRAFT_IN_DATABASE, 1L,
+                speechSpeakersInput);
+
+        //then
+        SpeechRelationException exception = assertThrows(SpeechRelationException.class, lambdaUnderTest);
+        assertThat(exception.getMessage()).isEqualTo("Speech relation with this entity doesn't exists");
     }
 
 }

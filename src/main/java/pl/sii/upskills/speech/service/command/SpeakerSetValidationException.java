@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class SpeakerSetValidationException extends RuntimeException {
-
     private final List<String> speakerSetErrors = new ArrayList<>();
 
     void addError(String message) {
@@ -19,4 +18,5 @@ public class SpeakerSetValidationException extends RuntimeException {
     public List<String> getErrors() {
         return Collections.unmodifiableList(speakerSetErrors);
     }
+
 }

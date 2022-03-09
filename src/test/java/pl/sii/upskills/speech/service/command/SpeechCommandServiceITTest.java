@@ -66,9 +66,9 @@ class SpeechCommandServiceITTest {
         SpeechOutput speechOutput = underTest.createSpeech(conferenceOutput.getId(), speechInput);
         SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(Set.of(1L, 2L));
 
-
         // when
-        SpeechOutput result = underTest.addSpeakers(speechOutput.getId(), speechSpeakersInput);
+        SpeechOutput result = underTest.addSpeakers(conferenceOutput.getId(), speechOutput.getId(),
+                speechSpeakersInput);
 
         // then
         assertThat(result.getSpeakers()).hasSize(2);

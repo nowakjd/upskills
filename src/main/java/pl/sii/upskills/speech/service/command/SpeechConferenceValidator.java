@@ -7,20 +7,23 @@ import pl.sii.upskills.speech.persistence.Speech;
 
 public class SpeechConferenceValidator {
 
-    boolean validate(Conference conference, Speech speech) {
+    void validate(Conference conference, Speech speech) {
 
-        if (conference == null || !conference.getStatus().equals(ConferenceStatus.DRAFT)) {
+        if (conference == null) {
+            throw new ConferenceDraftNotFoundException();
+        }
+
+        if (!conference.getStatus().equals(ConferenceStatus.DRAFT)) {
             throw new ConferenceDraftNotFoundException(conference.getId());
         }
 
         if (speech == null) {
-            throw new SpeechNotFoundException(speech.getId());
+            throw new SpeechNotFoundException();
         }
 
-        if (!conference.getListOfSpeeches().contains(speech)) {
+        if (!speech.getConference().getId().equals(conference.getId())) {
             throw new SpeechRelationException();
         }
-
-        return true;
     }
+
 }

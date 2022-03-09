@@ -17,7 +17,6 @@ class SpeechMapperTest {
 
     TimeSlotVO timeSlot = new TimeSlotVO(NOW_FOR_TEST.plusDays(1), NOW_FOR_TEST.plusDays(1).plusHours(3));
 
-
     @Test
     @DisplayName("Should map SpeechInput to Speech")
     void shouldMapSpeech() {

@@ -19,7 +19,6 @@ import javax.transaction.Transactional;
 import java.util.Set;
 import java.util.UUID;
 
-
 @Service
 public class SpeechCommandService {
     private final SpeechRepository speechRepository;
@@ -52,9 +51,9 @@ public class SpeechCommandService {
     }
 
     @Transactional
-    public SpeechOutput addSpeakers(Long id, SpeechSpeakersInput speechSpeakersInput) {
+    public SpeechOutput addSpeakers(UUID conferenceId, Long id, SpeechSpeakersInput speechSpeakersInput) {
         Speech speech = getSpeech(id);
-        Conference conference = speech.getConference();
+        Conference conference = getConference(conferenceId);
         speechConferenceValidator.validate(conference, speech);
         Set<Speaker> speakerSet = speakerQueryService.getSpeakersIds(speechSpeakersInput.getIds());
         speakerSetValidator.validate(speakerSet, speech);
@@ -74,6 +73,5 @@ public class SpeechCommandService {
                 .findById(id)
                 .orElseThrow(() -> new SpeechNotFoundException(id));
     }
-
 
 }

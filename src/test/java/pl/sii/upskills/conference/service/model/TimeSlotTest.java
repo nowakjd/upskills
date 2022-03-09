@@ -18,11 +18,11 @@ class TimeSlotTest {
     @DisplayName("Timeslots aren't colliding")
     void happyPath() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot nonColidingTimeslot = createNonCollidingTimeslot();
 
         //when
-        boolean result =  undertest.doesntCollide(nonColidingTimeslot);
+        boolean result =  underTest.doesntCollide(nonColidingTimeslot);
 
         //then
         assertThat(result).isTrue();
@@ -33,11 +33,11 @@ class TimeSlotTest {
     @DisplayName("Timeslot that is later collides with tested one")
     void collideAfter() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot laterColidingTimeslot = createCollidingTimeslot();
 
         //when
-        boolean result =  undertest.doesntCollide(laterColidingTimeslot);
+        boolean result =  underTest.doesntCollide(laterColidingTimeslot);
 
         //then
         assertThat(result).isFalse();
@@ -48,11 +48,11 @@ class TimeSlotTest {
     @DisplayName("Timeslot that is earlier collides with tested one")
     void collideEarlier() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot earlierColidingTimeslot = createEarlierCollidingTimeslot();
 
         //when
-        boolean result =  undertest.doesntCollide(earlierColidingTimeslot);
+        boolean result =  underTest.doesntCollide(earlierColidingTimeslot);
 
         //then
         assertThat(result).isFalse();
@@ -63,11 +63,11 @@ class TimeSlotTest {
     @DisplayName("Timeslot that starts the same collides with tested one")
     void collideStartDateEqual() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot sameStartDate = createSameStartDateTimeslot();
 
         //when
-        boolean result =  undertest.doesntCollide(sameStartDate);
+        boolean result =  underTest.doesntCollide(sameStartDate);
 
         //then
         assertThat(result).isFalse();
@@ -78,11 +78,11 @@ class TimeSlotTest {
     @DisplayName("Timeslot that ends the same collides with tested one")
     void collideEndDateEqual() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot sameEndDate = createSameEndDateTimeslot();
 
         //when
-        boolean result =  undertest.doesntCollide(sameEndDate);
+        boolean result =  underTest.doesntCollide(sameEndDate);
 
         //then
         assertThat(result).isFalse();
@@ -93,11 +93,11 @@ class TimeSlotTest {
     @DisplayName("Timeslot that start and ends the same collides with tested one")
     void collideEqual() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot equal = createTestTimeslot();
 
         //when
-        boolean result =  undertest.doesntCollide(equal);
+        boolean result =  underTest.doesntCollide(equal);
 
         //then
         assertThat(result).isFalse();
@@ -108,11 +108,11 @@ class TimeSlotTest {
     @DisplayName("Timeslot starts when tested one ends")
     void endsWhenSecondStarts() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot startingOne = createStartDateEqualToEndDate();
 
         //when
-        boolean result =  undertest.doesntCollide(startingOne);
+        boolean result =  underTest.doesntCollide(startingOne);
 
         //then
         assertThat(result).isFalse();
@@ -123,11 +123,11 @@ class TimeSlotTest {
     @DisplayName("Timeslot endss when tested one starts")
     void startsWhenSecondEnds() {
         //given
-        TimeSlot undertest = createTestTimeslot();
+        TimeSlot underTest = createTestTimeslot();
         TimeSlot endingOne = createEndDateEqualToStartDate();
 
         //when
-        boolean result =  undertest.doesntCollide(endingOne);
+        boolean result =  underTest.doesntCollide(endingOne);
 
         //then
         assertThat(result).isFalse();

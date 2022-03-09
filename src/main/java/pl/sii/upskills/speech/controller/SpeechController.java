@@ -27,9 +27,10 @@ public class SpeechController {
     }
 
     @PutMapping("/conferences/{conferenceId}/speeches/{id}/speakers")
-    ResponseEntity<SpeechOutput> addSpeakers(@PathVariable("id") Long id,
+    ResponseEntity<SpeechOutput> addSpeakers(@PathVariable("conferenceId") UUID conferenceId,
+                                             @PathVariable("id") Long id,
                                              @RequestBody SpeechSpeakersInput speechSpeakersInput) {
-        return new ResponseEntity<>(speechCommandService.addSpeakers(id, speechSpeakersInput),
+        return new ResponseEntity<>(speechCommandService.addSpeakers(conferenceId, id, speechSpeakersInput),
                 HttpStatus.CREATED);
     }
 

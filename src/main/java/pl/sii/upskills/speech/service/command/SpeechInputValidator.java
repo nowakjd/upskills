@@ -20,7 +20,7 @@ public class SpeechInputValidator {
         this.timeService = timeService;
     }
 
-    boolean validate(SpeechInput speechInput, Conference conference) {
+    void validate(SpeechInput speechInput, Conference conference) {
 
         SpeechValidationException speechValidationException = new SpeechValidationException();
 
@@ -48,7 +48,6 @@ public class SpeechInputValidator {
         if (!speechValidationException.getErrors().isEmpty()) {
             throw speechValidationException;
         }
-        return true;
     }
 
     private boolean isEmpty(String string) {

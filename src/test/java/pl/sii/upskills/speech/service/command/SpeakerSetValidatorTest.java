@@ -1,6 +1,6 @@
 package pl.sii.upskills.speech.service.command;
 
-
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -17,35 +17,37 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SpeakerSetValidatorTest {
 
     private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2023, 1, 1, 8, 1);
-    private static final TimeSlotVO CONFERENCE_TIMESLOT
-            = new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1), NOW_FOR_TEST.plusDays(4).plusHours(2));
+
     private final SpeakerSetValidator underTest = new SpeakerSetValidator();
 
-
-    @DisplayName("Should validate speaker")
     @Test
+    @DisplayName("Should validate speaker")
     void happyPath() {
         //given
         Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
         Speaker speaker = activeSpeakerNoOne();
+        Speaker secondSpeaker = activeSpeakerNoTwo();
+        speakers.add(speaker);
+        speakers.add(secondSpeaker);
         Speech toValidate = new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, new HashSet<>());
         //when
-        boolean result = underTest.validate(speakers, toValidate);
+        ThrowableAssert.ThrowingCallable lambdaUnderTest = () -> underTest.validate(speakers, toValidate);
         //then
-        assertThat(result).isTrue();
+        assertThatNoException().isThrownBy(lambdaUnderTest);
     }
 
-    @DisplayName("Should throw exception when speaker is inactive")
     @Test
+    @DisplayName("Should throw exception when speaker is inactive")
     void inactive() {
         Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
@@ -62,8 +64,8 @@ class SpeakerSetValidatorTest {
                 .allMatch(s -> s.equals("Speaker is inactive"));
     }
 
-    @DisplayName("Should throw exception when speaker is inactive without overlapping information")
     @Test
+    @DisplayName("Should throw exception when speaker is inactive without overlapping information")
     void inactiveAndOverlaps() {
         Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
@@ -83,8 +85,8 @@ class SpeakerSetValidatorTest {
                 .allMatch(s -> s.equals("Speaker is inactive"));
     }
 
-    @DisplayName("Should throw two exceptions with two different messages")
     @Test
+    @DisplayName("Should throw two exceptions with two different messages")
     void oneSpeakerInactiveSecondOverlaps() {
         Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
@@ -106,8 +108,8 @@ class SpeakerSetValidatorTest {
                 .anyMatch(s -> s.equals("Speaker with id 2 is already assigned to speech with id 1"));
     }
 
-    @DisplayName("Should throw exception with 3 messages")
     @Test
+    @DisplayName("Should throw exception with 3 messages")
     void oneSpeakerInactiveTwoOverlaps() {
         Conference conference = conferenceMaker();
         Set<Speaker> speakers = new HashSet<>();
@@ -145,8 +147,8 @@ class SpeakerSetValidatorTest {
     }
 
     private Conference conferenceMaker() {
-        return new Conference(UUID.randomUUID(), "Name", "Title", 100,
-                ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
+        return new Conference(UUID.fromString("0163c134-0141-415f-aaf6-89a502fb58bf"), "Name", "Title",
+                100, ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
                 NOW_FOR_TEST.plusDays(40)));
     }
 
