@@ -31,42 +31,42 @@ public class SpeakerQueryService {
                 .toList();
     }
 
-//    public List<SpeakerOutput> findSpeakers(String speakerStatus) {
-//        if (speakerStatus == null) {
-//            return findAllSpeakers();
-//        } else {
-//            return speakerRepository
-//                    .findBySpeakerStatus(mapToEnum(speakerStatus))
-//                    .stream()
-//                    .map(speakerOutputMapper)
-//                    .toList();
-//        }
-//    }
-//    public SpeakerStatus mapToEnum(String speakerStatus) {
-//        try {
-//            return SpeakerStatus.valueOf(speakerStatus);
-//        } catch (IllegalArgumentException e) {
-//            throw new SpeakerBadRequestException("You have provided wrong status!"
-//                    + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
-//        }
-//    }
-
     public List<SpeakerOutput> findSpeakers(String speakerStatus) {
-        return getSpeakerStatus(speakerStatus)
-                .map(speakerRepository::findBySpeakerStatus)
-                .orElseGet(speakerRepository::findAll)
-                .stream()
-                .map(speakerOutputMapper)
-                .toList();
+        if (speakerStatus == null) {
+            return findAllSpeakers();
+        } else {
+            return speakerRepository
+                    .findBySpeakerStatus(mapToEnum(speakerStatus))
+                    .stream()
+                    .map(speakerOutputMapper)
+                    .toList();
+        }
     }
-
-    private Optional<SpeakerStatus> getSpeakerStatus(String speakerStatus) {
+    public SpeakerStatus mapToEnum(String speakerStatus) {
         try {
-            return Optional.ofNullable(speakerStatus)
-                    .map(SpeakerStatus::valueOf);
+            return SpeakerStatus.valueOf(speakerStatus);
         } catch (IllegalArgumentException e) {
             throw new SpeakerBadRequestException("You have provided wrong status!"
                     + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
         }
     }
+
+//    public List<SpeakerOutput> findSpeakers(String speakerStatus) {
+//        return getSpeakerStatus(speakerStatus)
+//                .map(speakerRepository::findBySpeakerStatus)
+//                .orElseGet(speakerRepository::findAll)
+//                .stream()
+//                .map(speakerOutputMapper)
+//                .toList();
+//    }
+//
+//    private Optional<SpeakerStatus> getSpeakerStatus(String speakerStatus) {
+//        try {
+//            return Optional.ofNullable(speakerStatus)
+//                    .map(SpeakerStatus::valueOf);
+//        } catch (IllegalArgumentException e) {
+//            throw new SpeakerBadRequestException("You have provided wrong status!"
+//                    + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
+//        }
+//    }
 }
