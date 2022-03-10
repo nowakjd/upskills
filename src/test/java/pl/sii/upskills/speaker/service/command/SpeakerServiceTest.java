@@ -11,7 +11,6 @@ import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
-import pl.sii.upskills.speaker.service.model.SpeakerStatusInput;
 
 import java.util.Optional;
 import java.util.function.BiFunction;

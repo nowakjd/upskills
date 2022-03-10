@@ -49,7 +49,8 @@ class GlobalControllerAdviceITTest {
     void handleSpeakerBadRequestException(String parameter) {
 
         // when:
-        ResponseEntity<String> response = restTemplate.getForEntity(API_ROOTS + "?speakerStatus=" + parameter, String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(API_ROOTS + "?speakerStatus="
+                + parameter, String.class);
 
         // then:
 

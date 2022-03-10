@@ -32,7 +32,7 @@ class GlobalControllerAdvice2ITTest {
 
     @Test
     @DisplayName("shouldReturn4xxWhenBadStatusConferencesRequest")
-    void handleConferenceBadRequestException() throws Exception{
+    void handleConferenceBadRequestException() throws Exception {
 
         //given
         Mockito.when(conferenceQueryService.findByStatus(any())).thenThrow(new ConferenceBadRequestException("Error"));
