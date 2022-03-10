@@ -41,9 +41,8 @@ class SpeakerServiceTest {
         SpeakerInputValidator validator = new SpeakerInputValidator();
         Function<Speaker, SpeakerOutput> outputMapper = new SpeakerOutputMapper();
         BiFunction<Speaker, SpeakerInput, Speaker> inputMapper = new SpeakerInputMapper();
-        SpeakerStatusInputValidator speakerStatusInputValidator =new SpeakerStatusInputValidator();
         underTest = new SpeakerCommandService(repository, validator, outputMapper,
-                inputMapper,speakerStatusInputValidator);
+                inputMapper);
     }
 
     @Test

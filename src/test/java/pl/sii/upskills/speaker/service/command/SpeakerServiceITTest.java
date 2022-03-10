@@ -11,7 +11,6 @@ import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
-import static pl.sii.upskills.speaker.persistence.SpeakerStatus.INACTIVE;
 
 @SpringBootTest
 class SpeakerServiceITTest {
