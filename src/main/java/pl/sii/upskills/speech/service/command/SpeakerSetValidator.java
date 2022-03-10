@@ -9,11 +9,20 @@ import java.util.List;
 import java.util.Set;
 
 class SpeakerSetValidator {
+    private final Speech speech;
+    private final SpeechSpeakersInput input;
+
     private static final String SPEAKER_WITH = "Speaker with id ";
 
-    void validate(Set<Speaker> speakerSet, Speech speech, SpeechSpeakersInput input) {
+    public SpeakerSetValidator(Speech speech, SpeechSpeakersInput speechSpeakersInput) {
+        this.speech = speech;
+        this.input = speechSpeakersInput;
+    }
+
+    void validate() {
 
         SpeakerSetValidationException speakerSetValidationException = new SpeakerSetValidationException();
+        Set<Speaker> speakerSet = speech.getSpeakerSet();
 
         speakerSetValidationException.addAll(checkInput(speakerSet, input));
         speakerSet.stream()
