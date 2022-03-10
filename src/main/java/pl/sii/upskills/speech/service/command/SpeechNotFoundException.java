@@ -7,10 +7,6 @@ import java.util.List;
 public class SpeechNotFoundException extends RuntimeException {
     private final List<String> errors = new ArrayList<>();
 
-    public  SpeechNotFoundException() {
-        errors.add("Speech doesn't exist");
-    }
-
     public SpeechNotFoundException(Long speechId) {
         errors.add(String.format("Speech with id = %s was not found", speechId));
     }

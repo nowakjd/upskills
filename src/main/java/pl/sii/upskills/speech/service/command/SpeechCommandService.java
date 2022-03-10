@@ -55,8 +55,8 @@ public class SpeechCommandService {
         Speech speech = getSpeech(id);
         Conference conference = getConference(conferenceId);
         speechConferenceValidator.validate(conference, speech);
-        Set<Speaker> speakerSet = speakerQueryService.getSpeakersIds(speechSpeakersInput.getIds());
-        speakerSetValidator.validate(speakerSet, speech);
+        Set<Speaker> speakerSet = speakerQueryService.getSpeakersByIds(speechSpeakersInput.getIds());
+        speakerSetValidator.validate(speakerSet, speech, speechSpeakersInput);
         speech.setSpeakerSet(speakerSet);
         return speechOutputMapper.apply(speech);
     }
