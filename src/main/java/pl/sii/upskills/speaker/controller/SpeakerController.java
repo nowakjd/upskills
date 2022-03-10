@@ -13,6 +13,7 @@ import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -32,7 +33,10 @@ class SpeakerController {
 
     @GetMapping("/speakers")
     ResponseEntity<List<SpeakerOutput>> findAllWithStatus(@RequestParam(required = false) String speakerStatus) {
-        List<SpeakerOutput> speakers = speakerQueryService.findSpeakers(speakerStatus);
+        List<SpeakerOutput> speakers = Optional.ofNullable(speakerStatus)
+                .map(this::mapToEnum)
+                .map(speakerQueryService::findSpeakersByStatus)
+                .orElseGet(speakerQueryService::findAllSpeakers);
         return new ResponseEntity<>(speakers, HttpStatus.OK);
     }
 
