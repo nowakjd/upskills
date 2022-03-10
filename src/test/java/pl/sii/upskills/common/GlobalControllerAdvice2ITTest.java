@@ -1,23 +1,24 @@
 package pl.sii.upskills.common;
 
+
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.sii.upskills.conference.controller.ConferenceController;
-import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.command.ConferenceBadRequestException;
 import pl.sii.upskills.conference.service.query.ConferenceQueryService;
 
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,7 +30,15 @@ class GlobalControllerAdvice2ITTest {
     MockMvc mockMvc;
 
     @MockBean
+    //@InjectMocks
     ConferenceQueryService conferenceQueryService;
+
+//    @BeforeEach
+//    public void setup() {
+//        MockitoAnnotations.openMocks(this);
+//        mockMvc = MockMvcBuilders.standaloneSetup(conferenceQueryService).build();
+
+//    }
 
     @Test
     @DisplayName("shouldReturn4xxWhenBadStatusConferencesRequest")
@@ -48,6 +57,7 @@ class GlobalControllerAdvice2ITTest {
 //        assertEquals(response.getBody(),
 //                "[\"You have provided wrong status!Please use one of the following statuses : "
 //                        + Arrays.toString(ConferenceStatus.values()) + "\"]");
+
 
     }
 }

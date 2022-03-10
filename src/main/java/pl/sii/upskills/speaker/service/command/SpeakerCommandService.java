@@ -53,13 +53,13 @@ public class SpeakerCommandService {
         speakerStatusInputValidator.validateStatus(speakerStatus);
         return speakerRepository
                 .findById(id)
-                .map(s -> applyStatus(s, speakerStatus) )
+                .map(s -> applyStatus(s, speakerStatus))
                 .map(speakerRepository::save)
                 .map(speakerOutputMapper)
                 .orElseThrow(() -> new SpeakerNotFoundException(id));
     }
 
-    private Speaker applyStatus (Speaker speaker, SpeakerStatus speakerStatus) {
+    private Speaker applyStatus(Speaker speaker, SpeakerStatus speakerStatus) {
         speaker.setSpeakerStatus(speakerStatus);
         return  speaker;
     }

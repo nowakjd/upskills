@@ -13,9 +13,9 @@ class SpeakerStatusInputValidator {
 
         SpeakerValidationException speakerValidationException = new SpeakerValidationException();
 
-        if(speakerStatus == null) {
-            speakerValidationException.addError("You have provided wrong status!" +
-                    "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
+        if (speakerStatus == null) {
+            speakerValidationException.addError("You have provided wrong status!"
+                    + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
         }
 
         if (!speakerValidationException.getErrors().isEmpty()) {

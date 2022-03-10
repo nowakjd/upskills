@@ -9,7 +9,6 @@ import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -42,6 +41,7 @@ public class SpeakerQueryService {
                     .toList();
         }
     }
+
     public SpeakerStatus mapToEnum(String speakerStatus) {
         try {
             return SpeakerStatus.valueOf(speakerStatus);
