@@ -9,6 +9,7 @@ import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 @Service
@@ -50,4 +51,9 @@ public class SpeakerQueryService {
                     + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
         }
     }
+
+    public Set<Speaker> getSpeakersByIds(Set<Long> ids) {
+        return speakerRepository.findByIdIn(ids);
+    }
+
 }
