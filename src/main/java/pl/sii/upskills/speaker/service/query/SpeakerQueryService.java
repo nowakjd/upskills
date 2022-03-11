@@ -5,12 +5,13 @@ import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
+import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import javax.transaction.Transactional;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class SpeakerQueryService {
@@ -42,7 +43,8 @@ public class SpeakerQueryService {
                     .toList();
         }
     }
-    public SpeakerStatus mapToEnum(String speakerStatus) {
+
+    private SpeakerStatus mapToEnum(String speakerStatus) {
         try {
             return SpeakerStatus.valueOf(speakerStatus);
         } catch (IllegalArgumentException e) {
@@ -51,22 +53,18 @@ public class SpeakerQueryService {
         }
     }
 
-//    public List<SpeakerOutput> findSpeakers(String speakerStatus) {
-//        return getSpeakerStatus(speakerStatus)
-//                .map(speakerRepository::findBySpeakerStatus)
-//                .orElseGet(speakerRepository::findAll)
-//                .stream()
-//                .map(speakerOutputMapper)
-//                .toList();
-//    }
-//
-//    private Optional<SpeakerStatus> getSpeakerStatus(String speakerStatus) {
-//        try {
-//            return Optional.ofNullable(speakerStatus)
-//                    .map(SpeakerStatus::valueOf);
-//        } catch (IllegalArgumentException e) {
-//            throw new SpeakerBadRequestException("You have provided wrong status!"
-//                    + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
-//        }
-//    }
+    @Transactional
+    public Set<Speaker> getSpeakersIds(Set<Long> ids) {
+        return Optional.of(ids)
+                .orElse(Collections.emptySet())
+                .stream()
+                .map(this::getSpeaker)
+                .collect(Collectors.toSet());
+    }
+
+    private Speaker getSpeaker(Long i) {
+        return speakerRepository
+                .findById(i)
+                .orElseThrow(() -> new SpeakerNotFoundException(i));
+    }
 }

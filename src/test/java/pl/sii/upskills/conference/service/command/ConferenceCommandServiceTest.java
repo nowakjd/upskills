@@ -48,10 +48,10 @@ class ConferenceCommandServiceTest {
                 new Conference(ID_OF_PUBLISHED_IN_DATABASE, "name", "title", 100,
                         ConferenceStatus.PUBLISHED, null, CORRECT_TIMESLOT)));
         underTest = new ConferenceCommandService(
-                new ConferenceInputValidator(() -> NOW_FOR_TEST),
                 new ConferenceMapper(),
                 new ConferenceOutputMapper(),
-                repository);
+                repository,
+                new ConferenceValidator(() -> NOW_FOR_TEST));
     }
 
     @Test
@@ -89,7 +89,6 @@ class ConferenceCommandServiceTest {
         assertThat(result.getTitle()).isEqualTo(conferenceInput.getTitle());
         assertThat(result.getNumberOfPlaces()).isEqualTo(conferenceInput.getNumberOfPlaces());
         assertThat(result.getTimeSlot()).isEqualTo(conferenceInput.getTimeSlot());
-
     }
 
     @DisplayName("Should throw exception when updated conference is not found in database")
@@ -98,14 +97,12 @@ class ConferenceCommandServiceTest {
         //given
         ConferenceInput conferenceInput = new ConferenceInput("title", "name", 100, null,
                 CORRECT_TIMESLOT);
-        UUID idToUpdate = ID_OUTSIDE_DATABASE;
 
         //when
-        Executable lambdaUnderTest = () -> underTest.updateConference(idToUpdate, conferenceInput);
+        Executable lambdaUnderTest = () -> underTest.updateConference(ID_OUTSIDE_DATABASE, conferenceInput);
 
         //then
         assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
-
     }
 
     @DisplayName("Should throw exception when updated conference is published")
@@ -114,12 +111,10 @@ class ConferenceCommandServiceTest {
         //given
         ConferenceInput conferenceInput = new ConferenceInput("title", "name", 100, null,
                 CORRECT_TIMESLOT);
-        UUID idToUpdate = ID_OF_PUBLISHED_IN_DATABASE;
         //when
-        Executable lambdaUnderTest = () -> underTest.updateConference(idToUpdate, conferenceInput);
+        Executable lambdaUnderTest = () -> underTest.updateConference(ID_OF_PUBLISHED_IN_DATABASE, conferenceInput);
 
         //then
         assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
-
     }
 }

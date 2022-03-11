@@ -12,7 +12,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ConferenceOutputMapperTest {
+class ConferenceOutputMapperTest {
 
     private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2020, 1, 1, 0, 1);
@@ -25,7 +25,7 @@ public class ConferenceOutputMapperTest {
         // given
         ConferenceOutputMapper underTest = new ConferenceOutputMapper();
         Conference conference = new Conference(UUID.fromString("0963c134-0141-415f-aaf6-89a502fb58bf"), "adam",
-                    "damian", 15, ConferenceStatus.DRAFT, null, timeSlot);
+                "damian", 15, ConferenceStatus.DRAFT, null, timeSlot);
         // when
         ConferenceOutput result = underTest.apply(conference);
 

@@ -24,17 +24,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 class ConferenceControllerITTest {
+    private static final LocalDateTime START_FOR_TEST =
+            LocalDateTime.of(2023, 1, 1, 0, 1);
+    private static final LocalDateTime END_FOR_TEST =
+            LocalDateTime.of(2023, 1, 1, 8, 1);
     @Autowired
     private TestRestTemplate restTemplate;
 
     private URI createServerAddress() throws URISyntaxException {
         return new URI("http://localhost:7070/api/v1/conferences");
     }
-
-    private static final LocalDateTime START_FOR_TEST =
-            LocalDateTime.of(2023, 1, 1, 0, 1);
-    private static final LocalDateTime END_FOR_TEST =
-            LocalDateTime.of(2023, 1, 1, 8, 1);
 
     @Test
     @DisplayName("shouldReturn2xxWhenCreateConferenceIsSuccessful")

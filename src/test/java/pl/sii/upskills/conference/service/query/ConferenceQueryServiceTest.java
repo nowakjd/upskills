@@ -15,7 +15,10 @@ import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,10 +29,10 @@ import static org.mockito.Mockito.when;
 
 class ConferenceQueryServiceTest {
 
-    private ConferenceQueryService underTest;
-    private ConferenceRepository repository;
     private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2020, 1, 1, 0, 1);
+    private ConferenceQueryService underTest;
+    private ConferenceRepository repository;
 
     @BeforeEach
     void setUp() {

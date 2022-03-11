@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-
 class SpeakerControllerITTest {
 
     @Autowired
@@ -43,7 +42,7 @@ class SpeakerControllerITTest {
     void createSpeaker() throws Exception {
         // given:
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
-                "john.fowler@gmail.com", "It's my life");
+                "john.fowler@gmail.com", "It's my life", ACTIVE);
         // when:
         RequestEntity<SpeakerInput> request = RequestEntity
                 .post(createServerAddress())
@@ -66,7 +65,7 @@ class SpeakerControllerITTest {
         // given:
         insertSpeakers();
         SpeakerInput speakerInput = new SpeakerInput("John", "Fowler", "987654321",
-                "john.fowler@gmail.com", "It's my life");
+                "john.fowler@gmail.com", "It's my life", ACTIVE);
         // when:
         RequestEntity<SpeakerInput> request = RequestEntity
                 .put(updateServerAddress())

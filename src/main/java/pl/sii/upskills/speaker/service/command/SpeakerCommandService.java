@@ -18,17 +18,14 @@ public class SpeakerCommandService {
     private final SpeakerInputValidator speakerInputValidator;
     private final Function<Speaker, SpeakerOutput> speakerOutputMapper;
     private final BiFunction<Speaker, SpeakerInput, Speaker> speakerInputMapper;
-    private final SpeakerStatusInputValidator speakerStatusInputValidator;
 
     public SpeakerCommandService(SpeakerRepository speakerRepository, SpeakerInputValidator speakerInputValidator,
                                  Function<Speaker, SpeakerOutput> speakerOutputMapper,
-                                 BiFunction<Speaker, SpeakerInput, Speaker> speakerInputMapper,
-                                 SpeakerStatusInputValidator speakerStatusInputValidator) {
+                                 BiFunction<Speaker, SpeakerInput, Speaker> speakerInputMapper) {
         this.speakerRepository = speakerRepository;
         this.speakerInputValidator = speakerInputValidator;
         this.speakerOutputMapper = speakerOutputMapper;
         this.speakerInputMapper = speakerInputMapper;
-        this.speakerStatusInputValidator = speakerStatusInputValidator;
     }
 
     public SpeakerOutput addSpeaker(SpeakerInput speakerInput) {
@@ -47,20 +44,5 @@ public class SpeakerCommandService {
                 .map(speakerRepository::save)
                 .map(speakerOutputMapper)
                 .orElseThrow(() -> new SpeakerNotFoundException(id));
-    }
-
-    public SpeakerOutput changeStatus(Long id, SpeakerStatus speakerStatus) {
-        speakerStatusInputValidator.validateStatus(speakerStatus);
-        return speakerRepository
-                .findById(id)
-                .map(s -> applyStatus(s, speakerStatus) )
-                .map(speakerRepository::save)
-                .map(speakerOutputMapper)
-                .orElseThrow(() -> new SpeakerNotFoundException(id));
-    }
-
-    private Speaker applyStatus (Speaker speaker, SpeakerStatus speakerStatus) {
-        speaker.setSpeakerStatus(speakerStatus);
-        return  speaker;
     }
 }

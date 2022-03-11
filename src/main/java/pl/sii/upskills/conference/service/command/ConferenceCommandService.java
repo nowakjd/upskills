@@ -15,25 +15,26 @@ import java.util.UUID;
 
 @Service
 public class ConferenceCommandService {
-    private final ConferenceInputValidator conferenceInputValidator;
     private final ConferenceMapper conferenceMapper;
     private final ConferenceOutputMapper conferenceOutputMapper;
     private final ConferenceRepository conferenceRepository;
+    private final ConferenceValidator conferenceValidator;
 
-    public ConferenceCommandService(ConferenceInputValidator conferenceInputValidator,
-                                    ConferenceMapper conferenceMapper, ConferenceOutputMapper conferenceOutputMapper,
-                                    ConferenceRepository conferenceRepository) {
-        this.conferenceInputValidator = conferenceInputValidator;
+    public ConferenceCommandService(ConferenceMapper conferenceMapper,
+                                    ConferenceOutputMapper conferenceOutputMapper,
+                                    ConferenceRepository conferenceRepository,
+                                    ConferenceValidator conferenceValidator) {
         this.conferenceMapper = conferenceMapper;
         this.conferenceOutputMapper = conferenceOutputMapper;
         this.conferenceRepository = conferenceRepository;
+        this.conferenceValidator = conferenceValidator;
     }
 
     @Transactional
     public ConferenceOutput createConference(ConferenceInput conferenceInput) {
-        conferenceInputValidator.validate(conferenceInput);
         return Optional.of(conferenceInput)
                 .map(s -> conferenceMapper.apply(new Conference(), s))
+                .map(conferenceValidator)
                 .map(conferenceRepository::save)
                 .map(conferenceOutputMapper)
                 .orElseThrow();
@@ -41,13 +42,32 @@ public class ConferenceCommandService {
 
     @Transactional
     public ConferenceOutput updateConference(UUID id, ConferenceInput conferenceInput) {
-        conferenceInputValidator.validate(conferenceInput);
         return conferenceRepository
                 .findById(id)
                 .filter(conference -> conference.getStatus().equals(ConferenceStatus.DRAFT))
                 .map(conference -> conferenceMapper.apply(conference, conferenceInput))
+                .map(conferenceValidator)
                 .map(conferenceRepository::save)
                 .map(conferenceOutputMapper)
                 .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
+    }
+
+    @Transactional
+    private ConferenceOutput publish(UUID id) {
+        return conferenceRepository.findById(id)
+                .filter(conference -> conference.getStatus().equals(ConferenceStatus.DRAFT))
+                .map(Conference::publish)
+                .map(conferenceValidator)
+                .map(conferenceOutputMapper)
+                .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
+    }
+
+    @Transactional
+    public ConferenceOutput changeStatus(UUID id, ConferenceStatus status) {
+        return switch (status) {
+            case PUBLISHED -> publish(id);
+            default -> throw
+                    new ConferenceBadRequestException("Changing status to " + status + " is not allowed");
+        };
     }
 }
