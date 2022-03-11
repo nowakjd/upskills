@@ -30,7 +30,7 @@ public class PublishedValidator {
     private Optional<Set<String>> allSpeechesHaveAtLeastOneSpeaker(Collection<Speech> speeches) {
         Set<String> errors = new HashSet<>();
         speeches.forEach(speech -> hasAtLeastOneSpeaker(speech).ifPresent(errors::add));
-        return Optional.empty();
+        return optionalOf(errors);
     }
 
     private Optional<Set<String>> optionalOf(Set<String> errors) {
