@@ -27,18 +27,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class SpeechCommandServiceITTest {
 
-    private static final LocalDateTime NOW_FOR_TEST =
-            LocalDateTime.of(2024, 1, 1, 0, 1);
-    private static final TimeSlotVO CORRECT_TIMESLOT
-            = new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1), NOW_FOR_TEST.plusDays(1).plusHours(2));
-    private static final TimeSlotVO CONFERENCE_TIMESLOT
-            = new TimeSlotVO(NOW_FOR_TEST.plusDays(1), NOW_FOR_TEST.plusDays(2));
     @Autowired
     SpeakerRepository speakerRepository;
     @Autowired
     ConferenceCommandService conferenceCommandService;
     @Autowired
     SpeechCommandService underTest;
+
+    private static final LocalDateTime NOW_FOR_TEST =
+            LocalDateTime.of(2024, 1, 1, 0, 1);
+    private static final TimeSlotVO CORRECT_TIMESLOT
+            = new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1), NOW_FOR_TEST.plusDays(1).plusHours(2));
+    private static final TimeSlotVO CONFERENCE_TIMESLOT
+            = new TimeSlotVO(NOW_FOR_TEST.plusDays(1), NOW_FOR_TEST.plusDays(2));
 
     @Test
     @DisplayName("Should add speech to database")

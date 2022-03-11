@@ -7,7 +7,6 @@ import org.junit.jupiter.api.function.Executable;
 import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
-import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
 import pl.sii.upskills.speech.persistence.Speech;
 
 import java.time.LocalDateTime;
@@ -42,57 +41,6 @@ class SpeechConferenceValidatorTest {
     }
 
     @Test
-    @DisplayName("Should throw conference draft not found exception")
-    void conferenceIsNull() {
-        //given
-        Speech speech = new Speech(1L, "Title", new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(2),
-                NOW_FOR_TEST.plusDays(20).plusHours(6)), new Conference(), new HashSet<>());
-
-        //when
-        Executable lambdaUnderTest = () -> underTest.validate(null, speech);
-
-        //then
-        ConferenceDraftNotFoundException exception = assertThrows(ConferenceDraftNotFoundException.class,
-                lambdaUnderTest);
-        assertThat(exception.getMessage()).isEqualTo("Conference doesn't exist");
-    }
-
-    @Test
-    @DisplayName("Should throw conference draft not found exception")
-    void conferenceIsPublished() {
-        //given
-        Conference conference = publishedConferenceMaker();
-        Speech speech = new Speech(1L, "Title", new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(2),
-                NOW_FOR_TEST.plusDays(20).plusHours(6)), conference, new HashSet<>());
-        conference.addSpeech(speech);
-
-        //when
-        Executable lambdaUnderTest = () -> underTest.validate(conference, speech);
-
-        //then
-        ConferenceDraftNotFoundException exception = assertThrows(ConferenceDraftNotFoundException.class,
-                lambdaUnderTest);
-        assertThat(exception.getMessage()).isEqualTo("Conference draft with id= " + conference.getId() + " not found.");
-    }
-
-    @Test
-    @DisplayName("Should throw speech not found exception")
-    void speechIsNull() {
-        //given
-        Conference conference = conferenceMaker();
-
-        //when
-        Executable lambdaUnderTest = () -> underTest.validate(conference, null);
-
-        //then
-        SpeechNotFoundException exception = assertThrows(SpeechNotFoundException.class,
-                lambdaUnderTest);
-        assertThat(exception.getErrors())
-                .hasSize(1)
-                .allMatch(s -> s.equals("Speech doesn't exist"));
-    }
-
-    @Test
     @DisplayName("Should throw speech/conference relation exceptio")
     void noRelation() {
         //given
@@ -105,7 +53,7 @@ class SpeechConferenceValidatorTest {
         //then
         SpeechRelationException exception = assertThrows(SpeechRelationException.class,
                 lambdaUnderTest);
-        assertThat(exception.getMessage()).isEqualTo("Speech relation with this entity doesn't exists");
+        assertThat(exception.getMessage()).isEqualTo("The speech is not related to the conference");
     }
 
     private Conference conferenceMaker() {
@@ -124,8 +72,8 @@ class SpeechConferenceValidatorTest {
         return new Speech(1L, "Title", new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(2),
                 NOW_FOR_TEST.plusDays(20).plusHours(6)),
                 new Conference(UUID.fromString("0163c134-0141-415f-aaf6-89a502fb58bf"), "Name", "Title",
-                        100, ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
-                        NOW_FOR_TEST.plusDays(40))), new HashSet<>());
+                100, ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
+                NOW_FOR_TEST.plusDays(40))), new HashSet<>());
     }
 
 }

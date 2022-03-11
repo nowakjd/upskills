@@ -22,7 +22,7 @@ class TimeSlotTest {
         TimeSlot nonColidingTimeslot = createNonCollidingTimeslot();
 
         //when
-        boolean result = underTest.doesntCollide(nonColidingTimeslot);
+        boolean result =  underTest.doesntCollide(nonColidingTimeslot);
 
         //then
         assertThat(result).isTrue();
@@ -37,7 +37,7 @@ class TimeSlotTest {
         TimeSlot laterColidingTimeslot = createCollidingTimeslot();
 
         //when
-        boolean result = underTest.doesntCollide(laterColidingTimeslot);
+        boolean result =  underTest.doesntCollide(laterColidingTimeslot);
 
         //then
         assertThat(result).isFalse();
@@ -52,7 +52,7 @@ class TimeSlotTest {
         TimeSlot earlierColidingTimeslot = createEarlierCollidingTimeslot();
 
         //when
-        boolean result = underTest.doesntCollide(earlierColidingTimeslot);
+        boolean result =  underTest.doesntCollide(earlierColidingTimeslot);
 
         //then
         assertThat(result).isFalse();
@@ -67,7 +67,7 @@ class TimeSlotTest {
         TimeSlot sameStartDate = createSameStartDateTimeslot();
 
         //when
-        boolean result = underTest.doesntCollide(sameStartDate);
+        boolean result =  underTest.doesntCollide(sameStartDate);
 
         //then
         assertThat(result).isFalse();
@@ -82,7 +82,7 @@ class TimeSlotTest {
         TimeSlot sameEndDate = createSameEndDateTimeslot();
 
         //when
-        boolean result = underTest.doesntCollide(sameEndDate);
+        boolean result =  underTest.doesntCollide(sameEndDate);
 
         //then
         assertThat(result).isFalse();
@@ -97,7 +97,7 @@ class TimeSlotTest {
         TimeSlot equal = createTestTimeslot();
 
         //when
-        boolean result = underTest.doesntCollide(equal);
+        boolean result =  underTest.doesntCollide(equal);
 
         //then
         assertThat(result).isFalse();
@@ -112,7 +112,7 @@ class TimeSlotTest {
         TimeSlot startingOne = createStartDateEqualToEndDate();
 
         //when
-        boolean result = underTest.doesntCollide(startingOne);
+        boolean result =  underTest.doesntCollide(startingOne);
 
         //then
         assertThat(result).isFalse();
@@ -127,7 +127,7 @@ class TimeSlotTest {
         TimeSlot endingOne = createEndDateEqualToStartDate();
 
         //when
-        boolean result = underTest.doesntCollide(endingOne);
+        boolean result =  underTest.doesntCollide(endingOne);
 
         //then
         assertThat(result).isFalse();

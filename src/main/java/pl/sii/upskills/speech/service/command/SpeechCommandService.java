@@ -27,7 +27,6 @@ public class SpeechCommandService {
     private final SpeechOutputMapper speechOutputMapper;
     private final SpeakerQueryService speakerQueryService;
     private final SpeechMapper speechMapper = new SpeechMapper();
-    private final SpeakerSetValidator speakerSetValidator = new SpeakerSetValidator();
     private final SpeechConferenceValidator speechConferenceValidator = new SpeechConferenceValidator();
 
     public SpeechCommandService(SpeechRepository speechRepository, ConferenceRepository conferenceRepository,
@@ -55,9 +54,10 @@ public class SpeechCommandService {
         Speech speech = getSpeech(id);
         Conference conference = getConference(conferenceId);
         speechConferenceValidator.validate(conference, speech);
-        Set<Speaker> speakerSet = speakerQueryService.getSpeakersIds(speechSpeakersInput.getIds());
-        speakerSetValidator.validate(speakerSet, speech);
+        Set<Speaker> speakerSet = speakerQueryService.getSpeakersByIds(speechSpeakersInput.getIds());
         speech.setSpeakerSet(speakerSet);
+        SpeakerSetValidator speakerSetValidator = new SpeakerSetValidator(speech, speechSpeakersInput);
+        speakerSetValidator.validate();
         return speechOutputMapper.apply(speech);
     }
 

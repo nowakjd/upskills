@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Component
 public class SpeechOutputMapper implements Function<Speech, SpeechOutput> {
 
-    private final Function<Speaker, SpeakerOutput> speakerOutputMapper;
+    private final Function<Speaker, SpeakerOutput>  speakerOutputMapper;
 
     public SpeechOutputMapper(Function<Speaker, SpeakerOutput> speakerOutputMapper) {
         this.speakerOutputMapper = speakerOutputMapper;
@@ -24,8 +24,8 @@ public class SpeechOutputMapper implements Function<Speech, SpeechOutput> {
                 speech.getTimeSlotVO(),
                 speech.getId(),
                 speech.getSpeakerSet()
-                        .stream()
-                        .map(speakerOutputMapper)
-                        .collect(Collectors.toSet()));
+                .stream()
+                .map(speakerOutputMapper)
+                .collect(Collectors.toSet()));
     }
 }

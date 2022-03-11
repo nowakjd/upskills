@@ -123,7 +123,7 @@ class SpeechCommandServiceTest {
 
         //then
         SpeechRelationException exception = assertThrows(SpeechRelationException.class, lambdaUnderTest);
-        assertThat(exception.getMessage()).isEqualTo("Speech relation with this entity doesn't exists");
+        assertThat(exception.getMessage()).isEqualTo("The speech is not related to the conference");
     }
 
 }

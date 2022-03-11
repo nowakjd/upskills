@@ -12,9 +12,6 @@ import java.util.Set;
 @Entity
 public class Speech {
 
-    @ManyToOne
-    @JoinColumn(name = "conference_id")
-    Conference conference;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -24,6 +21,9 @@ public class Speech {
     private String title;
     @Embedded
     private TimeSlotVO timeSlotVO;
+    @ManyToOne
+    @JoinColumn(name = "conference_id")
+    Conference conference;
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Speaker> speakerSet;
 

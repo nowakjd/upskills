@@ -12,9 +12,6 @@ import java.util.UUID;
 @Entity
 public class Conference {
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "conference_id")
-    private final List<Speech> listOfSpeeches = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -33,6 +30,9 @@ public class Conference {
     private MoneyVO price;
     @Embedded
     private TimeSlotVO timeSlotVO;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "conference_id")
+    private final List<Speech> listOfSpeeches = new ArrayList<>();
 
     public Conference() {
     }

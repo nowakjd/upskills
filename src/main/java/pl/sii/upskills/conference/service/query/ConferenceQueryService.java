@@ -38,7 +38,7 @@ public class ConferenceQueryService {
     }
 
     public Conference findDraft(UUID id) {
-        return conferenceRepository
+        return  conferenceRepository
                 .findById(id)
                 .filter(con -> con.getStatus().equals(ConferenceStatus.DRAFT))
                 .orElseThrow(() -> new ConferenceDraftNotFoundException(id));

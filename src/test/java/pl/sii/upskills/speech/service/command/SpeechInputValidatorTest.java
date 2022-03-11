@@ -36,15 +36,6 @@ class SpeechInputValidatorTest {
     TimeSlotVO speechTimeSlot = new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1),
             NOW_FOR_TEST.plusDays(1).plusHours(3));
 
-    private static Stream<Arguments> speechTimeslotProvider() {
-        return Stream.of(
-                arguments(new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1),
-                        NOW_FOR_TEST.plusDays(1).plusMinutes(3))),
-                arguments(new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1),
-                        NOW_FOR_TEST.plusDays(1).plusHours(10)))
-        );
-    }
-
     @BeforeEach
     void setup() {
         underTest = new SpeechInputValidator(() -> NOW_FOR_TEST);
@@ -178,6 +169,15 @@ class SpeechInputValidatorTest {
         assertThat(exception.getErrors())
                 .hasSize(1)
                 .allMatch(s -> s.equals("Speech must be in range of conference"));
+    }
+
+    private static Stream<Arguments> speechTimeslotProvider() {
+        return Stream.of(
+                arguments(new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1),
+                        NOW_FOR_TEST.plusDays(1).plusMinutes(3))),
+                arguments(new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusSeconds(1),
+                        NOW_FOR_TEST.plusDays(1).plusHours(10)))
+        );
     }
 
 }
