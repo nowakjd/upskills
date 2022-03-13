@@ -7,6 +7,7 @@ import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 @Service
@@ -35,4 +36,9 @@ public class SpeakerQueryService {
                 .map(speakerOutputMapper)
                 .toList();
     }
+
+    public Set<Speaker> getSpeakersByIds(Set<Long> ids) {
+        return speakerRepository.findByIdIn(ids);
+    }
+
 }
