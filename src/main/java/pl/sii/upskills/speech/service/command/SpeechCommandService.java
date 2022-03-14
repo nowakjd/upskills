@@ -71,6 +71,18 @@ public class SpeechCommandService {
     }
 
     @Transactional
+    public SpeechOutput addSpeaker(UUID conferenceId, Long speechId, Long id) {
+        Conference conference = getConference(conferenceId);
+        Speech speech = getSpeech(speechId);
+        speechConferenceValidator.validate(conference, speech);
+        Speaker speakerToAdd = speakerQueryService.getSpeakerById(id);
+        Set<Speaker> speakerSet = speech.getSpeakerSet();
+        speakerSet.add(speakerToAdd);
+        speech.setSpeakerSet(speakerSet);
+        return speechOutputMapper.apply(speech);
+    }
+
+    @Transactional
     public SpeechOutput deleteSpeaker(UUID conferenceId, Long speechId, Long id) {
         Conference conference = getConference(conferenceId);
         Speech speech = getSpeech(speechId);
@@ -78,6 +90,7 @@ public class SpeechCommandService {
         Speaker speakerToRemove = speakerQueryService.getSpeakerById(id);
         Set<Speaker> speakerSet = speech.getSpeakerSet();
         speakerSet.remove(speakerToRemove);
+        speech.setSpeakerSet(speakerSet);
         return speechOutputMapper.apply(speech);
     }
 
