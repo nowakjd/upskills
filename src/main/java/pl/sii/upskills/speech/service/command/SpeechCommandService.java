@@ -67,6 +67,7 @@ public class SpeechCommandService {
         Speech speech = getSpeech(id);
         speechConferenceValidator.validate(conference, speech);
         speechInputValidator.validate(speechInput, conference);
+        speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
     }
 
@@ -79,6 +80,7 @@ public class SpeechCommandService {
         Set<Speaker> speakerSet = speech.getSpeakerSet();
         speakerSet.add(speakerToAdd);
         speech.setSpeakerSet(speakerSet);
+        speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
     }
 
@@ -91,6 +93,7 @@ public class SpeechCommandService {
         Set<Speaker> speakerSet = speech.getSpeakerSet();
         speakerSet.remove(speakerToRemove);
         speech.setSpeakerSet(speakerSet);
+        speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
     }
 
