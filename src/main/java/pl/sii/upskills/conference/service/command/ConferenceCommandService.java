@@ -52,7 +52,6 @@ public class ConferenceCommandService {
                 .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
     }
 
-    @Transactional
     private ConferenceOutput publish(UUID id) {
         return conferenceRepository.findById(id)
                 .filter(conference -> conference.getStatus().equals(ConferenceStatus.DRAFT))
