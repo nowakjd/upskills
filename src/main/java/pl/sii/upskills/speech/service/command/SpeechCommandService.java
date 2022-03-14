@@ -28,6 +28,7 @@ public class SpeechCommandService {
     private final SpeakerQueryService speakerQueryService;
     private final SpeechMapper speechMapper = new SpeechMapper();
     private final SpeechConferenceValidator speechConferenceValidator = new SpeechConferenceValidator();
+    private final SpeakerValidator speakerValidator = new SpeakerValidator();
 
     public SpeechCommandService(SpeechRepository speechRepository, ConferenceRepository conferenceRepository,
                                 SpeechInputValidator speechInputValidator, SpeechOutputMapper speechOutputMapper,
@@ -56,8 +57,7 @@ public class SpeechCommandService {
         speechConferenceValidator.validate(conference, speech);
         Set<Speaker> speakerSet = speakerQueryService.getSpeakersByIds(speechSpeakersInput.getIds());
         speech.setSpeakerSet(speakerSet);
-        SpeakerSetValidator speakerSetValidator = new SpeakerSetValidator(speech, speechSpeakersInput);
-        speakerSetValidator.validate();
+        speakerValidator.validateSpeakers(speech, speechSpeakersInput);
         return speechOutputMapper.apply(speech);
     }
 
@@ -78,8 +78,9 @@ public class SpeechCommandService {
         speechConferenceValidator.validate(conference, speech);
         Speaker speakerToAdd = speakerQueryService.getSpeakerById(id);
         Set<Speaker> speakerSet = speech.getSpeakerSet();
-        speakerSet.add(speakerToAdd);
+        speakerSet.add(speakerToAdd); //speech.addSpeaker - w encji
         speech.setSpeakerSet(speakerSet);
+        speakerValidator.validateSpeaker(speakerToAdd, speech);
         speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
     }
@@ -91,7 +92,7 @@ public class SpeechCommandService {
         speechConferenceValidator.validate(conference, speech);
         Speaker speakerToRemove = speakerQueryService.getSpeakerById(id);
         Set<Speaker> speakerSet = speech.getSpeakerSet();
-        speakerSet.remove(speakerToRemove);
+        speakerSet.remove(speakerToRemove); //speech.removeSpeaker - w encji
         speech.setSpeakerSet(speakerSet);
         speechRepository.save(speech);
         return speechOutputMapper.apply(speech);

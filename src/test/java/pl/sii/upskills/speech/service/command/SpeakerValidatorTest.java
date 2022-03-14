@@ -13,14 +13,14 @@ import pl.sii.upskills.speech.persistence.Speech;
 import pl.sii.upskills.speech.service.model.SpeechSpeakersInput;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class SpeakerSetValidatorTest {
+class SpeakerValidatorTest {
 
     private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2023, 1, 1, 8, 1);
@@ -37,9 +37,9 @@ class SpeakerSetValidatorTest {
         Speech toValidate = new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, speakers);
-        SpeakerSetValidator underTest = new SpeakerSetValidator(toValidate, input);
+        SpeakerValidator underTest = new SpeakerValidator();
         //when
-        ThrowableAssert.ThrowingCallable lambdaUnderTest = underTest::validate;
+        ThrowableAssert.ThrowingCallable lambdaUnderTest = (() -> underTest.validateSpeakers(toValidate, input));
         //then
         assertThatNoException().isThrownBy(lambdaUnderTest);
     }
@@ -54,9 +54,9 @@ class SpeakerSetValidatorTest {
         Speech toValidate = new Speech(1L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, speakers);
-        SpeakerSetValidator underTest = new SpeakerSetValidator(toValidate, input);
+        SpeakerValidator underTest = new SpeakerValidator();
         //when
-        Executable lambdaUnderTest = underTest::validate;
+        Executable lambdaUnderTest = (() -> underTest.validateSpeakers(toValidate, input));
         //then
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
@@ -77,9 +77,9 @@ class SpeakerSetValidatorTest {
         Speech toValidate = new Speech(2L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, speakers);
-        SpeakerSetValidator underTest = new SpeakerSetValidator(toValidate, input);
+        SpeakerValidator underTest = new SpeakerValidator();
         //when
-        Executable lambdaUnderTest = underTest::validate;
+        Executable lambdaUnderTest = (() -> underTest.validateSpeakers(toValidate, input));
         //then
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
@@ -101,9 +101,9 @@ class SpeakerSetValidatorTest {
         Speech toValidate = new Speech(2L, "Speech title",
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, speakers);
-        SpeakerSetValidator underTest = new SpeakerSetValidator(toValidate, input);
+        SpeakerValidator underTest = new SpeakerValidator();
         //when
-        Executable lambdaUnderTest = underTest::validate;
+        Executable lambdaUnderTest = (() -> underTest.validateSpeakers(toValidate, input));
         //then
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
@@ -133,10 +133,10 @@ class SpeakerSetValidatorTest {
                 new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
                 conference, validateSpeakers);
         conference.addSpeech(toValidate);
-        SpeakerSetValidator underTest = new SpeakerSetValidator(toValidate, input);
+        SpeakerValidator underTest = new SpeakerValidator();
 
         //when
-        Executable lambdaUnderTest = underTest::validate;
+        Executable lambdaUnderTest = (() -> underTest.validateSpeakers(toValidate, input));
         //then
         SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
         assertThat(exception.getErrors())
@@ -145,6 +145,24 @@ class SpeakerSetValidatorTest {
                 .anyMatch(s -> s.equals("Speaker with id 2 is already assigned to speech with id 1"))
                 .anyMatch(s -> s.equals("Speaker with id 3 is already assigned to speech with id 2"))
                 .anyMatch(s -> s.equals("Speaker with id 76 doesn't exist"));
+    }
+
+    @Test
+    @DisplayName("Should throw exception when input is empty")
+    void emptyInput() {
+        Conference conference = conferenceMaker();
+        SpeechSpeakersInput input = new SpeechSpeakersInput(new HashSet<>());
+        Speech toValidate = new Speech(1L, "Speech title",
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
+                conference, new HashSet<>());
+        SpeakerValidator underTest = new SpeakerValidator();
+        //when
+        Executable lambdaUnderTest = (() -> underTest.validateSpeakers(toValidate, input));
+        //then
+        SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
+        assertThat(exception.getErrors())
+                .hasSize(1)
+                .allMatch(s -> s.equals("Please select speakers to add them to speech"));
     }
 
     private Conference conferenceMaker() {
