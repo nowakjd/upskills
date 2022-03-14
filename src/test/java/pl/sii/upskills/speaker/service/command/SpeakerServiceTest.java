@@ -1,9 +1,14 @@
 package pl.sii.upskills.speaker.service.command;
 
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
@@ -11,6 +16,7 @@ import pl.sii.upskills.speaker.service.mapper.SpeakerInputMapper;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
+import pl.sii.upskills.speaker.service.model.SpeakerStatusInput;
 
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -99,4 +105,47 @@ class SpeakerServiceTest {
                 .hasSize(1)
                 .anyMatch(e -> e.contains("Speaker with id = " + ID_OUTSIDE_DATABASE + " was not found"));
     }
+
+    @ParameterizedTest
+    @EnumSource(SpeakerStatus.class)
+    @DisplayName("Update status")
+    void happyPath(SpeakerStatus speakerStatus) {
+
+        //given
+        SpeakerStatusInput speakerStatusInput = new SpeakerStatusInput(speakerStatus.name());
+
+        //when
+        SpeakerOutput result = underTest.changeStatus(ID_INSIDE_DATABASE,
+                SpeakerStatus.valueOf(speakerStatusInput.getStatus()));
+
+        //then
+
+        assertThat(result).isNotNull();
+        assertThat(result.getId()).isEqualTo(ID_INSIDE_DATABASE);
+        assertThat(result.getFirstName()).isEqualTo(SPEAKER_INSIDE_DATABASE.getFirstName());
+        assertThat(result.getLastName()).isEqualTo(SPEAKER_INSIDE_DATABASE.getLastName());
+        assertThat(result.getPhoneNumber()).isEqualTo(SPEAKER_INSIDE_DATABASE.getPhoneNumber());
+        assertThat(result.getEmail()).isEqualTo(SPEAKER_INSIDE_DATABASE.getEmail());
+        assertThat(result.getBio()).isEqualTo(SPEAKER_INSIDE_DATABASE.getBio());
+        assertThat(result.getStatus()).isEqualTo(SpeakerStatus.valueOf(speakerStatusInput.getStatus()));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {" ", "    ", "\t", "INACtive", "ACTIVEE", ""})
+    @DisplayName("Should ")
+    void shouldThrowException(String status) {
+
+        //given
+        SpeakerStatusInput speakerStatusInput = new SpeakerStatusInput(status);
+
+        //when
+
+        ThrowableAssert.ThrowingCallable execute = () -> underTest.changeStatus(ID_INSIDE_DATABASE,
+                SpeakerStatus.valueOf(speakerStatusInput.getStatus()));
+
+        //then
+
+        Assertions.assertThatThrownBy(execute).isInstanceOf(IllegalArgumentException.class);
+    }
+
 }
