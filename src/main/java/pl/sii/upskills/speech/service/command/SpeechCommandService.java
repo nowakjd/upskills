@@ -70,6 +70,17 @@ public class SpeechCommandService {
         return speechOutputMapper.apply(speech);
     }
 
+    @Transactional
+    public SpeechOutput deleteSpeaker(UUID conferenceId, Long speechId, Long id) {
+        Conference conference = getConference(conferenceId);
+        Speech speech = getSpeech(speechId);
+        speechConferenceValidator.validate(conference, speech);
+        Speaker speakerToRemove = speakerQueryService.getSpeakerById(id);
+        Set<Speaker> speakerSet = speech.getSpeakerSet();
+        speakerSet.remove(speakerToRemove);
+        return speechOutputMapper.apply(speech);
+    }
+
     private Conference getConference(UUID conferenceId) {
         return conferenceRepository
                 .findById(conferenceId)

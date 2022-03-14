@@ -41,4 +41,11 @@ public class SpeechController {
         return new ResponseEntity<>(speechCommandService.updateSpeech(conferenceId, id, speechInput), HttpStatus.OK);
     }
 
+    @DeleteMapping("/conferences/{conferenceId}/speeches/{speechId}/speakers{id}")
+    ResponseEntity<SpeechOutput> deleteSpeaker(@PathVariable("conferenceId") UUID conferenceId,
+                                               @PathVariable("speechId") Long speechId, @PathVariable("id") Long id) {
+        return new ResponseEntity<>(speechCommandService.deleteSpeaker(conferenceId, speechId, id),
+                HttpStatus.OK);
+    }
+
 }
