@@ -34,4 +34,11 @@ public class SpeechController {
                 HttpStatus.CREATED);
     }
 
+    @PutMapping("/conferences/{conferenceId}/speeches/{id}")
+    ResponseEntity<SpeechOutput> updateSpeech(@PathVariable("conferenceId") UUID conferenceId,
+                                              @PathVariable("id") Long id,
+                                              @RequestBody SpeechInput speechInput) {
+        return new ResponseEntity<>(speechCommandService.updateSpeech(conferenceId, id, speechInput), HttpStatus.OK);
+    }
+
 }

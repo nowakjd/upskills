@@ -61,6 +61,15 @@ public class SpeechCommandService {
         return speechOutputMapper.apply(speech);
     }
 
+    @Transactional
+    public SpeechOutput updateSpeech(UUID conferenceId, Long id, SpeechInput speechInput) {
+        Conference conference = getConference(conferenceId);
+        Speech speech = getSpeech(id);
+        speechConferenceValidator.validate(conference, speech);
+        speechInputValidator.validate(speechInput, conference);
+        return speechOutputMapper.apply(speech);
+    }
+
     private Conference getConference(UUID conferenceId) {
         return conferenceRepository
                 .findById(conferenceId)
