@@ -17,6 +17,7 @@ public class ConferenceOutputMapper implements Function<Conference, ConferenceOu
                 conference.getPrice(),
                 conference.getTimeSlot(),
                 conference.getStatus(),
-                conference.getId());
+                conference.getId(),
+                conference.getListOfSpeeches());
     }
 }

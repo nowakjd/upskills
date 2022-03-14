@@ -73,5 +73,4 @@ public class SpeechCommandService {
                 .findById(id)
                 .orElseThrow(() -> new SpeechNotFoundException(id));
     }
-
 }

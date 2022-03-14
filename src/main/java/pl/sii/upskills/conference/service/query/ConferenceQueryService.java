@@ -53,5 +53,13 @@ public class ConferenceQueryService {
                     + "Please use one of the following statuses : " + Arrays.toString(ConferenceStatus.values()));
         }
     }
+
+    public ConferenceOutput conferenceDetails(UUID id) {
+        return  conferenceRepository
+                .findById(id)
+              //  .map(conference -> conferenceOutputMapper.apply(conference, conferenceOutput))
+                .map(conferenceOutputMapper)
+                .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
+    }
 }
 

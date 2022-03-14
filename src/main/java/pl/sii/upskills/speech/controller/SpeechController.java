@@ -33,5 +33,4 @@ public class SpeechController {
         return new ResponseEntity<>(speechCommandService.addSpeakers(conferenceId, id, speechSpeakersInput),
                 HttpStatus.CREATED);
     }
-
 }

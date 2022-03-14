@@ -2,7 +2,10 @@ package pl.sii.upskills.conference.service.model;
 
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.configuration.Generated;
+import pl.sii.upskills.speech.persistence.Speech;
+import pl.sii.upskills.speech.service.model.SpeechOutput;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -15,10 +18,11 @@ public class ConferenceOutput {
     private final TimeSlot timeSlot;
     private final ConferenceStatus status;
     private final UUID id;
+    private final List<SpeechOutput> speechesOutputList;
 
     public ConferenceOutput(String name, String title, int numberOfPlaces,
                             Money price, TimeSlot timeSlot,
-                            ConferenceStatus status, UUID id) {
+                            ConferenceStatus status, UUID id, List<SpeechOutput> speechesOutputList) {
         this.name = name;
         this.title = title;
         this.numberOfPlaces = numberOfPlaces;
@@ -26,6 +30,7 @@ public class ConferenceOutput {
         this.timeSlot = timeSlot;
         this.status = status;
         this.id = id;
+        this.speechesOutputList = speechesOutputList;
     }
 
     public String getName() {
@@ -56,6 +61,10 @@ public class ConferenceOutput {
         return id;
     }
 
+    public List<SpeechOutput> getSpeechesOutputList() {
+        return speechesOutputList;
+    }
+
     @Generated
     @Override
     public boolean equals(Object o) {
@@ -67,12 +76,13 @@ public class ConferenceOutput {
                 && Objects.equals(price, that.price)
                 && Objects.equals(timeSlot, that.timeSlot)
                 && status == that.status
-                && Objects.equals(id, that.id);
+                && Objects.equals(id, that.id)
+                && Objects.equals(speechesOutputList, that.speechesOutputList);
     }
 
     @Generated
     @Override
     public int hashCode() {
-        return Objects.hash(name, title, numberOfPlaces, price, timeSlot, status, id);
+        return Objects.hash(name, title, numberOfPlaces, price, timeSlot, status, id, speechesOutputList);
     }
 }
