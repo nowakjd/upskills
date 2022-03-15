@@ -77,11 +77,11 @@ public class SpeechCommandService {
         Speech speech = getSpeech(speechId);
         speechConferenceValidator.validate(conference, speech);
         Speaker speakerToAdd = speakerQueryService.getSpeakerById(id);
-        Set<Speaker> speakerSet = speech.getSpeakerSet();
-        speakerSet.add(speakerToAdd); //speech.addSpeaker - w encji
-        speech.setSpeakerSet(speakerSet);
-        speakerValidator.validateSpeaker(speakerToAdd, speech);
-        speechRepository.save(speech);
+        if (!speech.getSpeakerSet().contains(speakerToAdd)) {
+            speech.addSpeaker(speakerToAdd);
+            speakerValidator.validateSpeaker(speakerToAdd, speech);
+            speechRepository.save(speech);
+        }
         return speechOutputMapper.apply(speech);
     }
 
@@ -91,9 +91,7 @@ public class SpeechCommandService {
         Speech speech = getSpeech(speechId);
         speechConferenceValidator.validate(conference, speech);
         Speaker speakerToRemove = speakerQueryService.getSpeakerById(id);
-        Set<Speaker> speakerSet = speech.getSpeakerSet();
-        speakerSet.remove(speakerToRemove); //speech.removeSpeaker - w encji
-        speech.setSpeakerSet(speakerSet);
+        speech.removeSpeaker(speakerToRemove);
         speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
     }
