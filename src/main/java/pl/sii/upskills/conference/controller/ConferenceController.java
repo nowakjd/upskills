@@ -2,9 +2,7 @@ package pl.sii.upskills.conference.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.command.ConferenceCommandService;
 import pl.sii.upskills.conference.service.model.ConferenceInput;

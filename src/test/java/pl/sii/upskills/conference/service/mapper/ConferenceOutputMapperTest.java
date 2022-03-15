@@ -25,7 +25,8 @@ class ConferenceOutputMapperTest {
     @DisplayName("Should map Conference to ConferenceOutPut")
     void shouldMapConference() {
         // given
-        ConferenceOutputMapper underTest = new ConferenceOutputMapper(new SpeechOutputMapper(new SpeakerOutputMapper()));
+        ConferenceOutputMapper underTest = new ConferenceOutputMapper(
+                new SpeechOutputMapper(new SpeakerOutputMapper()));
         Conference conference = new Conference(UUID.fromString("0963c134-0141-415f-aaf6-89a502fb58bf"), "adam",
                 "damian", 15, ConferenceStatus.DRAFT, null, timeSlot);
         // when

@@ -39,7 +39,8 @@ class ConferenceQueryServiceTest {
     @BeforeEach
     void setUp() {
         repository = mock(ConferenceRepository.class);
-        Function<Conference, ConferenceOutput> mapper = new ConferenceOutputMapper(new SpeechOutputMapper(new SpeakerOutputMapper()));
+        Function<Conference, ConferenceOutput> mapper = new ConferenceOutputMapper(
+                new SpeechOutputMapper(new SpeakerOutputMapper()));
         underTest = new ConferenceQueryService(mapper, repository);
     }
 
