@@ -111,6 +111,24 @@ class SpeechCommandServiceITTest {
         assertThat(result.getSpeakers()).hasSize(1);
     }
 
+    @Test
+    @DisplayName("Should update speech to database")
+    void updateSpeech() {
+        // given
+        createSpeakers();
+        ConferenceOutput conferenceOutput = createConference();
+        SpeechInput speechInput = new SpeechInput("Concrete Donkey", CORRECT_TIMESLOT);
+        SpeechOutput speechOutput = underTest.createSpeech(conferenceOutput.getId(), speechInput);
+        SpeechInput input = new SpeechInput("Grandma", CORRECT_TIMESLOT);
+
+        // when
+        SpeechOutput updated = underTest.updateSpeech(conferenceOutput.getId(), speechOutput.getId(), input);
+
+        // then
+        assertThat(updated.getId()).isEqualTo(speechOutput.getId());
+        assertThat(updated.getTitle()).isEqualTo("Grandma");
+    }
+
     private ConferenceOutput createConference() {
         return conferenceCommandService.createConference(new ConferenceInput("Worms", "Armageddon ?",
                 200, new MoneyVO(BigDecimal.valueOf(9.00), Currency.getInstance("USD")),
