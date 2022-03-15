@@ -75,6 +75,42 @@ class SpeechCommandServiceITTest {
         assertThat(result.getTitle()).isEqualTo("Concrete Donkey");
     }
 
+    @Test
+    @DisplayName("Should add speaker to speech")
+    void addSpeaker() {
+        // given
+        createSpeakers();
+        ConferenceOutput conferenceOutput = createConference();
+        SpeechInput speechInput = new SpeechInput("Concrete Donkey", CORRECT_TIMESLOT);
+        SpeechOutput speechOutput = underTest.createSpeech(conferenceOutput.getId(), speechInput);
+        SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(Set.of(1L));
+        underTest.addSpeakers(conferenceOutput.getId(), speechOutput.getId(), speechSpeakersInput);
+
+        // when
+        SpeechOutput result = underTest.addSpeaker(conferenceOutput.getId(), speechOutput.getId(), 2L);
+
+        // then
+        assertThat(result.getSpeakers()).hasSize(2);
+    }
+
+    @Test
+    @DisplayName("Should remove speaker from speech")
+    void removeSpeaker() {
+        // given
+        createSpeakers();
+        ConferenceOutput conferenceOutput = createConference();
+        SpeechInput speechInput = new SpeechInput("Concrete Donkey", CORRECT_TIMESLOT);
+        SpeechOutput speechOutput = underTest.createSpeech(conferenceOutput.getId(), speechInput);
+        SpeechSpeakersInput speechSpeakersInput = new SpeechSpeakersInput(Set.of(1L, 2L));
+        underTest.addSpeakers(conferenceOutput.getId(), speechOutput.getId(), speechSpeakersInput);
+
+        // when
+        SpeechOutput result = underTest.deleteSpeaker(conferenceOutput.getId(), speechOutput.getId(), 1L);
+
+        // then
+        assertThat(result.getSpeakers()).hasSize(1);
+    }
+
     private ConferenceOutput createConference() {
         return conferenceCommandService.createConference(new ConferenceInput("Worms", "Armageddon ?",
                 200, new MoneyVO(BigDecimal.valueOf(9.00), Currency.getInstance("USD")),

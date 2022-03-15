@@ -165,6 +165,29 @@ class SpeakerValidatorTest {
                 .allMatch(s -> s.equals("Please select speakers to add them to speech"));
     }
 
+    @Test
+    @DisplayName("Should throw exception when one speaker overlaps speeches")
+    void oneSpeakerOverlaps() {
+        Conference conference = conferenceMaker();
+        Speaker speaker = activeSpeakerNoOne();
+        Set<Speaker> speakers = Set.of(speaker);
+        conference.addSpeech(new Speech(1L, "Speech title",
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
+                conference, speakers));
+        Speech toValidate = new Speech(2L, "Speech title",
+                new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(1), NOW_FOR_TEST.plusDays(20).plusHours(2)),
+                conference, speakers);
+        SpeakerValidator underTest = new SpeakerValidator();
+        //when
+        Executable lambdaUnderTest = (() -> underTest.validateSpeaker(speaker, toValidate));
+        //then
+        SpeakerSetValidationException exception = assertThrows(SpeakerSetValidationException.class, lambdaUnderTest);
+        assertThat(exception.getErrors())
+                .hasSize(1)
+                .allMatch(s -> s.equals("Speaker with id " + speaker.getId() + " is already assigned to "
+                        + "speech with id 1"));
+    }
+
     private Conference conferenceMaker() {
         return new Conference(UUID.fromString("0163c134-0141-415f-aaf6-89a502fb58bf"), "Name", "Title",
                 100, ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
