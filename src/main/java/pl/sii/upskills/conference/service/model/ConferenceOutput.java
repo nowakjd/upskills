@@ -2,11 +2,11 @@ package pl.sii.upskills.conference.service.model;
 
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.configuration.Generated;
-import pl.sii.upskills.speech.persistence.Speech;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 public class ConferenceOutput {
@@ -18,11 +18,11 @@ public class ConferenceOutput {
     private final TimeSlot timeSlot;
     private final ConferenceStatus status;
     private final UUID id;
-    private final List<SpeechOutput> speechesOutputList;
+    private final Set<SpeechOutput> speechesOutputList;
 
     public ConferenceOutput(String name, String title, int numberOfPlaces,
                             Money price, TimeSlot timeSlot,
-                            ConferenceStatus status, UUID id, List<SpeechOutput> speechesOutputList) {
+                            ConferenceStatus status, UUID id, Set<SpeechOutput> speechesOutputList) {
         this.name = name;
         this.title = title;
         this.numberOfPlaces = numberOfPlaces;
@@ -61,7 +61,7 @@ public class ConferenceOutput {
         return id;
     }
 
-    public List<SpeechOutput> getSpeechesOutputList() {
+    public Set<SpeechOutput> getSpeechesOutputList() {
         return speechesOutputList;
     }
 

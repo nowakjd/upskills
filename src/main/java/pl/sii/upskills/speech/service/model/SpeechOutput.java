@@ -40,7 +40,9 @@ public class SpeechOutput {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpeechOutput that = (SpeechOutput) o;
-        return title.equals(that.title) && timeSlot.equals(that.timeSlot) && speakers.equals(
+        return title.equals(that.title)
+                && timeSlot.equals(that.timeSlot)
+                && speakers.equals(
                 that.speakers)
                 && id.equals(that.id);
     }
