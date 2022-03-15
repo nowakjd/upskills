@@ -62,6 +62,25 @@ class ConferenceValidatorTest {
 
     }
 
+    @DisplayName("Published conference with wrong data should not pass validation")
+    @Test
+    void publishedWithoutPrice() {
+        //given
+        Conference conference = new ConferenceBuilder()
+                .setTimeSlot(getTimeSlot(NOW_FOR_TEST.minusDays(1), Duration.ofDays(2)))
+                .setPrice(null).build();
+        conference.publish();
+        Speech speech = new SpeechBuilder(conference).build();
+        conference.addSpeech(speech);
+        //when
+        Executable lamdbaUnderTest = () -> underTest.apply(conference);
+        //then
+        ConferenceValidationException exception = assertThrows(ConferenceValidationException.class,
+                lamdbaUnderTest);
+        assertThat(exception.getErrors()).hasSize(3);
+
+    }
+
     @DisplayName("Should throw exception when speech is outside Conference timeframe")
     @Test
     void speechOutside() {
