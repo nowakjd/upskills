@@ -10,7 +10,7 @@ CREATE TABLE speaker (
 );
 
 CREATE TABLE conference (
-   id UUID NOT NULL,
+  id UUID NOT NULL,
    name VARCHAR(250) NOT NULL,
    title VARCHAR(250) NOT NULL,
    number_of_places INTEGER NOT NULL,
@@ -21,4 +21,3 @@ CREATE TABLE conference (
    end_date TIMESTAMP WITHOUT TIME ZONE,
    CONSTRAINT pk_conference PRIMARY KEY (id)
 );
-
