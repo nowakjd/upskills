@@ -46,4 +46,11 @@ public class ConferenceController {
     ResponseEntity<List<ConferenceOutput>> findByStatus(@RequestParam(required = false) String status) {
         return new ResponseEntity<>(conferenceQueryService.findByStatus(status), HttpStatus.OK);
     }
+
+    @PutMapping("/conferences/{id}/status")
+    ResponseEntity<ConferenceOutput> changeStatus(@PathVariable("id") UUID id,
+                                                  @RequestBody ConferenceStatus status) {
+        return new ResponseEntity<>(commandService.changeStatus(id, status), HttpStatus.OK);
+
+    }
 }

@@ -29,13 +29,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class SpeakerServiceTest {
-    SpeakerCommandService underTest;
     public static final Long ID_OUTSIDE_DATABASE = 666L;
     public static final Long ID_INSIDE_DATABASE = 3L;
-    public static final Speaker SPEAKER_INSIDE_DATABASE = new Speaker(ID_INSIDE_DATABASE,
-            "John", "Doe", "123456789", "john@email.com",
-            "My bio", SpeakerStatus.ACTIVE);
-
+    public static final Speaker SPEAKER_INSIDE_DATABASE = new Speaker(ID_INSIDE_DATABASE, "John", "Doe",
+            "123456789", "john@email.com", "My bio", SpeakerStatus.ACTIVE);
+    SpeakerCommandService underTest;
 
     @BeforeEach
     void setUp() {
@@ -46,8 +44,7 @@ class SpeakerServiceTest {
         SpeakerInputValidator validator = new SpeakerInputValidator();
         Function<Speaker, SpeakerOutput> outputMapper = new SpeakerOutputMapper();
         BiFunction<Speaker, SpeakerInput, Speaker> inputMapper = new SpeakerInputMapper();
-        underTest = new SpeakerCommandService(repository, validator, outputMapper,
-                inputMapper);
+        underTest = new SpeakerCommandService(repository, validator, outputMapper, inputMapper);
     }
 
     @Test

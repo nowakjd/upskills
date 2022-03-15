@@ -16,17 +16,16 @@ import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
 class SpeakerServiceITTest {
 
     @Autowired
-    private SpeakerRepository speakerRepository;
-    @Autowired
     SpeakerCommandService underTest;
-
+    @Autowired
+    private SpeakerRepository speakerRepository;
 
     @Test
     @DisplayName("Should add speaker to database")
     void happyPath() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
-                "john@email.com", "My bio");
+                "john@email.com", "My bio", ACTIVE);
 
         // when
         SpeakerOutput speakerOutput = underTest.addSpeaker(speakerInput);
@@ -42,7 +41,7 @@ class SpeakerServiceITTest {
         // given
         insertSpeakers();
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
-                "john@email.com", "My bio");
+                "john@email.com", "My bio", INACTIVE);
 
         // when
         SpeakerOutput speakerOutput = underTest.updateSpeaker(2L, speakerInput);
@@ -54,6 +53,7 @@ class SpeakerServiceITTest {
         assertThat(speakerOutput.getPhoneNumber()).isEqualTo(speakerInput.getPhoneNumber());
         assertThat(speakerOutput.getBio()).isEqualTo(speakerInput.getBio());
         assertThat(speakerOutput.getEmail()).isEqualTo(speakerInput.getEmail());
+        assertThat(speakerOutput.getStatus()).isEqualTo(speakerInput.getStatus());
     }
 
     private void insertSpeakers() {

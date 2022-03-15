@@ -34,12 +34,9 @@ class SpeakerQueryServiceTest {
     void findAll() {
         //given
         List<Speaker> list = new ArrayList<>();
-        list.add(new Speaker(1L, "John", "Doe", "123456789",
-                "john@email.com", "My bio", ACTIVE));
-        list.add(new Speaker(2L, "John", "Doe", "123456789",
-                "john@email.com", "My bio", ACTIVE));
-        list.add(new Speaker(3L, "John", "Doe", "123456789",
-                "john@email.com", "My bio", ACTIVE));
+        list.add(new Speaker(1L, "John", "Doe", "123456789", "john@email.com", "My bio", ACTIVE));
+        list.add(new Speaker(2L, "John", "Doe", "123456789", "john@email.com", "My bio", ACTIVE));
+        list.add(new Speaker(3L, "John", "Doe", "123456789", "john@email.com", "My bio", ACTIVE));
         when(repository.findAll()).thenReturn(list);
 
         //when
@@ -48,12 +45,12 @@ class SpeakerQueryServiceTest {
         //then
         assertThat(result)
                 .hasSize(3)
-                .anyMatch(s -> s.equals(new SpeakerOutput(1L, "John", "Doe",
-                        "123456789", "john@email.com", "My bio", ACTIVE)))
-                .anyMatch(s -> s.equals(new SpeakerOutput(2L, "John", "Doe",
-                        "123456789", "john@email.com", "My bio", ACTIVE)))
-                .anyMatch(s -> s.equals(new SpeakerOutput(3L, "John", "Doe",
-                        "123456789", "john@email.com", "My bio", ACTIVE)));
+                .anyMatch(s -> s.equals(new SpeakerOutput(1L, "John", "Doe", "123456789", "john@email.com", "My bio",
+                        ACTIVE)))
+                .anyMatch(s -> s.equals(new SpeakerOutput(2L, "John", "Doe", "123456789", "john@email.com", "My bio",
+                        ACTIVE)))
+                .anyMatch(s -> s.equals(new SpeakerOutput(3L, "John", "Doe", "123456789", "john@email.com", "My bio",
+                        ACTIVE)));
     }
 
     @Test

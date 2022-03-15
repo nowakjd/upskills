@@ -48,10 +48,10 @@ class ConferenceCommandServiceTest {
                 new Conference(ID_OF_PUBLISHED_IN_DATABASE, "name", "title", 100,
                         ConferenceStatus.PUBLISHED, null, CORRECT_TIMESLOT)));
         underTest = new ConferenceCommandService(
-                new ConferenceInputValidator(() -> NOW_FOR_TEST),
                 new ConferenceMapper(),
                 new ConferenceOutputMapper(),
-                repository);
+                repository,
+                new ConferenceValidator(() -> NOW_FOR_TEST));
     }
 
     @Test

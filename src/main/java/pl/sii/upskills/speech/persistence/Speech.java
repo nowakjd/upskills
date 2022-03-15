@@ -85,4 +85,8 @@ public class Speech {
     public boolean hasSpeaker(Speaker speaker) {
         return speakerSet.contains(speaker);
     }
+
+    public boolean hasZeroSpeaker() {
+        return speakerSet.isEmpty();
+    }
 }
