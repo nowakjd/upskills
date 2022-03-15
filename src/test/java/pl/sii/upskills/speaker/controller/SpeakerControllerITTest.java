@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-
 class SpeakerControllerITTest {
 
     @Autowired

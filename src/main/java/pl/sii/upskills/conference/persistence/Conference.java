@@ -104,6 +104,11 @@ public class Conference {
         this.id = id;
     }
 
+    public Conference publish() {
+        setStatus(ConferenceStatus.PUBLISHED);
+        return this;
+    }
+
     public List<Speech> getListOfSpeeches() {
         return Collections.unmodifiableList(listOfSpeeches);
     }
