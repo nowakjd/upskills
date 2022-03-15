@@ -17,10 +17,9 @@ import static pl.sii.upskills.speaker.persistence.SpeakerStatus.INACTIVE;
 class SpeakerServiceITTest {
 
     @Autowired
-    private SpeakerRepository speakerRepository;
-    @Autowired
     SpeakerCommandService underTest;
-
+    @Autowired
+    private SpeakerRepository speakerRepository;
 
     @Test
     @DisplayName("Should add speaker to database")

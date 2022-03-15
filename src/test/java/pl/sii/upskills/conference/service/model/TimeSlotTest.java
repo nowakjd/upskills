@@ -15,6 +15,59 @@ class TimeSlotTest {
             5);
 
     @Test
+    @DisplayName("Should return true when first and second timeslot are the same ")
+    void fitInEquals() {
+        //given
+        TimeSlot first = createTestTimeslot();
+        TimeSlot second = createTestTimeslot();
+        //when
+        boolean result = first.fitIn(second);
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("Should return true when second time slot fit in first")
+    void fitIn() {
+        //given
+        TimeSlot first = createTestTimeslot();
+        TimeSlot second = createTimeSlotFittingIn();
+
+        //when
+        boolean result = second.fitIn(first);
+
+        //then
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    @DisplayName("Should return false when second timeslot starts before first ")
+    void doesNotFitEarlier() {
+        //given
+        TimeSlot first = createTestTimeslot();
+        TimeSlot second = createTimeSlotStartingEarlier();
+        //when
+        boolean result = second.fitIn(first);
+
+        //then
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    @DisplayName("Should return false when second timeslot ends after first ")
+    void doesNotFitLater() {
+        //given
+        TimeSlot first = createTestTimeslot();
+        TimeSlot second = createTimeSlotEndingLater();
+        //when
+        boolean result = second.fitIn(first);
+
+        //then
+        assertThat(result).isFalse();
+    }
+
+    @Test
     @DisplayName("Timeslots aren't colliding")
     void happyPath() {
         //given
@@ -22,7 +75,7 @@ class TimeSlotTest {
         TimeSlot nonColidingTimeslot = createNonCollidingTimeslot();
 
         //when
-        boolean result =  underTest.doesntCollide(nonColidingTimeslot);
+        boolean result = underTest.doesntCollide(nonColidingTimeslot);
 
         //then
         assertThat(result).isTrue();
@@ -37,7 +90,7 @@ class TimeSlotTest {
         TimeSlot laterColidingTimeslot = createCollidingTimeslot();
 
         //when
-        boolean result =  underTest.doesntCollide(laterColidingTimeslot);
+        boolean result = underTest.doesntCollide(laterColidingTimeslot);
 
         //then
         assertThat(result).isFalse();
@@ -52,7 +105,7 @@ class TimeSlotTest {
         TimeSlot earlierColidingTimeslot = createEarlierCollidingTimeslot();
 
         //when
-        boolean result =  underTest.doesntCollide(earlierColidingTimeslot);
+        boolean result = underTest.doesntCollide(earlierColidingTimeslot);
 
         //then
         assertThat(result).isFalse();
@@ -67,7 +120,7 @@ class TimeSlotTest {
         TimeSlot sameStartDate = createSameStartDateTimeslot();
 
         //when
-        boolean result =  underTest.doesntCollide(sameStartDate);
+        boolean result = underTest.doesntCollide(sameStartDate);
 
         //then
         assertThat(result).isFalse();
@@ -82,7 +135,7 @@ class TimeSlotTest {
         TimeSlot sameEndDate = createSameEndDateTimeslot();
 
         //when
-        boolean result =  underTest.doesntCollide(sameEndDate);
+        boolean result = underTest.doesntCollide(sameEndDate);
 
         //then
         assertThat(result).isFalse();
@@ -97,11 +150,10 @@ class TimeSlotTest {
         TimeSlot equal = createTestTimeslot();
 
         //when
-        boolean result =  underTest.doesntCollide(equal);
+        boolean result = underTest.doesntCollide(equal);
 
         //then
         assertThat(result).isFalse();
-
     }
 
     @Test
@@ -112,7 +164,7 @@ class TimeSlotTest {
         TimeSlot startingOne = createStartDateEqualToEndDate();
 
         //when
-        boolean result =  underTest.doesntCollide(startingOne);
+        boolean result = underTest.doesntCollide(startingOne);
 
         //then
         assertThat(result).isFalse();
@@ -127,7 +179,7 @@ class TimeSlotTest {
         TimeSlot endingOne = createEndDateEqualToStartDate();
 
         //when
-        boolean result =  underTest.doesntCollide(endingOne);
+        boolean result = underTest.doesntCollide(endingOne);
 
         //then
         assertThat(result).isFalse();
@@ -136,6 +188,18 @@ class TimeSlotTest {
 
     private TimeSlotVO createTestTimeslot() {
         return new TimeSlotVO(BASE_DATE_TIME, BASE_DATE_TIME.plusHours(2));
+    }
+
+    private TimeSlot createTimeSlotFittingIn() {
+        return new TimeSlotVO(BASE_DATE_TIME.plusMinutes(5), BASE_DATE_TIME.plusHours(2).minusMinutes(5));
+    }
+
+    private TimeSlot createTimeSlotStartingEarlier() {
+        return new TimeSlotVO(BASE_DATE_TIME.minusMinutes(5), BASE_DATE_TIME.plusHours(2));
+    }
+
+    private TimeSlot createTimeSlotEndingLater() {
+        return new TimeSlotVO(BASE_DATE_TIME, BASE_DATE_TIME.plusHours(3));
     }
 
     private TimeSlotVO createCollidingTimeslot() {

@@ -24,4 +24,9 @@ public interface TimeSlot {
         return getStartDate().isAfter(timeSlotToCompare.getEndDate())
                 || getEndDate().isBefore(timeSlotToCompare.getStartDate());
     }
+
+    default boolean fitIn(TimeSlot other) {
+        return !getStartDate().isBefore(other.getStartDate()) && !getEndDate().isAfter(other.getEndDate());
+
+    }
 }

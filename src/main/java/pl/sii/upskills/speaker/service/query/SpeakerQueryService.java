@@ -7,9 +7,7 @@ import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 
 @Service

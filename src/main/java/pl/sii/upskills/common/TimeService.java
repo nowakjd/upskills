@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.function.Supplier;
 
 /**
- LocalDateTime supplier.
+ * LocalDateTime supplier.
  */
 @FunctionalInterface
 public interface TimeService extends Supplier<LocalDateTime> {
