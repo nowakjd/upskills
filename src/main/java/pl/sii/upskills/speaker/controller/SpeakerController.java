@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.command.SpeakerCommandService;
+import pl.sii.upskills.speaker.service.mapper.SpeakerStatusInput;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
-import pl.sii.upskills.speaker.service.model.SpeakerStatusInput;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 
 import java.util.Arrays;
