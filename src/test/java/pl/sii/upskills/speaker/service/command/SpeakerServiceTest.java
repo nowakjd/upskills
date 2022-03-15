@@ -131,8 +131,8 @@ class SpeakerServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {" ", "    ", "\t", "INACtive", "ACTIVEE", ""})
-    @DisplayName("Should ")
+    @ValueSource(strings = {" ", "    ", "\t", "INACTIVED", "ACTIVEE", ""})
+    @DisplayName("Should throw IllegalArgumentException when status is incorrect ")
     void shouldThrowException(String status) {
 
         //given
@@ -147,5 +147,4 @@ class SpeakerServiceTest {
 
         Assertions.assertThatThrownBy(execute).isInstanceOf(IllegalArgumentException.class);
     }
-
 }
