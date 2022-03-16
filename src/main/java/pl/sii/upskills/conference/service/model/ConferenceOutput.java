@@ -70,7 +70,7 @@ public class ConferenceOutput {
         return id;
     }
 
-    public Set<SpeechOutput> getSpeechesOutputList() {
+    public Set<SpeechOutput> getSpeeches() {
         return Collections.unmodifiableSet(speeches);
     }
 
@@ -152,6 +152,7 @@ public class ConferenceOutput {
 
         public ConferenceOutput build() {
             return new ConferenceOutput(name, title, numberOfPlaces, price, timeSlot, status, id, speeches);
+           // return new ConferenceOutput(this);
         }
     }
 }

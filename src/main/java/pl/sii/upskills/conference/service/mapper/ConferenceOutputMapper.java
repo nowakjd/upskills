@@ -33,17 +33,5 @@ public class ConferenceOutputMapper implements Function<Conference, ConferenceOu
                 .map(speechOutputMapper)
                 .collect(Collectors.toSet()));
         return builder.build();
-//        return new ConferenceOutput.ConferenceOutputBuilder(conference.getName(),
-//                conference.getTitle(),
-//                conference.getNumberOfPlaces(),
-//                conference.getPrice(),
-//                conference.getTimeSlot(),
-//                conference.getStatus(),
-//                conference.getId(),
-//                conference.getListOfSpeeches()
-//                        .stream()
-//                        .map(speechOutputMapper)
-//                        .collect(Collectors.toSet()));
-//    }
     }
 }
