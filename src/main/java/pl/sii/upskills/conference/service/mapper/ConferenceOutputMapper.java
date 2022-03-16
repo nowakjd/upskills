@@ -20,16 +20,30 @@ public class ConferenceOutputMapper implements Function<Conference, ConferenceOu
 
     @Override
     public ConferenceOutput apply(Conference conference) {
-        return new ConferenceOutput(conference.getName(),
-                conference.getTitle(),
-                conference.getNumberOfPlaces(),
-                conference.getPrice(),
-                conference.getTimeSlot(),
-                conference.getStatus(),
-                conference.getId(),
-                conference.getListOfSpeeches()
-                        .stream()
-                        .map(speechOutputMapper)
-                        .collect(Collectors.toSet()));
+        ConferenceOutput.ConferenceOutputBuilder builder = new ConferenceOutput.ConferenceOutputBuilder();
+        builder.withName(conference.getName());
+        builder.withTitle(conference.getTitle());
+        builder.withNumberOfPlaces(conference.getNumberOfPlaces());
+        builder.withPrice(conference.getPrice());
+        builder.withTimeSlot(conference.getTimeSlot());
+        builder.withStatus(conference.getStatus());
+        builder.withId(conference.getId());
+        builder.withSpeeches(conference.getListOfSpeeches()
+                .stream()
+                .map(speechOutputMapper)
+                .collect(Collectors.toSet()));
+        return builder.build();
+//        return new ConferenceOutput.ConferenceOutputBuilder(conference.getName(),
+//                conference.getTitle(),
+//                conference.getNumberOfPlaces(),
+//                conference.getPrice(),
+//                conference.getTimeSlot(),
+//                conference.getStatus(),
+//                conference.getId(),
+//                conference.getListOfSpeeches()
+//                        .stream()
+//                        .map(speechOutputMapper)
+//                        .collect(Collectors.toSet()));
+//    }
     }
 }

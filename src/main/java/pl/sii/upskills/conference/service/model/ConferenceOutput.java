@@ -30,6 +30,18 @@ public class ConferenceOutput {
         this.speeches = speeches;
     }
 
+//    public ConferenceOutput(ConferenceOutputBuilder builder) {
+//
+//        this.name = builder.name;
+//        this.title = builder.title;
+//        this.numberOfPlaces = builder.numberOfPlaces;
+//        this.price = builder.price;
+//        this.timeSlot = builder.timeSlot;
+//        this.status = builder.status;
+//        this.id = builder.id;
+//        this.speeches = builder.speeches;
+//    }
+
     public String getName() {
         return name;
     }
@@ -62,6 +74,10 @@ public class ConferenceOutput {
         return Collections.unmodifiableSet(speeches);
     }
 
+    static ConferenceOutputBuilder conferenceOutputBuilder() {
+        return new ConferenceOutputBuilder();
+    }
+
     @Generated
     @Override
     public boolean equals(Object o) {
@@ -81,5 +97,61 @@ public class ConferenceOutput {
     @Override
     public int hashCode() {
         return Objects.hash(name, title, numberOfPlaces, price, timeSlot, status, id, speeches);
+    }
+
+    public static final class ConferenceOutputBuilder {
+
+        private String name;
+        private String title;
+        private int numberOfPlaces;
+        private Money price;
+        private TimeSlot timeSlot;
+        private ConferenceStatus status;
+        private UUID id;
+        private Set<SpeechOutput> speeches;
+
+        public ConferenceOutputBuilder withName(final String name) {
+            this.name = name;
+            return this;
+        }
+
+        public ConferenceOutputBuilder withTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public ConferenceOutputBuilder withNumberOfPlaces(int numberOfPlaces) {
+            this.numberOfPlaces = numberOfPlaces;
+            return this;
+        }
+
+        public ConferenceOutputBuilder withPrice(Money price) {
+            this.price = price;
+            return this;
+        }
+
+        public ConferenceOutputBuilder withTimeSlot(TimeSlot timeSlot) {
+            this.timeSlot = timeSlot;
+            return this;
+        }
+
+        public ConferenceOutputBuilder withStatus(ConferenceStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public ConferenceOutputBuilder withId(UUID id) {
+            this.id = id;
+            return this;
+        }
+
+        public ConferenceOutputBuilder withSpeeches(Set<SpeechOutput> speeches) {
+            this.speeches = speeches;
+            return this;
+        }
+
+        public ConferenceOutput build() {
+            return new ConferenceOutput(name, title, numberOfPlaces, price, timeSlot, status, id, speeches);
+        }
     }
 }
