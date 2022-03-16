@@ -30,17 +30,17 @@ public class ConferenceOutput {
         this.speeches = speeches;
     }
 
-//    public ConferenceOutput(ConferenceOutputBuilder builder) {
-//
-//        this.name = builder.name;
-//        this.title = builder.title;
-//        this.numberOfPlaces = builder.numberOfPlaces;
-//        this.price = builder.price;
-//        this.timeSlot = builder.timeSlot;
-//        this.status = builder.status;
-//        this.id = builder.id;
-//        this.speeches = builder.speeches;
-//    }
+    public ConferenceOutput(ConferenceOutputBuilder builder) {
+
+        this.name = builder.name;
+        this.title = builder.title;
+        this.numberOfPlaces = builder.numberOfPlaces;
+        this.price = builder.price;
+        this.timeSlot = builder.timeSlot;
+        this.status = builder.status;
+        this.id = builder.id;
+        this.speeches = builder.speeches;
+    }
 
     public String getName() {
         return name;
@@ -151,8 +151,7 @@ public class ConferenceOutput {
         }
 
         public ConferenceOutput build() {
-            return new ConferenceOutput(name, title, numberOfPlaces, price, timeSlot, status, id, speeches);
-           // return new ConferenceOutput(this);
+            return new ConferenceOutput(this);
         }
     }
 }
