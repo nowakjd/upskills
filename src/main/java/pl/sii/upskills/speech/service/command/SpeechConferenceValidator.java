@@ -1,13 +1,14 @@
 package pl.sii.upskills.speech.service.command;
 
 import pl.sii.upskills.conference.persistence.Conference;
-import pl.sii.upskills.speech.persistence.Speech;
+
+import java.util.UUID;
 
 public class SpeechConferenceValidator {
 
-    void validate(Conference conference, Speech speech) {
+    void validate(Conference conference, UUID conferenceId) {
 
-        if (!speech.getConference().getId().equals(conference.getId())) {
+        if (!conferenceId.equals(conference.getId())) {
             throw new SpeechRelationException();
         }
     }

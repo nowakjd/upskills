@@ -7,10 +7,8 @@ import org.junit.jupiter.api.function.Executable;
 import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
-import pl.sii.upskills.speech.persistence.Speech;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,12 +27,10 @@ class SpeechConferenceValidatorTest {
     void happyPath() {
         //given
         Conference conference = conferenceMaker();
-        Speech speech = new Speech(1L, "Title", new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(2),
-                NOW_FOR_TEST.plusDays(20).plusHours(6)), conference, new HashSet<>());
-        conference.addSpeech(speech);
+        UUID conferenceId = UUID.fromString("0963c134-0141-415f-aaf6-89a502fb58bf");
 
         //when
-        ThrowableAssert.ThrowingCallable lambdaUnderTest = () -> underTest.validate(conference, speech);
+        ThrowableAssert.ThrowingCallable lambdaUnderTest = () -> underTest.validate(conference, conferenceId);
 
         //then
         assertThatNoException().isThrownBy(lambdaUnderTest);
@@ -45,10 +41,10 @@ class SpeechConferenceValidatorTest {
     void noRelation() {
         //given
         Conference conference = conferenceMaker();
-        Speech speech = speechMaker();
+        UUID otherConference = UUID.fromString("0163c134-0141-415f-aaf6-89a502fb58bf");
 
         //when
-        Executable lambdaUnderTest = () -> underTest.validate(conference, speech);
+        Executable lambdaUnderTest = () -> underTest.validate(conference, otherConference);
 
         //then
         SpeechRelationException exception = assertThrows(SpeechRelationException.class,
@@ -60,20 +56,6 @@ class SpeechConferenceValidatorTest {
         return new Conference(UUID.fromString("0963c134-0141-415f-aaf6-89a502fb58bf"), "Name", "Title",
                 100, ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
                 NOW_FOR_TEST.plusDays(40)));
-    }
-
-    private Conference publishedConferenceMaker() {
-        return new Conference(UUID.fromString("0163c134-0141-415f-aaf6-89a502fb58bf"), "Name", "Title",
-                100, ConferenceStatus.PUBLISHED, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
-                NOW_FOR_TEST.plusDays(40)));
-    }
-
-    private Speech speechMaker() {
-        return new Speech(1L, "Title", new TimeSlotVO(NOW_FOR_TEST.plusDays(20).plusHours(2),
-                NOW_FOR_TEST.plusDays(20).plusHours(6)),
-                new Conference(UUID.fromString("0163c134-0141-415f-aaf6-89a502fb58bf"), "Name", "Title",
-                100, ConferenceStatus.DRAFT, null, new TimeSlotVO(NOW_FOR_TEST.plusDays(20),
-                NOW_FOR_TEST.plusDays(40))), new HashSet<>());
     }
 
 }
