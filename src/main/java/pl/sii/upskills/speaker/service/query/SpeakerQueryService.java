@@ -4,11 +4,11 @@ import org.springframework.stereotype.Service;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
-import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 @Service
