@@ -17,20 +17,7 @@ public class ConferenceOutput {
     private final UUID id;
     private final Set<SpeechOutput> speeches;
 
-    public ConferenceOutput(String name, String title, int numberOfPlaces,
-                            Money price, TimeSlot timeSlot,
-                            ConferenceStatus status, UUID id, Set<SpeechOutput> speeches) {
-        this.name = name;
-        this.title = title;
-        this.numberOfPlaces = numberOfPlaces;
-        this.price = price;
-        this.timeSlot = timeSlot;
-        this.status = status;
-        this.id = id;
-        this.speeches = speeches;
-    }
-
-    public ConferenceOutput(ConferenceOutputBuilder builder) {
+    ConferenceOutput(Builder builder) {
 
         this.name = builder.name;
         this.title = builder.title;
@@ -74,8 +61,8 @@ public class ConferenceOutput {
         return Collections.unmodifiableSet(speeches);
     }
 
-    static ConferenceOutputBuilder conferenceOutputBuilder() {
-        return new ConferenceOutputBuilder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Generated
@@ -99,7 +86,7 @@ public class ConferenceOutput {
         return Objects.hash(name, title, numberOfPlaces, price, timeSlot, status, id, speeches);
     }
 
-    public static final class ConferenceOutputBuilder {
+    public static final class Builder {
 
         private String name;
         private String title;
@@ -110,42 +97,42 @@ public class ConferenceOutput {
         private UUID id;
         private Set<SpeechOutput> speeches;
 
-        public ConferenceOutputBuilder withName(final String name) {
+        public Builder withName(final String name) {
             this.name = name;
             return this;
         }
 
-        public ConferenceOutputBuilder withTitle(String title) {
+        public Builder withTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public ConferenceOutputBuilder withNumberOfPlaces(int numberOfPlaces) {
+        public Builder withNumberOfPlaces(int numberOfPlaces) {
             this.numberOfPlaces = numberOfPlaces;
             return this;
         }
 
-        public ConferenceOutputBuilder withPrice(Money price) {
+        public Builder withPrice(Money price) {
             this.price = price;
             return this;
         }
 
-        public ConferenceOutputBuilder withTimeSlot(TimeSlot timeSlot) {
+        public Builder withTimeSlot(TimeSlot timeSlot) {
             this.timeSlot = timeSlot;
             return this;
         }
 
-        public ConferenceOutputBuilder withStatus(ConferenceStatus status) {
+        public Builder withStatus(ConferenceStatus status) {
             this.status = status;
             return this;
         }
 
-        public ConferenceOutputBuilder withId(UUID id) {
+        public Builder withId(UUID id) {
             this.id = id;
             return this;
         }
 
-        public ConferenceOutputBuilder withSpeeches(Set<SpeechOutput> speeches) {
+        public Builder withSpeeches(Set<SpeechOutput> speeches) {
             this.speeches = speeches;
             return this;
         }

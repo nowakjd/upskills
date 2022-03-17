@@ -11,13 +11,15 @@ import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
+import pl.sii.upskills.speaker.persistence.Speaker;
+import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speech.persistence.Speech;
 import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -56,7 +58,7 @@ class ConferenceDetailsTest {
     void conferenceDetails() {
         //given
         Conference conferenceToReturn = getConference();
-        when(repository.findById(ID_OF_DRAFT_IN_DATABASE)).thenReturn(Optional.of(getConference()));
+        when(repository.findById(ID_OF_DRAFT_IN_DATABASE)).thenReturn(Optional.of(conferenceToReturn));
 
         //when
         ConferenceOutput result = underTest.conferenceDetails(ID_OF_DRAFT_IN_DATABASE);
@@ -73,7 +75,7 @@ class ConferenceDetailsTest {
     }
 
     @Test
-    @DisplayName("Should throw exception when id of conference to displat is not in database")
+    @DisplayName("Should throw exception when id of conference to display is not in database")
     void notInDatabase() {
         //given
         when(repository.findById(ID_OUTSIDE_DATABASE)).thenReturn(Optional.empty());
@@ -97,7 +99,12 @@ class ConferenceDetailsTest {
     }
 
     private Speech getSpeech() {
-        return new Speech(2L, "Title", CORRECT_TIMESLOT, createConference(), new HashSet<>());
+        return new Speech(2L, "Title", CORRECT_TIMESLOT, createConference(), Set.of(getSpeaker()));
+    }
+
+    private Speaker getSpeaker() {
+        return new Speaker(1L, "John", "Doe",
+                "500400300", "johndoe@sii.pl", " ", SpeakerStatus.ACTIVE);
     }
 }
 
