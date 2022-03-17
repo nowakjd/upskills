@@ -33,4 +33,26 @@ public class SpeechController {
         return new ResponseEntity<>(speechCommandService.addSpeakers(conferenceId, id, speechSpeakersInput),
                 HttpStatus.CREATED);
     }
+
+    @PutMapping("/conferences/{conferenceId}/speeches/{id}")
+    ResponseEntity<SpeechOutput> updateSpeech(@PathVariable("conferenceId") UUID conferenceId,
+                                              @PathVariable("id") Long id,
+                                              @RequestBody SpeechInput speechInput) {
+        return new ResponseEntity<>(speechCommandService.updateSpeech(conferenceId, id, speechInput), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/conferences/{conferenceId}/speeches/{speechId}/speakers/{id}")
+    ResponseEntity<SpeechOutput> deleteSpeaker(@PathVariable("conferenceId") UUID conferenceId,
+                                               @PathVariable("speechId") Long speechId, @PathVariable("id") Long id) {
+        return new ResponseEntity<>(speechCommandService.deleteSpeaker(conferenceId, speechId, id),
+                HttpStatus.OK);
+    }
+
+    @PostMapping("/conferences/{conferenceId}/speeches/{speechId}/speakers/{id}")
+    ResponseEntity<SpeechOutput> addSpeaker(@PathVariable("conferenceId") UUID conferenceId,
+                                               @PathVariable("speechId") Long speechId, @PathVariable("id") Long id) {
+        return new ResponseEntity<>(speechCommandService.addSpeaker(conferenceId, speechId, id),
+                HttpStatus.CREATED);
+    }
+
 }

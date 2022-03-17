@@ -74,6 +74,14 @@ public class Speech {
         this.speakerSet = speakerSet;
     }
 
+    public void addSpeaker(Speaker speaker) {
+        speakerSet.add(speaker);
+    }
+
+    public void removeSpeaker(Speaker speaker) {
+        speakerSet.remove(speaker);
+    }
+
     public Conference getConference() {
         return conference;
     }
