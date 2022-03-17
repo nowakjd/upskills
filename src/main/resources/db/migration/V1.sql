@@ -21,3 +21,4 @@ CREATE TABLE conference (
    end_date TIMESTAMP WITHOUT TIME ZONE,
    CONSTRAINT pk_conference PRIMARY KEY (id)
 );
+
