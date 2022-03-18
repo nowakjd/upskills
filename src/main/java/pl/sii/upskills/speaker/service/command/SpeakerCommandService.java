@@ -19,6 +19,7 @@ public class SpeakerCommandService {
     private final Function<Speaker, SpeakerOutput> speakerOutputMapper;
     private final BiFunction<Speaker, SpeakerInput, Speaker> speakerInputMapper;
 
+
     public SpeakerCommandService(SpeakerRepository speakerRepository, SpeakerInputValidator speakerInputValidator,
                                  Function<Speaker, SpeakerOutput> speakerOutputMapper,
                                  BiFunction<Speaker, SpeakerInput, Speaker> speakerInputMapper) {
@@ -26,6 +27,7 @@ public class SpeakerCommandService {
         this.speakerInputValidator = speakerInputValidator;
         this.speakerOutputMapper = speakerOutputMapper;
         this.speakerInputMapper = speakerInputMapper;
+
     }
 
     public SpeakerOutput addSpeaker(SpeakerInput speakerInput) {
@@ -44,5 +46,19 @@ public class SpeakerCommandService {
                 .map(speakerRepository::save)
                 .map(speakerOutputMapper)
                 .orElseThrow(() -> new SpeakerNotFoundException(id));
+    }
+
+    public SpeakerOutput changeStatus(Long id, SpeakerStatus speakerStatus) {
+        return speakerRepository
+                .findById(id)
+                .map(s -> applyStatus(s, speakerStatus))
+                .map(speakerRepository::save)
+                .map(speakerOutputMapper)
+                .orElseThrow(() -> new SpeakerNotFoundException(id));
+    }
+
+    private Speaker applyStatus(Speaker speaker, SpeakerStatus speakerStatus) {
+        speaker.setSpeakerStatus(speakerStatus);
+        return  speaker;
     }
 }

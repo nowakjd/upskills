@@ -4,11 +4,11 @@ import org.springframework.stereotype.Service;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
-import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 @Service
@@ -30,25 +30,12 @@ public class SpeakerQueryService {
                 .toList();
     }
 
-    public List<SpeakerOutput> findSpeakers(String speakerStatus) {
-        if (speakerStatus == null) {
-            return findAllSpeakers();
-        } else {
-            return speakerRepository
-                    .findBySpeakerStatus(mapToEnum(speakerStatus))
-                    .stream()
-                    .map(speakerOutputMapper)
-                    .toList();
-        }
-    }
-
-    private SpeakerStatus mapToEnum(String speakerStatus) {
-        try {
-            return SpeakerStatus.valueOf(speakerStatus);
-        } catch (IllegalArgumentException e) {
-            throw new SpeakerBadRequestException("You have provided wrong status!"
-                    + "Please use one of the following statuses : " + Arrays.toString(SpeakerStatus.values()));
-        }
+    public List<SpeakerOutput> findSpeakersByStatus(SpeakerStatus speakerStatus) {
+        return speakerRepository
+                .findBySpeakerStatus(speakerStatus)
+                .stream()
+                .map(speakerOutputMapper)
+                .toList();
     }
 
     public Set<Speaker> getSpeakersByIds(Set<Long> ids) {
