@@ -11,7 +11,6 @@ import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static pl.sii.upskills.speaker.persistence.SpeakerStatus.ACTIVE;
-import static pl.sii.upskills.speaker.persistence.SpeakerStatus.INACTIVE;
 
 @SpringBootTest
 class SpeakerServiceITTest {
@@ -26,7 +25,7 @@ class SpeakerServiceITTest {
     void happyPath() {
         // given
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
-                "john@email.com", "My bio", ACTIVE);
+                "john@email.com", "My bio");
 
         // when
         SpeakerOutput speakerOutput = underTest.addSpeaker(speakerInput);
@@ -42,7 +41,7 @@ class SpeakerServiceITTest {
         // given
         insertSpeakers();
         SpeakerInput speakerInput = new SpeakerInput("John", "Doe", "123456789",
-                "john@email.com", "My bio", INACTIVE);
+                "john@email.com", "My bio");
 
         // when
         SpeakerOutput speakerOutput = underTest.updateSpeaker(2L, speakerInput);
@@ -54,7 +53,6 @@ class SpeakerServiceITTest {
         assertThat(speakerOutput.getPhoneNumber()).isEqualTo(speakerInput.getPhoneNumber());
         assertThat(speakerOutput.getBio()).isEqualTo(speakerInput.getBio());
         assertThat(speakerOutput.getEmail()).isEqualTo(speakerInput.getEmail());
-        assertThat(speakerOutput.getStatus()).isEqualTo(speakerInput.getStatus());
     }
 
     private void insertSpeakers() {
