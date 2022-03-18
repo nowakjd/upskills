@@ -10,7 +10,6 @@ import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 import pl.sii.upskills.conference.service.query.ConferenceQueryService;
-import pl.sii.upskills.speaker.persistence.SpeakerStatus;
 import pl.sii.upskills.speaker.service.command.SpeakerCommandService;
 import pl.sii.upskills.speaker.service.model.SpeakerInput;
 import pl.sii.upskills.speech.service.command.SpeechCommandService;
@@ -85,7 +84,7 @@ class ConferenceCommandServiceITTest {
                 LocalDateTime.of(2023, 1, 1, 2, 1)));
         Long speechId = speechCommandService.createSpeech(result, speechInput).getId();
         SpeakerInput speakerInput = new SpeakerInput("name", "lastName", "123",
-                "email@email.email", "bio", SpeakerStatus.ACTIVE);
+                "email@email.email", "bio");
         Long speakerId = speakerCommandService.addSpeaker(speakerInput).getId();
         speechCommandService.addSpeakers(result, speechId, new SpeechSpeakersInput(Set.of(speakerId)));
         return result;
