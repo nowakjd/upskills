@@ -5,6 +5,8 @@ import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
+import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
+import pl.sii.upskills.conference.service.model.ConferenceOutput;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 import pl.sii.upskills.speech.persistence.Speech;
@@ -29,6 +31,7 @@ public class SpeechCommandService {
     private final SpeechMapper speechMapper = new SpeechMapper();
     private final SpeechConferenceValidator speechConferenceValidator = new SpeechConferenceValidator();
     private final SpeakerValidator speakerValidator = new SpeakerValidator();
+    private final ConferenceOutputMapper conferenceOutputMapper = new ConferenceOutputMapper();
 
     public SpeechCommandService(SpeechRepository speechRepository, ConferenceRepository conferenceRepository,
                                 SpeechInputValidator speechInputValidator, SpeechOutputMapper speechOutputMapper,
@@ -95,6 +98,16 @@ public class SpeechCommandService {
         speech.removeSpeaker(speakerToRemove);
         speechRepository.save(speech);
         return speechOutputMapper.apply(speech);
+    }
+
+    @Transactional
+    public ConferenceOutput deleteSpeech(UUID conferenceId, Long id) {
+        Speech speech = getSpeech(id);
+        Conference conference = speech.getConference();
+        speechConferenceValidator.validate(conference, conferenceId);
+        conference.removeSpeech(speech);
+        conferenceRepository.save(conference);
+        return conferenceOutputMapper.apply(conference);
     }
 
     private Conference getConference(UUID conferenceId) {

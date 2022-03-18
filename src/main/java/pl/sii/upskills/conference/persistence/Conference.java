@@ -116,4 +116,8 @@ public class Conference {
     public void addSpeech(Speech speech) {
         listOfSpeeches.add(speech);
     }
+
+    public void removeSpeech(Speech speech) {
+        listOfSpeeches.remove(speech);
+    }
 }
