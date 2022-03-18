@@ -4,6 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import pl.sii.upskills.conference.persistence.Conference;
+import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.MoneyVO;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceCommandService;
@@ -12,10 +14,12 @@ import pl.sii.upskills.conference.service.model.ConferenceOutput;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.persistence.SpeakerRepository;
 import pl.sii.upskills.speaker.persistence.SpeakerStatus;
+import pl.sii.upskills.speech.persistence.SpeechRepository;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
 import pl.sii.upskills.speech.service.model.SpeechSpeakersInput;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Currency;
@@ -33,6 +37,10 @@ class SpeechCommandServiceITTest {
     ConferenceCommandService conferenceCommandService;
     @Autowired
     SpeechCommandService underTest;
+    @Autowired
+    ConferenceRepository conferenceRepository;
+    @Autowired
+    SpeechRepository speechRepository;
 
     private static final LocalDateTime NOW_FOR_TEST =
             LocalDateTime.of(2024, 1, 1, 0, 1);
@@ -127,6 +135,31 @@ class SpeechCommandServiceITTest {
         // then
         assertThat(updated.getId()).isEqualTo(speechOutput.getId());
         assertThat(updated.getTitle()).isEqualTo("Grandma");
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Should remove speech from conference")
+    void removeSpeech() {
+        // given
+        ConferenceOutput conferenceOutput = createConference();
+        SpeechInput speechInput = new SpeechInput("Holy Hand Grenade", CORRECT_TIMESLOT);
+        SpeechInput secondInput = new SpeechInput("Mole Strike", CORRECT_TIMESLOT);
+        SpeechOutput speechOutput = underTest.createSpeech(conferenceOutput.getId(), speechInput);
+        SpeechOutput secondOutput = underTest.createSpeech(conferenceOutput.getId(), secondInput);
+        Conference conference = conferenceRepository.getById(conferenceOutput.getId());
+        conference.addSpeech(speechRepository.getById(speechOutput.getId()));
+        conference.addSpeech(speechRepository.getById(secondOutput.getId()));
+
+        // when
+        underTest.deleteSpeech(conference.getId(), speechOutput.getId());
+
+        // then
+        assertThat(conference.getListOfSpeeches()).hasSize(1);
+        assertThat(conference.getListOfSpeeches()
+                .stream()
+                .filter(s -> s.getTitle().equals("Mole Strike"))
+                .toList()).isNotEmpty();
     }
 
     private ConferenceOutput createConference() {
