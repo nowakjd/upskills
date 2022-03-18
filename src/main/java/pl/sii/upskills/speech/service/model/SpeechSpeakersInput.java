@@ -3,7 +3,6 @@ package pl.sii.upskills.speech.service.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.util.Collections;
 import java.util.Set;
 
 public class SpeechSpeakersInput {
@@ -17,7 +16,7 @@ public class SpeechSpeakersInput {
     }
 
     public Set<Long> getIds() {
-        return Collections.unmodifiableSet(speakersIds);
+        return speakersIds;
     }
 
 }

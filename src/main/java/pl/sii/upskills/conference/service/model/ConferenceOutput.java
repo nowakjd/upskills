@@ -1,11 +1,13 @@
 package pl.sii.upskills.conference.service.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.configuration.Generated;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
 
 import java.util.*;
 
+@JsonDeserialize(builder = ConferenceOutput.Builder.class)
 public class ConferenceOutput {
 
     private final String name;
