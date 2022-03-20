@@ -99,7 +99,7 @@ public class ConferenceOutput {
         private UUID id;
         private Set<SpeechOutput> speeches;
 
-        public Builder withName(final String name) {
+        public Builder withName(String name) {
             this.name = name;
             return this;
         }

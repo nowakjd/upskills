@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
-import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
+import pl.sii.upskills.conference.service.command.ConferenceNotFoundException;
 import pl.sii.upskills.speaker.persistence.Speaker;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 import pl.sii.upskills.speech.persistence.Speech;
@@ -101,7 +101,7 @@ public class SpeechCommandService {
         return conferenceRepository
                 .findById(conferenceId)
                 .filter(c -> c.getStatus().equals(ConferenceStatus.DRAFT))
-                .orElseThrow(() -> new ConferenceDraftNotFoundException(conferenceId));
+                .orElseThrow(() -> new ConferenceNotFoundException(conferenceId, ConferenceStatus.DRAFT));
     }
 
     private Speech getSpeech(Long id) {

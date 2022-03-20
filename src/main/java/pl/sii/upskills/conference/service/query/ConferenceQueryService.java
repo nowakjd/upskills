@@ -5,7 +5,7 @@ import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.command.ConferenceBadRequestException;
-import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
+import pl.sii.upskills.conference.service.command.ConferenceNotFoundException;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
 import javax.transaction.Transactional;
@@ -41,7 +41,7 @@ public class ConferenceQueryService {
         return  conferenceRepository
                 .findById(id)
                 .filter(con -> con.getStatus().equals(ConferenceStatus.DRAFT))
-                .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
+                .orElseThrow(() -> new ConferenceNotFoundException(id, ConferenceStatus.DRAFT));
     }
 
     private Optional<ConferenceStatus> getConferenceStatus(String status) {
@@ -58,7 +58,7 @@ public class ConferenceQueryService {
         return  conferenceRepository
                 .findById(id)
                 .map(conferenceOutputMapper)
-                .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
+                .orElseThrow(() -> new ConferenceNotFoundException(id));
     }
 }
 

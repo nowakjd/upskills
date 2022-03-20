@@ -104,7 +104,7 @@ class ConferenceCommandServiceTest {
         Executable lambdaUnderTest = () -> underTest.updateConference(ID_OUTSIDE_DATABASE, conferenceInput);
 
         //then
-        assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
+        assertThrows(ConferenceNotFoundException.class, lambdaUnderTest);
     }
 
     @DisplayName("Should throw exception when updated conference is published")
@@ -117,6 +117,6 @@ class ConferenceCommandServiceTest {
         Executable lambdaUnderTest = () -> underTest.updateConference(ID_OF_PUBLISHED_IN_DATABASE, conferenceInput);
 
         //then
-        assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
+        assertThrows(ConferenceNotFoundException.class, lambdaUnderTest);
     }
 }

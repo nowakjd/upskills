@@ -8,7 +8,7 @@ import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
-import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
+import pl.sii.upskills.conference.service.command.ConferenceNotFoundException;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 import pl.sii.upskills.speaker.persistence.Speaker;
@@ -52,7 +52,6 @@ class ConferenceDetailsTest {
         underTest = new ConferenceQueryService(mapper, repository);
     }
 
-
     @Test
     @DisplayName("Should return conference details from repository")
     void conferenceDetails() {
@@ -83,7 +82,7 @@ class ConferenceDetailsTest {
         //when
         Executable lambdaUnderTest = () -> underTest.conferenceDetails(ID_OUTSIDE_DATABASE);
         //then
-        assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
+        assertThrows(ConferenceNotFoundException.class, lambdaUnderTest);
     }
 
     private Conference getConference() {
