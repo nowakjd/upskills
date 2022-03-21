@@ -12,6 +12,8 @@ import pl.sii.upskills.conference.service.mapper.ConferenceMapper;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
+import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
+import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -49,7 +51,7 @@ class ConferenceCommandServiceTest {
                         ConferenceStatus.PUBLISHED, null, CORRECT_TIMESLOT)));
         underTest = new ConferenceCommandService(
                 new ConferenceMapper(),
-                new ConferenceOutputMapper(),
+                new ConferenceOutputMapper(new SpeechOutputMapper(new SpeakerOutputMapper())),
                 repository,
                 new ConferenceValidator(() -> NOW_FOR_TEST));
     }
@@ -102,7 +104,7 @@ class ConferenceCommandServiceTest {
         Executable lambdaUnderTest = () -> underTest.updateConference(ID_OUTSIDE_DATABASE, conferenceInput);
 
         //then
-        assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
+        assertThrows(ConferenceNotFoundException.class, lambdaUnderTest);
     }
 
     @DisplayName("Should throw exception when updated conference is published")
@@ -115,6 +117,6 @@ class ConferenceCommandServiceTest {
         Executable lambdaUnderTest = () -> underTest.updateConference(ID_OF_PUBLISHED_IN_DATABASE, conferenceInput);
 
         //then
-        assertThrows(ConferenceDraftNotFoundException.class, lambdaUnderTest);
+        assertThrows(ConferenceNotFoundException.class, lambdaUnderTest);
     }
 }

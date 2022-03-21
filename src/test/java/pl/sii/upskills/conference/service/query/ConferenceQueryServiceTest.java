@@ -13,6 +13,8 @@ import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceBadRequestException;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
+import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
+import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -37,7 +39,8 @@ class ConferenceQueryServiceTest {
     @BeforeEach
     void setUp() {
         repository = mock(ConferenceRepository.class);
-        Function<Conference, ConferenceOutput> mapper = new ConferenceOutputMapper();
+        Function<Conference, ConferenceOutput> mapper = new ConferenceOutputMapper(
+                new SpeechOutputMapper(new SpeakerOutputMapper()));
         underTest = new ConferenceQueryService(mapper, repository);
     }
 
