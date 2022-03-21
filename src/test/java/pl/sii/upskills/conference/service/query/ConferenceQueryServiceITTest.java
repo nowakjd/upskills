@@ -92,7 +92,7 @@ class ConferenceQueryServiceITTest {
 
     @Test
     @DisplayName("Should throw exception when id of conference isn't in database")
-    void ConferenceNotFound() {
+    void conferenceNotFound() {
         //given
         UUID givenConferenceUUID = UUID.randomUUID();
 
