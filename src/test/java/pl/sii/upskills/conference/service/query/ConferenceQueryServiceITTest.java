@@ -51,6 +51,8 @@ class ConferenceQueryServiceITTest {
     private static final TimeSlotVO SPEECH_TIMESLOT
             = new TimeSlotVO(NOW_FOR_TEST.plusDays(1).plusHours(1), NOW_FOR_TEST.plusDays(1).plusHours(3));
     private static final MoneyVO MONEY = new MoneyVO(BigDecimal.valueOf(10.00), Currency.getInstance("USD"));
+    private static final UUID ID_DATABASE =
+            UUID.fromString("0063c134-0141-415f-aaf6-89a502fb58bf");
 
 
     @Test
@@ -94,10 +96,9 @@ class ConferenceQueryServiceITTest {
     @DisplayName("Should throw exception when id of conference isn't in database")
     void ConferenceNotFound() {
         //given
-        UUID givenConferenceUUID = UUID.randomUUID();
 
         //when
-        Executable lambdaUnderTest = () -> conferenceQueryService.conferenceDetails(givenConferenceUUID);
+        Executable lambdaUnderTest = () -> conferenceQueryService.conferenceDetails(ID_DATABASE);
 
         //then
         assertThrows(ConferenceNotFoundException.class, lambdaUnderTest);
