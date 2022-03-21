@@ -1,6 +1,7 @@
 package pl.sii.upskills.conference.persistence;
 
 import pl.sii.upskills.conference.service.model.Money;
+import pl.sii.upskills.configuration.Generated;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Size;
@@ -39,6 +40,7 @@ public class MoneyVO implements Money {
         this.currency = currency;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,10 +52,12 @@ public class MoneyVO implements Money {
         return Objects.equals(currency, moneyVO.currency);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         int result = amount != null ? amount.hashCode() : 0;
         result = 31 * result + (currency != null ? currency.hashCode() : 0);
         return result;
     }
+
 }

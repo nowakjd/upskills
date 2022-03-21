@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
-import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
+import pl.sii.upskills.conference.service.command.ConferenceNotFoundException;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 import pl.sii.upskills.speaker.persistence.Speaker;
@@ -28,19 +28,21 @@ public class SpeechCommandService {
     private final SpeechInputValidator speechInputValidator;
     private final SpeechOutputMapper speechOutputMapper;
     private final SpeakerQueryService speakerQueryService;
+    private final ConferenceOutputMapper conferenceOutputMapper;
     private final SpeechMapper speechMapper = new SpeechMapper();
     private final SpeechConferenceValidator speechConferenceValidator = new SpeechConferenceValidator();
     private final SpeakerValidator speakerValidator = new SpeakerValidator();
-    private final ConferenceOutputMapper conferenceOutputMapper = new ConferenceOutputMapper();
 
     public SpeechCommandService(SpeechRepository speechRepository, ConferenceRepository conferenceRepository,
                                 SpeechInputValidator speechInputValidator, SpeechOutputMapper speechOutputMapper,
-                                SpeakerQueryService speakerQueryService) {
+                                SpeakerQueryService speakerQueryService,
+                                ConferenceOutputMapper conferenceOutputMapper) {
         this.speechRepository = speechRepository;
         this.conferenceRepository = conferenceRepository;
         this.speechInputValidator = speechInputValidator;
         this.speechOutputMapper = speechOutputMapper;
         this.speakerQueryService = speakerQueryService;
+        this.conferenceOutputMapper = conferenceOutputMapper;
     }
 
     @Transactional
@@ -114,7 +116,7 @@ public class SpeechCommandService {
         return conferenceRepository
                 .findById(conferenceId)
                 .filter(c -> c.getStatus().equals(ConferenceStatus.DRAFT))
-                .orElseThrow(() -> new ConferenceDraftNotFoundException(conferenceId));
+                .orElseThrow(() -> new ConferenceNotFoundException(conferenceId, ConferenceStatus.DRAFT));
     }
 
     private Speech getSpeech(Long id) {
@@ -122,5 +124,4 @@ public class SpeechCommandService {
                 .findById(id)
                 .orElseThrow(() -> new SpeechNotFoundException(id));
     }
-
 }

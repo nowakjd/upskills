@@ -6,6 +6,8 @@ import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
+import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
+import pl.sii.upskills.speech.service.mapper.SpeechOutputMapper;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -23,7 +25,8 @@ class ConferenceOutputMapperTest {
     @DisplayName("Should map Conference to ConferenceOutPut")
     void shouldMapConference() {
         // given
-        ConferenceOutputMapper underTest = new ConferenceOutputMapper();
+        ConferenceOutputMapper underTest = new ConferenceOutputMapper(
+                new SpeechOutputMapper(new SpeakerOutputMapper()));
         Conference conference = new Conference(UUID.fromString("0963c134-0141-415f-aaf6-89a502fb58bf"), "adam",
                 "damian", 15, ConferenceStatus.DRAFT, null, timeSlot);
         // when

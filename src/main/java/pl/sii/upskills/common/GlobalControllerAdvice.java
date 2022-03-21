@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.sii.upskills.conference.service.command.ConferenceBadRequestException;
-import pl.sii.upskills.conference.service.command.ConferenceDraftNotFoundException;
+import pl.sii.upskills.conference.service.command.ConferenceNotFoundException;
 import pl.sii.upskills.conference.service.command.ConferenceValidationException;
 import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
@@ -60,9 +60,9 @@ class GlobalControllerAdvice {
         return e.getErrors();
     }
 
-    @ExceptionHandler(ConferenceDraftNotFoundException.class)
+    @ExceptionHandler(ConferenceNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    String handlingConferenceDraftNotFoundException(ConferenceDraftNotFoundException e) {
+    String handlingConferenceNotFoundException(ConferenceNotFoundException e) {
         return e.getMessage();
     }
 

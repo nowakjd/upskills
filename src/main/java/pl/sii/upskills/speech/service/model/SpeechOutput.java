@@ -1,6 +1,7 @@
 package pl.sii.upskills.speech.service.model;
 
 import pl.sii.upskills.conference.service.model.TimeSlot;
+import pl.sii.upskills.configuration.Generated;
 import pl.sii.upskills.speaker.service.model.SpeakerOutput;
 
 import java.util.Objects;
@@ -35,16 +36,20 @@ public class SpeechOutput {
         return id;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SpeechOutput that = (SpeechOutput) o;
-        return title.equals(that.title) && timeSlot.equals(that.timeSlot) && speakers.equals(
+        return title.equals(that.title)
+                && timeSlot.equals(that.timeSlot)
+                && speakers.equals(
                 that.speakers)
                 && id.equals(that.id);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(title, timeSlot, speakers, id);

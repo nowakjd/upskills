@@ -49,7 +49,7 @@ public class ConferenceCommandService {
                 .map(conferenceValidator)
                 .map(conferenceRepository::save)
                 .map(conferenceOutputMapper)
-                .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
+                .orElseThrow(() -> new ConferenceNotFoundException(id, ConferenceStatus.DRAFT));
     }
 
     private ConferenceOutput publish(UUID id) {
@@ -58,7 +58,7 @@ public class ConferenceCommandService {
                 .map(Conference::publish)
                 .map(conferenceValidator)
                 .map(conferenceOutputMapper)
-                .orElseThrow(() -> new ConferenceDraftNotFoundException(id));
+                .orElseThrow(() -> new ConferenceNotFoundException(id, ConferenceStatus.DRAFT));
     }
 
     @Transactional

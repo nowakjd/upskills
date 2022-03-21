@@ -73,10 +73,10 @@ class ConferenceValidatorTest {
         Speech speech = new SpeechBuilder(conference).build();
         conference.addSpeech(speech);
         //when
-        Executable lamdbaUnderTest = () -> underTest.apply(conference);
+        Executable lambdaUnderTest = () -> underTest.apply(conference);
         //then
         ConferenceValidationException exception = assertThrows(ConferenceValidationException.class,
-                lamdbaUnderTest);
+                lambdaUnderTest);
         assertThat(exception.getErrors()).hasSize(3);
 
     }

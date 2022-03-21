@@ -67,7 +67,7 @@ class ConferenceCommandServiceITTest {
                 ConferenceStatus.PUBLISHED);
         //then
         assertThat(publishedConference.getStatus()).isEqualTo(ConferenceStatus.PUBLISHED);
-        assertThrows(ConferenceDraftNotFoundException.class,
+        assertThrows(ConferenceNotFoundException.class,
                 () -> conferenceQueryService.findDraft(idOfEligibleConferenceDraft));
         assertThat(conferenceQueryService.findByStatus("PUBLISHED"))
                 .anyMatch(publishedConference::equals);

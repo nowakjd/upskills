@@ -1,5 +1,7 @@
 package pl.sii.upskills.speaker.persistence;
 
+import pl.sii.upskills.configuration.Generated;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Objects;
@@ -103,17 +105,22 @@ public class Speaker implements java.io.Serializable {
         return speakerStatus.equals(SpeakerStatus.ACTIVE);
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Speaker speaker = (Speaker) o;
-        return Objects.equals(id, speaker.id) && Objects.equals(firstName, speaker.firstName)
-                && Objects.equals(lastName, speaker.lastName) && Objects.equals(phoneNumber, speaker.phoneNumber)
-                && Objects.equals(email, speaker.email) && Objects.equals(bio, speaker.bio)
+        return Objects.equals(id, speaker.id)
+                && Objects.equals(firstName, speaker.firstName)
+                && Objects.equals(lastName, speaker.lastName)
+                && Objects.equals(phoneNumber, speaker.phoneNumber)
+                && Objects.equals(email, speaker.email)
+                && Objects.equals(bio, speaker.bio)
                 && speakerStatus == speaker.speakerStatus;
     }
 
+    @Generated
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, phoneNumber, email, bio, speakerStatus);
