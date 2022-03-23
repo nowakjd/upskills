@@ -9,6 +9,7 @@ import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.command.ConferenceNotFoundException;
+import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.speaker.service.mapper.SpeakerOutputMapper;
 import pl.sii.upskills.speaker.service.query.SpeakerQueryService;
 import pl.sii.upskills.speech.persistence.Speech;
@@ -63,8 +64,9 @@ class SpeechCommandServiceTest {
         SpeechOutputMapper outputMapper = new SpeechOutputMapper(new SpeakerOutputMapper());
         BiFunction<Speech, SpeechInput, Speech> inputMapper = new SpeechMapper();
         SpeakerQueryService speakerQueryService = mock(SpeakerQueryService.class);
+        ConferenceOutputMapper conferenceOutputMapper = mock(ConferenceOutputMapper.class);
         underTest = new SpeechCommandService(repository, conferenceRepository, speechInputValidator,
-                outputMapper, speakerQueryService);
+                outputMapper, speakerQueryService, conferenceOutputMapper);
     }
 
     @Test

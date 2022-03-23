@@ -3,6 +3,7 @@ package pl.sii.upskills.speech.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.sii.upskills.conference.service.model.ConferenceOutput;
 import pl.sii.upskills.speech.service.command.SpeechCommandService;
 import pl.sii.upskills.speech.service.model.SpeechInput;
 import pl.sii.upskills.speech.service.model.SpeechOutput;
@@ -55,4 +56,9 @@ public class SpeechController {
                 HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/conferences/{conferenceId}/speeches/{id}")
+    ResponseEntity<ConferenceOutput> deleteSpeech(@PathVariable("conferenceId") UUID conferenceId,
+                                                  @PathVariable("id") Long id) {
+        return new ResponseEntity<>(speechCommandService.deleteSpeech(conferenceId, id), HttpStatus.OK);
+    }
 }
