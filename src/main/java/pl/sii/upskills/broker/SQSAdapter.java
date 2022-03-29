@@ -13,7 +13,9 @@ import software.amazon.awssdk.services.sqs.model.SqsException;
 
 @Component
 public class SQSAdapter implements ConferenceBroker {
+    
     ObjectMapper mapper;
+  
     @Value("${aws.queue.url}")
     String url;
 
