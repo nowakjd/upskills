@@ -13,4 +13,5 @@ class UpSkillsConfigurations {
     TimeService getTimeService() {
         return () -> LocalDateTime.of(2022, 1, 27, 12, 34, 56);
     }
+
 }

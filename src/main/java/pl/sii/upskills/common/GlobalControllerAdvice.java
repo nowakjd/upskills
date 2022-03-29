@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.sii.upskills.conference.service.command.ConferenceBadRequestException;
 import pl.sii.upskills.conference.service.command.ConferenceNotFoundException;
+import pl.sii.upskills.conference.service.command.ConferencePublishingException;
 import pl.sii.upskills.conference.service.command.ConferenceValidationException;
 import pl.sii.upskills.speaker.service.command.SpeakerBadRequestException;
 import pl.sii.upskills.speaker.service.command.SpeakerNotFoundException;
@@ -82,6 +83,12 @@ class GlobalControllerAdvice {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     String handlingSpeechRelationException(SpeechRelationException e) {
         return e.getMessage();
+    }
+
+    @ExceptionHandler(ConferencePublishingException.class)
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    List<String> handlingConferencePublishingException(ConferencePublishingException e) {
+        return e.getErrors();
     }
 
 }
