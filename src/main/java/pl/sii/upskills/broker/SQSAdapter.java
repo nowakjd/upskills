@@ -13,7 +13,9 @@ import software.amazon.awssdk.services.sqs.model.SqsException;
 
 @Component
 public class SQSAdapter implements ConferenceBroker {
+
     ObjectMapper mapper;
+
     @Value("${aws.queue.url}")
     String url;
 
@@ -24,12 +26,12 @@ public class SQSAdapter implements ConferenceBroker {
     @Override
     public ConferenceOutput send(ConferenceOutput conferenceOutput) {
         String conferenceAsJSON;
-        try {
-            conferenceAsJSON = mapper.writeValueAsString(conferenceOutput);
-        } catch (JsonProcessingException e) {
-            throw new ConferencePublishingException(e.getMessage());
-        }
+        conferenceAsJSON = serialize(conferenceOutput);
+        sendInternal(conferenceAsJSON);
+        return conferenceOutput;
+    }
 
+    private void sendInternal(String conferenceAsJSON) {
         try {
             SqsClient.builder().build()
                     .sendMessage(SendMessageRequest.builder()
@@ -39,6 +41,15 @@ public class SQSAdapter implements ConferenceBroker {
         } catch (SqsException e) {
             throw new ConferencePublishingException("Error during publishing. Try again later");
         }
-        return conferenceOutput;
+    }
+
+    private String serialize(ConferenceOutput conferenceOutput) {
+        String conferenceAsJSON;
+        try {
+            conferenceAsJSON = mapper.writeValueAsString(conferenceOutput);
+        } catch (JsonProcessingException e) {
+            throw new ConferencePublishingException(e.getMessage());
+        }
+        return conferenceAsJSON;
     }
 }

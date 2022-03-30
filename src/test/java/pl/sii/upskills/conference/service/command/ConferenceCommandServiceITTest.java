@@ -4,8 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import pl.sii.upskills.broker.ConferenceBroker;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.persistence.MoneyVO;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
@@ -26,8 +24,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+
 
 @SpringBootTest
 class ConferenceCommandServiceITTest {
@@ -43,9 +40,6 @@ class ConferenceCommandServiceITTest {
 
     @Autowired
     ConferenceQueryService conferenceQueryService;
-
-    @MockBean
-    ConferenceBroker conferenceBroker;
 
     @Test
     @DisplayName("Should add conference to database")
@@ -69,7 +63,6 @@ class ConferenceCommandServiceITTest {
     void publish() {
         //given
         UUID idOfEligibleConferenceDraft = getIdOfEligibleConference();
-        when(conferenceBroker.send(any())).thenAnswer((a -> a.getArgument(0)));
         //when
         ConferenceOutput publishedConference = underTest.changeStatus(idOfEligibleConferenceDraft,
                 ConferenceStatus.PUBLISHED);
