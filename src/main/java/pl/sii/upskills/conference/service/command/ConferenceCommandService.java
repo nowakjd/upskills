@@ -1,6 +1,7 @@
 package pl.sii.upskills.conference.service.command;
 
 import org.springframework.stereotype.Service;
+import pl.sii.upskills.broker.ConferenceBroker;
 import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
 import pl.sii.upskills.conference.persistence.ConferenceStatus;
@@ -19,15 +20,16 @@ public class ConferenceCommandService {
     private final ConferenceOutputMapper conferenceOutputMapper;
     private final ConferenceRepository conferenceRepository;
     private final ConferenceValidator conferenceValidator;
+    private final ConferenceBroker conferenceBroker;
 
-    public ConferenceCommandService(ConferenceMapper conferenceMapper,
-                                    ConferenceOutputMapper conferenceOutputMapper,
-                                    ConferenceRepository conferenceRepository,
-                                    ConferenceValidator conferenceValidator) {
+    public ConferenceCommandService(ConferenceMapper conferenceMapper, ConferenceOutputMapper conferenceOutputMapper,
+                                    ConferenceRepository conferenceRepository, ConferenceValidator conferenceValidator,
+                                    ConferenceBroker conferenceBroker) {
         this.conferenceMapper = conferenceMapper;
         this.conferenceOutputMapper = conferenceOutputMapper;
         this.conferenceRepository = conferenceRepository;
         this.conferenceValidator = conferenceValidator;
+        this.conferenceBroker = conferenceBroker;
     }
 
     @Transactional
@@ -58,6 +60,7 @@ public class ConferenceCommandService {
                 .map(Conference::publish)
                 .map(conferenceValidator)
                 .map(conferenceOutputMapper)
+                .map(conferenceBroker::send)
                 .orElseThrow(() -> new ConferenceNotFoundException(id, ConferenceStatus.DRAFT));
     }
 
