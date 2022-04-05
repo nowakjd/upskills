@@ -1,7 +1,10 @@
 package pl.sii.upskills.speaker.persistence;
 
+import pl.sii.upskills.configuration.Generated;
+
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Entity
 
@@ -24,17 +27,22 @@ public class Speaker implements java.io.Serializable {
     private String email;
     @Column(name = "bio", columnDefinition = "TEXT")
     private String bio;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private SpeakerStatus speakerStatus;
 
     public Speaker() {
     }
 
-    public Speaker(Long id, String firstName, String lastName, String phoneNumber, String email, String bio) {
+    public Speaker(Long id, String firstName, String lastName,
+                   String phoneNumber, String email, String bio, SpeakerStatus speakerStatus) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.bio = bio;
+        this.speakerStatus = speakerStatus;
     }
 
     public Long getId() {
@@ -85,4 +93,36 @@ public class Speaker implements java.io.Serializable {
         this.bio = bio;
     }
 
+    public SpeakerStatus getSpeakerStatus() {
+        return speakerStatus;
+    }
+
+    public void setSpeakerStatus(SpeakerStatus speakerStatus) {
+        this.speakerStatus = speakerStatus;
+    }
+
+    public boolean isActive() {
+        return speakerStatus.equals(SpeakerStatus.ACTIVE);
+    }
+
+    @Generated
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Speaker speaker = (Speaker) o;
+        return Objects.equals(id, speaker.id)
+                && Objects.equals(firstName, speaker.firstName)
+                && Objects.equals(lastName, speaker.lastName)
+                && Objects.equals(phoneNumber, speaker.phoneNumber)
+                && Objects.equals(email, speaker.email)
+                && Objects.equals(bio, speaker.bio)
+                && speakerStatus == speaker.speakerStatus;
+    }
+
+    @Generated
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, phoneNumber, email, bio, speakerStatus);
+    }
 }

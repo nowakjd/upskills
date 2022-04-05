@@ -7,13 +7,13 @@ import pl.sii.upskills.conference.persistence.MoneyVO;
 import pl.sii.upskills.conference.persistence.TimeSlotVO;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 @Component
-public class ConferenceMapper implements Function<ConferenceInput, Conference> {
+public class ConferenceMapper implements BiFunction<Conference, ConferenceInput, Conference> {
     @Override
-    public Conference apply(ConferenceInput conferenceInput) {
-        Conference conference = new Conference();
+    public Conference apply(Conference conference,
+                            ConferenceInput conferenceInput) {
         conference.setName(conferenceInput.getName());
         conference.setTitle(conferenceInput.getTitle());
         conference.setNumberOfPlaces(conferenceInput.getNumberOfPlaces());

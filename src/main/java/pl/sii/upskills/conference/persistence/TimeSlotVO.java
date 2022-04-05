@@ -1,6 +1,7 @@
 package pl.sii.upskills.conference.persistence;
 
 import pl.sii.upskills.conference.service.model.TimeSlot;
+import pl.sii.upskills.configuration.Generated;
 
 import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public class TimeSlotVO implements TimeSlot {
         return endDate;
     }
 
+    @Generated
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,6 +41,7 @@ public class TimeSlotVO implements TimeSlot {
         return Objects.equals(endDate, that.endDate);
     }
 
+    @Generated
     @Override
     public int hashCode() {
         int result = startDate != null ? startDate.hashCode() : 0;

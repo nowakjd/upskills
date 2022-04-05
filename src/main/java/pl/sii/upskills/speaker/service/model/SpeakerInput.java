@@ -35,5 +35,4 @@ public class SpeakerInput {
     public String getBio() {
         return bio;
     }
-
 }

@@ -1,36 +1,75 @@
 package pl.sii.upskills.conference.service.command;
 
 import org.springframework.stereotype.Service;
+import pl.sii.upskills.broker.ConferenceBroker;
+import pl.sii.upskills.conference.persistence.Conference;
 import pl.sii.upskills.conference.persistence.ConferenceRepository;
+import pl.sii.upskills.conference.persistence.ConferenceStatus;
 import pl.sii.upskills.conference.service.mapper.ConferenceMapper;
 import pl.sii.upskills.conference.service.mapper.ConferenceOutputMapper;
 import pl.sii.upskills.conference.service.model.ConferenceInput;
 import pl.sii.upskills.conference.service.model.ConferenceOutput;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ConferenceCommandService {
-    private final ConferenceInputValidator conferenceInputValidator;
     private final ConferenceMapper conferenceMapper;
     private final ConferenceOutputMapper conferenceOutputMapper;
     private final ConferenceRepository conferenceRepository;
+    private final ConferenceValidator conferenceValidator;
+    private final ConferenceBroker conferenceBroker;
 
-    public ConferenceCommandService(ConferenceInputValidator conferenceInputValidator,
-                                    ConferenceMapper conferenceMapper, ConferenceOutputMapper conferenceOutputMapper,
-                                    ConferenceRepository conferenceRepository) {
-        this.conferenceInputValidator = conferenceInputValidator;
+    public ConferenceCommandService(ConferenceMapper conferenceMapper, ConferenceOutputMapper conferenceOutputMapper,
+                                    ConferenceRepository conferenceRepository, ConferenceValidator conferenceValidator,
+                                    ConferenceBroker conferenceBroker) {
         this.conferenceMapper = conferenceMapper;
         this.conferenceOutputMapper = conferenceOutputMapper;
         this.conferenceRepository = conferenceRepository;
+        this.conferenceValidator = conferenceValidator;
+        this.conferenceBroker = conferenceBroker;
     }
 
+    @Transactional
     public ConferenceOutput createConference(ConferenceInput conferenceInput) {
-        conferenceInputValidator.validate(conferenceInput);
         return Optional.of(conferenceInput)
-                .map(conferenceMapper)
+                .map(s -> conferenceMapper.apply(new Conference(), s))
+                .map(conferenceValidator)
                 .map(conferenceRepository::save)
                 .map(conferenceOutputMapper)
                 .orElseThrow();
+    }
+
+    @Transactional
+    public ConferenceOutput updateConference(UUID id, ConferenceInput conferenceInput) {
+        return conferenceRepository
+                .findById(id)
+                .filter(conference -> conference.getStatus().equals(ConferenceStatus.DRAFT))
+                .map(conference -> conferenceMapper.apply(conference, conferenceInput))
+                .map(conferenceValidator)
+                .map(conferenceRepository::save)
+                .map(conferenceOutputMapper)
+                .orElseThrow(() -> new ConferenceNotFoundException(id, ConferenceStatus.DRAFT));
+    }
+
+    private ConferenceOutput publish(UUID id) {
+        return conferenceRepository.findById(id)
+                .filter(conference -> conference.getStatus().equals(ConferenceStatus.DRAFT))
+                .map(Conference::publish)
+                .map(conferenceValidator)
+                .map(conferenceOutputMapper)
+                .map(conferenceBroker::send)
+                .orElseThrow(() -> new ConferenceNotFoundException(id, ConferenceStatus.DRAFT));
+    }
+
+    @Transactional
+    public ConferenceOutput changeStatus(UUID id, ConferenceStatus status) {
+        return switch (status) {
+            case PUBLISHED -> publish(id);
+            default -> throw
+                    new ConferenceBadRequestException("Changing status to " + status + " is not allowed");
+        };
     }
 }
